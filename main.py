@@ -10,7 +10,8 @@ reserved = {
             'import': 'IMPORT',
             'print':'PRINT',
             'main':'MAIN',
-            'List': 'LIST'
+            'List': 'LIST',
+            'return':'RETURN'
            }
 
 #Sequencia de tokens
