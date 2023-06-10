@@ -39,6 +39,14 @@ Contribucion
 
 
 t_NUMERO = r'\d+'
+t_MAS = r'\+'
+t_MENOS = r'-'
+t_POR = r'\*'
+t_ENTRE = r'/'
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_COMMENT = r'//'
+t_PUNTO=r'\.'
 t_COMA=r','
 t_MAYORQUE=r'>'
 t_MENORQUE=r'<'
@@ -106,6 +114,67 @@ List<int> insertionSort(List<int> list) {
   return list;
 }
     '''
+algoritmo2 = '''//ALGORITMO POR JARED CASTILLO 
+// importing dart:io file
+import 'dart:async';
+import 'dart:io';
+
+void main()  {
+  menu();
+}
+
+
+void leerFile() {
+
+  try {
+    var file = File('C:/Users/wayar/OneDrive/Escritorio/archivo.txt');
+    var contents = file.readAsLinesSync();
+    for(var line in contents){
+    print(line);
+    }
+    
+  } catch (e) {
+    if (e is FileSystemException && e.message.contains('No such file or directory') || e is PathNotFoundException) {
+      print('El archivo no existe o la ruta es incorrecta.');
+    }
+  }
+  menu();
+}
+
+void escribirFile() async{
+
+    print("Ingresa el contenido: ");
+    String contenido = stdin.readLineSync()!;
+    var file = File('C:/Users/wayar/OneDrive/Escritorio/archivo.txt');
+    var sink = file.openWrite(mode: FileMode.append);
+    sink.write((contenido + " "));
+    await sink.close();
+    print('¡Archivo escrito exitosamente!');  
+    menu();
+}
+
+
+void menu() {
+
+  print("\n************* MENU ******************");
+  print("1. Ingresar contenido");
+  print("2. Leer archivo\n");
+  String scan2 = stdin.readLineSync()!;
+
+  print("Elija una opcion: ");
+  int opt = int.parse(scan2);
+
+  if(opt == 1){
+    escribirFile();
+  }else if(opt == 2){
+    leerFile();
+  }else{
+    print("Opcion incorrecta. Cerrando Sesion...");
+    exit(0);
+  }
+}
+'''
+
 
 #Datos de entrada
 lexer.input(algoritmo1)
