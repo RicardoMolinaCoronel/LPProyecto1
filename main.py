@@ -4,45 +4,58 @@ import ply.lex as lex
 
 #Diccionario de palabras reservadas
 reserved = {
-            'print':'IMPRESION',
-            'parse' : 'PARSE',
+            'while':'WHILE',
+            'for':'FOR',
+            'int':'INT',
+            'import': 'IMPORT',
+            'print':'PRINT',
+            'main':'MAIN',
+            'List': 'LIST',
+            'return':'RETURN',
             'exit' : 'EXIT',
             'write' : 'WRITE',
             'close' : 'CLOSE',
             'readLineSync' : 'READLINE',
             'openWrite' : 'OPENW'
-            ''
 
            }
 
+
 #Sequencia de tokens
-tokens = ('NUMBER','PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'LPAREN', 'RPAREN',
-          'CAMPO','COMMENT','PUNTO','COMA','MAYORQUE','MENORQUE','DIFERENTE','COMADOBLE','CADENA','IGUAL', 'COLON',
-          'SEMICOLON', 'EXMARK', 'LLLAVE','RLLAVE', 'AND', 'OR') + tuple(reserved.values())
+tokens = ('NUMERO','MAS', 'MENOS', 'POR', 'ENTRE', 'LPAREN', 'RPAREN',
+          'CAMPO','COMMENT','PUNTO','COMA','MAYORQUE','MENORQUE','DIFERENTE',
+          'COMADOBLE','CADENA','IGUAL','IGUALDOBLE',"LLLAVE","RLLAVE",
+          'LCORCH','RCORCH','PUNTOCOMA','AMPERSAND', 'COLON', 'EXMARK', 'AND', 'OR' ) + tuple(reserved.values())
+
+'''
+Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return)
+Contribucion
+Contribucion
+
+'''
+
 
 #Exp Regulares para tokens de símbolos
-t_PLUS = r'\+'
-t_MINUS = r'-'
-t_TIMES = r'\*'
-t_DIVIDE = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_PUNTO=r'\.'
-t_NUMBER = r'\d+'
-t_COMA = r','
-t_MAYORQUE = r'>'
-t_MENORQUE = r'<'
-t_DIFERENTE = r'<>'
-t_CADENA = r'"[^".]*"'
-t_IGUAL = r'=='
+
+
+t_NUMERO = r'\d+'
+t_COMA=r','
+t_MAYORQUE=r'>'
+t_MENORQUE=r'<'
+t_DIFERENTE=r'<>'
+t_CADENA=r'"[^".]*"'
+t_IGUAL=r'='
+t_IGUALDOBLE=r'=='
+t_LLLAVE=r'\{'
+t_RLLAVE=r'\}'
+t_LCORCH=r'\['
+t_RCORCH=r'\]'
+t_PUNTOCOMA=r';'
+t_AMPERSAND=r'&'
 t_COLON = r':'
-t_SEMICOLON = r';'
 t_EXMARK = r'!'
-t_LLLAVE = r'\{'
-t_RLLAVE = r'\}'
 t_AND = '&&'
 t_OR = '||'
-
 
 
 #Para contabilizar nro de líneas
@@ -59,7 +72,7 @@ def t_CAMPO(t):
 
 #Ignorar un comentario
 def t_COMMENT(t):
-  r'\#.*'
+  r'\/\/.*'
   pass
 
 # Ignorar lo que no sea un token en mi LP
@@ -74,12 +87,28 @@ def t_error(t):
 #Contruir analizador
 lexer = lex.lex()
 
-#Testeando
-data = '''
-    '''.lower()
+#Testeos
+algoritmo1 = '''
+//ALGORITMO RICARDO MOLINA
+main() {
+  print(insertionSort([8,9, 4, 2, 6,10,12]));
+}
+List<int> insertionSort(List<int> list) {
+  for (int j = 1; j < list.length; j++) {
+    int key = list[j];
+    int i = j - 1;
+    while (i >= 0 && list[i] > key) {
+      list[i + 1] = list[i];
+      i = i - 1;
+      list[i + 1] = key;
+    }
+  }
+  return list;
+}
+    '''
 
 #Datos de entrada
-lexer.input(data)
+lexer.input(algoritmo1)
 
 # Tokenizador
 while True:
