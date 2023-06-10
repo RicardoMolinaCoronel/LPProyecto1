@@ -21,7 +21,7 @@ tokens = ('NUMERO','MAS', 'MENOS', 'POR', 'ENTRE', 'LPAREN', 'RPAREN',
           'LCORCH','RCORCH','PUNTOCOMA','AMPERSAND') + tuple(reserved.values())
 
 '''
-Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta List)
+Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return)
 Contribucion
 Contribucion
 
