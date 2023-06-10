@@ -4,12 +4,21 @@ import ply.lex as lex
 
 #Diccionario de palabras reservadas
 reserved = {
-            'print':'IMPRESION'
+            'print':'IMPRESION',
+            'parse' : 'PARSE',
+            'exit' : 'EXIT',
+            'write' : 'WRITE',
+            'close' : 'CLOSE',
+            'readLineSync' : 'READLINE',
+            'openWrite' : 'OPENW'
+            ''
+
            }
 
 #Sequencia de tokens
 tokens = ('NUMBER','PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'LPAREN', 'RPAREN',
-          'CAMPO','COMMENT','PUNTO','COMA','MAYORQUE','MENORQUE','DIFERENTE','COMADOBLE','CADENA','IGUAL') + tuple(reserved.values())
+          'CAMPO','COMMENT','PUNTO','COMA','MAYORQUE','MENORQUE','DIFERENTE','COMADOBLE','CADENA','IGUAL', 'COLON',
+          'SEMICOLON', 'EXMARK', 'LLLAVE','RLLAVE', 'AND', 'OR') + tuple(reserved.values())
 
 #Exp Regulares para tokens de símbolos
 t_PLUS = r'\+'
@@ -20,12 +29,22 @@ t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_PUNTO=r'\.'
 t_NUMBER = r'\d+'
-t_COMA=r','
-t_MAYORQUE=r'>'
-t_MENORQUE=r'<'
-t_DIFERENTE=r'<>'
-t_CADENA=r'"[^".]*"'
-t_IGUAL=r'=='
+t_COMA = r','
+t_MAYORQUE = r'>'
+t_MENORQUE = r'<'
+t_DIFERENTE = r'<>'
+t_CADENA = r'"[^".]*"'
+t_IGUAL = r'=='
+t_COLON = r':'
+t_SEMICOLON = r';'
+t_EXMARK = r'!'
+t_LLLAVE = r'\{'
+t_RLLAVE = r'\}'
+t_AND = '&&'
+t_OR = '||'
+
+
+
 #Para contabilizar nro de líneas
 def t_newline(t):
   r'\n+'
