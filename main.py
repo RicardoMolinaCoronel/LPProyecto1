@@ -25,11 +25,11 @@ reserved = {
 tokens = ('NUMERO','MAS', 'MENOS', 'POR', 'ENTRE', 'LPAREN', 'RPAREN',
           'CAMPO','COMMENT','PUNTO','COMA','MAYORQUE','MENORQUE','DIFERENTE',
           'COMADOBLE','CADENA','IGUAL','IGUALDOBLE',"LLLAVE","RLLAVE",
-          'LCORCH','RCORCH','PUNTOCOMA','AMPERSAND', 'COLON', 'EXMARK', 'AND', 'OR' ) + tuple(reserved.values())
+          'LCORCH','RCORCH','PUNTOCOMA','AMPERSAND', 'COLON', 'EXMARK', 'AND', 'OR', 'APOSTROFE') + tuple(reserved.values())
 
 '''
 Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return)
-Contribucion
+Contribucion Jared: tokens(COLON - OR), reservada(exit - openWrite)
 Contribucion
 
 '''
@@ -51,7 +51,7 @@ t_MAYORQUE = r'>'
 t_MENORQUE = r'<'
 t_DIFERENTE = r'<>'
 t_COMADOBLE = r'\"'
-t_CADENA = r'"[^".]*"'
+t_CADENA = r'("[^".]*"|\'[^\'.]*\')'
 t_IGUAL = r'='
 t_IGUALDOBLE = r'=='
 t_LLLAVE = r'\{'
@@ -63,7 +63,8 @@ t_AMPERSAND = r'&'
 t_COLON = r':'
 t_EXMARK = r'!'
 t_AND = r'&&'
-t_OR = r'||'
+t_OR = r'\|\|'
+t_APOSTROFE = r'\''
 
 
 #Para contabilizar nro de líneas
@@ -114,6 +115,7 @@ List<int> insertionSort(List<int> list) {
   return list;
 }
     '''
+
 algoritmo2 = '''//ALGORITMO POR JARED CASTILLO 
 // importing dart:io file
 import 'dart:async';
@@ -177,7 +179,7 @@ void menu() {
 
 
 #Datos de entrada
-lexer.input(algoritmo1)
+lexer.input(algoritmo2)
 
 # Tokenizador
 while True:
