@@ -29,7 +29,7 @@ tokens = ('NUMERO','MAS', 'MENOS', 'POR', 'ENTRE', 'LPAREN', 'RPAREN',
 
 '''
 Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return)
-Contribucion Jared: tokens(COLON - OR), reservada(exit - openWrite)
+Contribucion Jared: tokens(COLON - APOSTROFE), reservada(exit - openWrite)
 Contribucion
 
 '''
