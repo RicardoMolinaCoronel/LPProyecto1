@@ -16,7 +16,19 @@ reserved = {
             'write' : 'WRITE',
             'close' : 'CLOSE',
             'readLineSync' : 'READLINE',
-            'openWrite' : 'OPENW'
+            'openWrite' : 'OPENW',
+            'void' : 'VOID',
+            'try' : 'TRY',
+            'catch' : 'CATCH',
+            'var' : 'VAR',
+            'File' : 'FILE',
+            'if' : 'IF',
+            'async' : 'ASYNC',
+            'await' : 'AWAIT',
+            'String' : 'STRING',
+            'double' : 'DOUBLE'
+
+
 
            }
 
@@ -25,7 +37,7 @@ reserved = {
 tokens = ('NUMERO','MAS', 'MENOS', 'POR', 'ENTRE', 'LPAREN', 'RPAREN',
           'CAMPO','COMMENT','PUNTO','COMA','MAYORQUE','MENORQUE','DIFERENTE',
           'COMADOBLE','CADENA','IGUAL','IGUALDOBLE',"LLLAVE","RLLAVE",
-          'LCORCH','RCORCH','PUNTOCOMA','AMPERSAND', 'COLON', 'EXMARK', 'AND', 'OR', 'APOSTROFE') + tuple(reserved.values())
+          'LCORCH','RCORCH','PUNTOCOMA','AMPERSAND', 'COLON', 'EXMARK', 'AND', 'OR', 'APOSTROFE','METODO') + tuple(reserved.values())
 
 '''
 Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return)
@@ -51,7 +63,7 @@ t_MAYORQUE = r'>'
 t_MENORQUE = r'<'
 t_DIFERENTE = r'<>'
 t_COMADOBLE = r'\"'
-t_CADENA = r'("[^".]*"|\'[^\'.]*\')'
+t_CADENA = r'("[^".]*"|\'[^\'.]*\'|"[^"]*"|\'[^\']*\')'
 t_IGUAL = r'='
 t_IGUALDOBLE = r'=='
 t_LLLAVE = r'\{'
@@ -65,7 +77,7 @@ t_EXMARK = r'!'
 t_AND = r'&&'
 t_OR = r'\|\|'
 t_APOSTROFE = r'\''
-
+t_METODO = r'[a-zA-Z\_]+\(\)$'
 
 #Para contabilizar nro de líneas
 def t_newline(t):
