@@ -42,9 +42,9 @@ tokens = ('NUMERO','MAS', 'MENOS', 'POR', 'ENTRE', 'LPAREN', 'RPAREN',
           'LCORCH','RCORCH','PUNTOCOMA','AMPERSAND', 'COLON', 'EXMARK', 'AND', 'OR', 'APOSTROFE','METODO', 'DOLAR') + tuple(reserved.values())
 
 '''
-Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return)
-Contribucion Jared: tokens(COLON - APOSTROFE), reservada(exit - openWrite)
-Contribucion Freddy: tokens (DOLAR), reservada (Iterable - Set)
+Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return) - algoritmo1
+Contribucion Jared: tokens(COLON - APOSTROFE), reservada(exit - openWrite) - algoritmo2
+Contribucion Freddy: tokens (DOLAR), reservada (Iterable - Set) - algoritmo3
 
 '''
 
