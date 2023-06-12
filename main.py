@@ -26,7 +26,9 @@ reserved = {
             'async' : 'ASYNC',
             'await' : 'AWAIT',
             'String' : 'STRING',
-            'double' : 'DOUBLE'
+            'double' : 'DOUBLE',
+            'Iterable' : 'ITERABLE',
+            'Set' : 'SET'
 
 
 
@@ -37,12 +39,12 @@ reserved = {
 tokens = ('NUMERO','MAS', 'MENOS', 'POR', 'ENTRE', 'LPAREN', 'RPAREN',
           'CAMPO','COMMENT','PUNTO','COMA','MAYORQUE','MENORQUE','DIFERENTE',
           'COMADOBLE','CADENA','IGUAL','IGUALDOBLE',"LLLAVE","RLLAVE",
-          'LCORCH','RCORCH','PUNTOCOMA','AMPERSAND', 'COLON', 'EXMARK', 'AND', 'OR', 'APOSTROFE','METODO') + tuple(reserved.values())
+          'LCORCH','RCORCH','PUNTOCOMA','AMPERSAND', 'COLON', 'EXMARK', 'AND', 'OR', 'APOSTROFE','METODO', 'DOLAR') + tuple(reserved.values())
 
 '''
 Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return)
 Contribucion Jared: tokens(COLON - APOSTROFE), reservada(exit - openWrite)
-Contribucion
+Contribucion Freddy: tokens (DOLAR), reservada (Iterable - Set
 
 '''
 
@@ -78,6 +80,7 @@ t_AND = r'&&'
 t_OR = r'\|\|'
 t_APOSTROFE = r'\''
 t_METODO = r'[a-zA-Z\_]+\(\)$'
+t_DOLAR=r'\$'
 
 #Para contabilizar nro de líneas
 def t_newline(t):
