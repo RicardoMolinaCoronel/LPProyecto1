@@ -189,6 +189,30 @@ void menu() {
 }
 '''
 
+algoritmo3= '''
+//ALGORITMO FREDDY TENESACA
+int mayorQueX(Iterable<int> collection, int x) {
+  return collection.where((item) => item > x).length;
+}
+
+main() async {
+  final numeros = [1, 2, 3, 4, 8, 52, 47, 8, 10, 18, 19, 4, 19];
+  final mySet = Set<int>.from(numeros);
+  final puntos = {
+    'juan': 1, 
+    'pedro': 4,
+    'josue': 7,
+    'luis': 2
+   };
+  final x = 5;
+  
+  print('Numeros mayor que $x en list: ${mayorQueX(numeros, 5)}');
+  print('Numeros mayor que $x en set: ${mayorQueX(mySet, 5)}');
+  print('Puntos mayor que $x en map: ${mayorQueX(puntos.values, 5)}');
+}
+
+
+''' 
 
 #Datos de entrada
 lexer.input(algoritmo2)
