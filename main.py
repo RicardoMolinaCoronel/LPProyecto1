@@ -228,7 +228,7 @@ main() async {
 
 
 #Datos de entrada
-lexer.input(algoritmo3)
+lexer.input(algoritmo2)
 
 # Tokenizador
 while True:
