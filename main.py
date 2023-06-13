@@ -23,6 +23,7 @@ reserved = {
             'var' : 'VAR',
             'File' : 'FILE',
             'if' : 'IF',
+            'else':'ELSE',
             'async' : 'ASYNC',
             'await' : 'AWAIT',
             'String' : 'STRING',
@@ -33,7 +34,8 @@ reserved = {
             'is' : 'IS',
             'true' : 'TRUE',
             'false' : 'FALSE',
-            'double': 'DOUBLE'
+            'bool':'BOOLEAN',
+            'dynamic':'DYNAMIC'
 
 
 
@@ -41,10 +43,11 @@ reserved = {
 
 
 #Sequencia de tokens
-tokens = ('DIGIT','PLUS', 'MINUS', 'MULTIPASTERISK', 'DIVISION', 'LPAREN', 'RPAREN',
-          'CAMPO','COMMENT','DOT','COMA','GREATERTHAN','LESSTHAN','NOTEQUAL',
+tokens = ('INTEGER','FLOAT','IDENTIFIER','PLUS', 'MINUS', 'TIMES', 'DIVISION', 'LPAREN', 'RPAREN',
+          'COMMENT','DOT','COMA','GREATERTHAN','LESSTHAN','NOTEQUAL',
           'DOUBQUOTMARK','STR','EQUAL','DOUBLEQUAL',"LCURLYBRACKET","RCURLYBRACKET",
-          'LSQUAREBRACKET','RSQUAREBRACKET','SEMICOLON','AMPERSAND', 'COLON', 'EXMARK', 'AND', 'OR', 'APOSTROPHE','METHOD', 'DOLLAR') + tuple(reserved.values())
+          'LSQUAREBRACKET','RSQUAREBRACKET','SEMICOLON','AMPERSAND', 'COLON', 'EXMARK',
+          'AND', 'OR', 'APOSTROPHE','METHOD', 'DOLLAR') + tuple(reserved.values())
 
 '''
 Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return) - algoritmo1
@@ -57,10 +60,11 @@ Contribucion Freddy: tokens (DOLLAR), reservada (Iterable - Set) - algoritmo3
 #Exp Regulares para tokens de símbolos
 
 
-t_DIGIT = r'\d+'
+t_INTEGER = r'[+-]?\d+'
+t_FLOAT=r'[+-]?([0-9]*)[\.][0-9]+'
 t_PLUS = r'\+'
 t_MINUS = r'-'
-t_MULTIPASTERISK = r'\*'
+t_TIMES = r'\*'
 t_DIVISION = r'/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
@@ -91,12 +95,12 @@ t_DOLLAR=r'\$'
 def t_newline(t):
   r'\n+'
   t.lexer.lineno += len(t.value)
-
-
-def t_CAMPO(t):
+def t_IDENTIFIER(t):
   r'[a-zA-Z]\w*'
-  t.type = reserved.get(t.value, 'CAMPO')
+  t.type = reserved.get(t.value, 'IDENTIFIER')
   return t
+
+
 
 
 #Ignorar un comentario
@@ -222,8 +226,9 @@ main() async {
 
 ''' 
 
+
 #Datos de entrada
-lexer.input(algoritmo2)
+lexer.input(algoritmo3)
 
 # Tokenizador
 while True:
