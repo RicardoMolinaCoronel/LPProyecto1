@@ -107,8 +107,8 @@ main() async {
 
 
 '''
-def p_clase(p):
-    'clase : INT MAIN'
+def p_class(p):
+    'class : INT MAIN'
 
 def p_error(p):
   if p:
