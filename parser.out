@@ -1,0 +1,174 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AMPERSAND
+    AND
+    APOSTROPHE
+    ASYNC
+    AWAIT
+    BOOL
+    CATCH
+    CLOSE
+    COLON
+    COMA
+    COMMENT
+    DIVISION
+    DOLLAR
+    DOT
+    DOUBLE
+    DOUBLEQUAL
+    DOUBQUOTMARK
+    DYNAMIC
+    ELSE
+    EQUAL
+    EXIT
+    EXMARK
+    FALSE
+    FILE
+    FLOAT
+    FOR
+    GREATERTHAN
+    IDENTIFIER
+    IF
+    IMPORT
+    IN
+    INTEGER
+    IS
+    ITERABLE
+    LCURLYBRACKET
+    LESSTHAN
+    LIST
+    LPAREN
+    LSQUAREBRACKET
+    METHOD
+    MINUS
+    NOTEQUAL
+    OPENWRITE
+    OR
+    PLUS
+    PRINT
+    RCURLYBRACKET
+    READLINESYNC
+    RETURN
+    RPAREN
+    RSQUAREBRACKET
+    SEMICOLON
+    SET
+    STR
+    STRING
+    TIMES
+    TRUE
+    TRY
+    VAR
+    VOID
+    WHILE
+    WRITE
+
+Grammar
+
+Rule 0     S' -> clase
+Rule 1     clase -> INT MAIN
+
+Terminals, with rules where they appear
+
+AMPERSAND            : 
+AND                  : 
+APOSTROPHE           : 
+ASYNC                : 
+AWAIT                : 
+BOOL                 : 
+CATCH                : 
+CLOSE                : 
+COLON                : 
+COMA                 : 
+COMMENT              : 
+DIVISION             : 
+DOLLAR               : 
+DOT                  : 
+DOUBLE               : 
+DOUBLEQUAL           : 
+DOUBQUOTMARK         : 
+DYNAMIC              : 
+ELSE                 : 
+EQUAL                : 
+EXIT                 : 
+EXMARK               : 
+FALSE                : 
+FILE                 : 
+FLOAT                : 
+FOR                  : 
+GREATERTHAN          : 
+IDENTIFIER           : 
+IF                   : 
+IMPORT               : 
+IN                   : 
+INT                  : 1
+INTEGER              : 
+IS                   : 
+ITERABLE             : 
+LCURLYBRACKET        : 
+LESSTHAN             : 
+LIST                 : 
+LPAREN               : 
+LSQUAREBRACKET       : 
+MAIN                 : 1
+METHOD               : 
+MINUS                : 
+NOTEQUAL             : 
+OPENWRITE            : 
+OR                   : 
+PLUS                 : 
+PRINT                : 
+RCURLYBRACKET        : 
+READLINESYNC         : 
+RETURN               : 
+RPAREN               : 
+RSQUAREBRACKET       : 
+SEMICOLON            : 
+SET                  : 
+STR                  : 
+STRING               : 
+TIMES                : 
+TRUE                 : 
+TRY                  : 
+VAR                  : 
+VOID                 : 
+WHILE                : 
+WRITE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+clase                : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . clase
+    (1) clase -> . INT MAIN
+
+    INT             shift and go to state 2
+
+    clase                          shift and go to state 1
+
+state 1
+
+    (0) S' -> clase .
+
+
+
+state 2
+
+    (1) clase -> INT . MAIN
+
+    MAIN            shift and go to state 3
+
+
+state 3
+
+    (1) clase -> INT MAIN .
+
+    $end            reduce using rule 1 (clase -> INT MAIN .)
+

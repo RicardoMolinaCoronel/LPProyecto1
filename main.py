@@ -1,124 +1,6 @@
-import ply.lex as lex
+from lexico import tokens
+import ply.yacc as yacc
 
-#AvanceLexico ply
-
-#Diccionario de palabras reservadas
-reserved = {
-            'while':'WHILE',
-            'for':'FOR',
-            'int':'INT',
-            'import': 'IMPORT',
-            'print':'PRINT',
-            'main':'MAIN',
-            'List': 'LIST',
-            'return':'RETURN',
-            'exit' : 'EXIT',
-            'write' : 'WRITE',
-            'close' : 'CLOSE',
-            'readLineSync' : 'READLINE',
-            'openWrite' : 'OPENW',
-            'void' : 'VOID',
-            'try' : 'TRY',
-            'catch' : 'CATCH',
-            'var' : 'VAR',
-            'File' : 'FILE',
-            'if' : 'IF',
-            'else':'ELSE',
-            'async' : 'ASYNC',
-            'await' : 'AWAIT',
-            'String' : 'STRING',
-            'double' : 'DOUBLE',
-            'Iterable' : 'ITERABLE',
-            'Set' : 'SET',
-            'in' : 'IN',
-            'is' : 'IS',
-            'true' : 'TRUE',
-            'false' : 'FALSE',
-            'bool':'BOOLEAN',
-            'dynamic':'DYNAMIC'
-
-
-
-           }
-
-
-#Sequencia de tokens
-tokens = ('INTEGER','FLOAT','IDENTIFIER','PLUS', 'MINUS', 'TIMES', 'DIVISION', 'LPAREN', 'RPAREN',
-          'COMMENT','DOT','COMA','GREATERTHAN','LESSTHAN','NOTEQUAL',
-          'DOUBQUOTMARK','STR','EQUAL','DOUBLEQUAL',"LCURLYBRACKET","RCURLYBRACKET",
-          'LSQUAREBRACKET','RSQUAREBRACKET','SEMICOLON','AMPERSAND', 'COLON', 'EXMARK',
-          'AND', 'OR', 'APOSTROPHE','METHOD', 'DOLLAR') + tuple(reserved.values())
-
-'''
-Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return) - algoritmo1
-Contribucion Jared: tokens(COLON - APOSTROPHE), reservada(exit - await) - algoritmo2
-Contribucion Freddy: tokens (DOLLAR), reservada (Iterable - Set) - algoritmo3
-
-'''
-
-
-#Exp Regulares para tokens de símbolos
-
-
-t_INTEGER = r'[+-]?\d+'
-t_FLOAT=r'[+-]?([0-9]*)[\.][0-9]+'
-t_PLUS = r'\+'
-t_MINUS = r'-'
-t_TIMES = r'\*'
-t_DIVISION = r'/'
-t_LPAREN = r'\('
-t_RPAREN = r'\)'
-t_DOT = r'\.'
-t_COMA = r','
-t_GREATERTHAN = r'>'
-t_LESSTHAN = r'<'
-t_NOTEQUAL = r'<>'
-t_DOUBQUOTMARK = r'\"'
-t_STR = r'("[^".]*"|\'[^\'.]*\'|"[^"]*"|\'[^\']*\')'
-t_EQUAL = r'='
-t_DOUBLEQUAL = r'=='
-t_LCURLYBRACKET = r'\{'
-t_RCURLYBRACKET = r'\}'
-t_LSQUAREBRACKET = r'\['
-t_RSQUAREBRACKET = r'\]'
-t_SEMICOLON = r';'
-t_AMPERSAND = r'&'
-t_COLON = r':'
-t_EXMARK = r'!'
-t_AND = r'&&'
-t_OR = r'\|\|'
-t_APOSTROPHE = r'\''
-t_METHOD = r'[a-zA-Z\_]+\(\)$'
-t_DOLLAR=r'\$'
-
-#Para contabilizar nro de líneas
-def t_newline(t):
-  r'\n+'
-  t.lexer.lineno += len(t.value)
-def t_IDENTIFIER(t):
-  r'[a-zA-Z]\w*'
-  t.type = reserved.get(t.value, 'IDENTIFIER')
-  return t
-
-
-
-
-#Ignorar un comentario
-def t_COMMENT(t):
-  r'\/\/.*'
-  pass
-
-# Ignorar lo que no sea un token en mi LP
-t_ignore = ' \t'
-
-
-#Presentación de errores léxicos
-def t_error(t):
-  print("Componente léxico no reconocido '%s'" % t.value[0])
-  t.lexer.skip(1)
-
-#Contruir analizador
-lexer = lex.lex()
 
 #Testeos
 algoritmo1 = '''
@@ -224,15 +106,27 @@ main() async {
 }
 
 
-''' 
+'''
+def p_clase(p):
+    'clase : INT MAIN'
+
+def p_error(p):
+  if p:
+    print("Error de sintaxis en token:", p.type)
+    #sintactico.errok()
+  else:
+    print("Syntax error at EOF")
 
 
-#Datos de entrada
-lexer.input(algoritmo2)
+# Build the parser
+sintactico = yacc.yacc()
 
-# Tokenizador
 while True:
-  tok = lexer.token()
-  if not tok:
-    break  #Rompe
-  print(tok)
+  try:
+    s = input('dart > ')
+  except EOFError:
+    break
+  if not s: continue
+  result = sintactico.parse(s)
+  if result != None: print(result)
+
