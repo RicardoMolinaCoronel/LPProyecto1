@@ -30,15 +30,14 @@ reserved = reservadas.crear(
    'Set',
    'in',
    'is',
-   'true',
-   'false',
    'bool',
    'dynamic',
-   'Map'
+   'Map',
+   'required'
    ])
 
 
-tokens = ('INTEGER','FLOAT','IDENTIFIER','PLUS', 'MINUS', 'TIMES', 'DIVISION', 'LPAREN', 'RPAREN',
+tokens = ('INTEGER','FLOAT','IDENTIFIER','BOOLEAN','PLUS', 'MINUS', 'TIMES', 'DIVISION', 'LPAREN', 'RPAREN',
           'COMMENT','DOT','COMMA','GREATERTHAN','LESSTHAN','NOTEQUAL',
           'DOUBQUOTMARK','STR','EQUAL','DOUBLEQUAL',"LCURLYBRACKET","RCURLYBRACKET",
           'LSQUAREBRACKET','RSQUAREBRACKET','SEMICOLON','AMPERSAND', 'COLON', 'EXMARK',
@@ -55,8 +54,9 @@ Contribucion Freddy: tokens (DOLLAR), reservada (Iterable - Set) - algoritmo3
 #Exp Regulares para tokens de símbolos
 
 
-t_INTEGER = r'[+-]?\d+'
+t_INTEGER = r'\d+'
 t_FLOAT=r'[+-]?([0-9]*)[\.][0-9]+'
+t_BOOLEAN=r'true|false'
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -127,6 +127,15 @@ def consultarTokens(data):
 
 
 # Test it out
-data = '''int 5;
+data = '''Map<int,String> personas = {
+   1 : 'ere',
+    2 :'sd'
+};
+if(n==5){
+  }else if(n==6){
+  }else if(n==7){
+  }else{
+  }
+void imprimirMediaNumero(int c1,{required int num1, required int num2}) => num1+num2;
 '''
-#consultarTokens(data)
+consultarTokens(data)

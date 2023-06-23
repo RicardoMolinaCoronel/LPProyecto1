@@ -2,8 +2,16 @@ from lexico import tokens
 import ply.yacc as yacc
 
 prueba1='''
-Map mapa={persona:dasda,
-'sdasdas':dasd};
+Map<int,String> personas = {
+   1 : 'ere',
+    2 :'sd'
+};
+if(n==5){
+  }else if(n==6){
+  }else if(n==7){
+  }else{
+  }
+void imprimirMediaNumero(int c1,{required int num1, required int num2}) => num1+num2;
 '''
 #Testeos
 algoritmo1 = '''
@@ -111,7 +119,7 @@ main() async {
 
 '''
 def p_class(p):
-    'class : map'
+    'class : map ifElseStatement function_lambda'
 
 def p_map(p):
   'map : map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON'
@@ -130,12 +138,25 @@ def p_datatype(p):
                | BOOL
                | DOUBLE
                | DYNAMIC
+               | VAR
+               | VOID
                | map_identifier
   '''
+def p_returnType(p):
+  '''returnType : INT
+                 | STRING
+                 | BOOL
+                 | DOUBLE
+                 | DYNAMIC
+                 | VOID
+                 | map_identifier
+  '''
 
+def p_empty(p):
+    'empty :'
 def p_map_content(p):
-  '''map_content :
-                  | map_pairs
+  '''map_content : map_pairs
+                  | empty
   '''
 
 def p_map_pair(p):
@@ -146,20 +167,111 @@ def p_map_pairs(p):
   '''
 
 def p_map_key(p):
-  '''map_key : INTEGER
-              | FLOAT
-              | STR
-              | TRUE
-              | FALSE
-              | IDENTIFIER
+  '''map_key : value
   '''
 def p_map_value(p):
-  '''map_value : INTEGER
+  '''map_value : value
+  '''
+
+def p_ifElseStatement(p):
+  '''ifElseStatement : ifStatement
+                      | ifStatement elifStatement_repeat
+  '''
+
+def p_elifStatement_repeat(p):
+  '''elifStatement_repeat : elifStatement
+                           | elifStatement elifStatement_repeat
+  '''
+def p_ifStatement(p):
+  '''ifStatement : IF LPAREN conditions RPAREN LCURLYBRACKET RCURLYBRACKET
+  '''
+
+def p_elifStatement(p):
+  '''elifStatement : ELSE ifStatement
+  '''
+def p_elseStatement(p):
+  '''elifStatement : ELSE LCURLYBRACKET RCURLYBRACKET
+  '''
+
+def p_value(p):
+  '''value : INTEGER
               | FLOAT
               | STR
-              | TRUE
-              | FALSE
+              | BOOLEAN
               | IDENTIFIER
+  '''
+
+def p_deniable_values(p):
+  '''deniable_values : IDENTIFIER
+                      | BOOLEAN
+  '''
+def p_negation_values(p):
+  '''negation_values : deniable_values
+                     | EXMARK deniable_values
+  '''
+
+def p_condition_values(p):
+  '''condition_values : negation_values
+                      | INTEGER
+                      | FLOAT
+                      | STR
+  '''
+def p_condition_operator(p):
+  '''condition_operator : DOUBLEQUAL
+                         | LESSTHAN
+                         | GREATERTHAN
+  '''
+def p_number(p):
+  '''number : FLOAT
+             | INTEGER
+  '''
+def p_condition(p):
+  '''condition : IDENTIFIER condition_operator condition_values
+                | EXMARK IDENTIFIER condition_operator condition_values
+                | BOOLEAN condition_operator BOOLEAN
+                | number condition_operator number
+                | STR condition_operator STR
+  '''
+
+def p_conditions(p):
+  '''conditions : condition
+                 | condition condition_connector conditions
+  '''
+
+def p_condition_connector(p):
+  '''condition_connector : AND
+                          | OR
+  '''
+
+def p_function_lambda(p):
+  '''function_lambda : returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
+  '''
+
+def p_function_argument(p):
+  ''' function_argument : datatype IDENTIFIER
+                         | empty
+  '''
+
+def p_function_arguments_repeat(p):
+  '''function_arguments_repeat : function_argument
+                                | function_argument COMMA function_arguments_repeat
+  '''
+
+def p_optFunction_argumentsExpression(p):
+  ''' optFunction_argumentsExpression : LCURLYBRACKET optFunction_arguments RCURLYBRACKET
+                                       | empty
+  '''
+def p_optFunction_argument(p):
+  '''optFunction_argument : REQUIRED datatype IDENTIFIER
+  '''
+
+def p_optFunction_arguments(p):
+  '''optFunction_arguments : optFunction_argument
+                            | optFunction_argument COMMA optFunction_arguments
+  '''
+
+def p_expression(p):
+  '''expression : IDENTIFIER PLUS IDENTIFIER
   '''
 
 
