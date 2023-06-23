@@ -12,6 +12,7 @@ if(n==5){
   }else{
   }
 void imprimirMediaNumero(int c1,{required int num1, required int num2}) => num1+num2;
+int x= num1+num2;
 '''
 #Testeos
 algoritmo1 = '''
@@ -119,7 +120,7 @@ main() async {
 
 '''
 def p_class(p):
-    'class : map ifElseStatement function_lambda'
+    'class : map ifElseStatement function_lambda declarationExpression'
 
 def p_map(p):
   'map : map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON'
@@ -274,6 +275,13 @@ def p_expression(p):
   '''expression : IDENTIFIER PLUS IDENTIFIER
   '''
 
+def p_declarationExpression(p):
+  '''declarationExpression : datatype IDENTIFIER SEMICOLON
+  '''
+
+def p_declarationExpression_asign(p):
+  '''declarationExpression : datatype IDENTIFIER EQUAL expression SEMICOLON
+  '''
 
 def p_error(p):
   if p:
