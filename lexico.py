@@ -33,12 +33,13 @@ reserved = reservadas.crear(
    'true',
    'false',
    'bool',
-   'dynamic'
+   'dynamic',
+   'Map'
    ])
 
 
 tokens = ('INTEGER','FLOAT','IDENTIFIER','PLUS', 'MINUS', 'TIMES', 'DIVISION', 'LPAREN', 'RPAREN',
-          'COMMENT','DOT','COMA','GREATERTHAN','LESSTHAN','NOTEQUAL',
+          'COMMENT','DOT','COMMA','GREATERTHAN','LESSTHAN','NOTEQUAL',
           'DOUBQUOTMARK','STR','EQUAL','DOUBLEQUAL',"LCURLYBRACKET","RCURLYBRACKET",
           'LSQUAREBRACKET','RSQUAREBRACKET','SEMICOLON','AMPERSAND', 'COLON', 'EXMARK',
           'AND', 'OR', 'APOSTROPHE','METHOD', 'DOLLAR') + tuple(reserved.values())
@@ -63,7 +64,7 @@ t_DIVISION = r'/'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_DOT = r'\.'
-t_COMA = r','
+t_COMMA = r','
 t_GREATERTHAN = r'>'
 t_LESSTHAN = r'<'
 t_NOTEQUAL = r'<>'

@@ -7,40 +7,28 @@ Unused terminals:
     APOSTROPHE
     ASYNC
     AWAIT
-    BOOL
     CATCH
     CLOSE
-    COLON
-    COMA
     COMMENT
     DIVISION
     DOLLAR
     DOT
-    DOUBLE
     DOUBLEQUAL
     DOUBQUOTMARK
-    DYNAMIC
     ELSE
-    EQUAL
     EXIT
     EXMARK
-    FALSE
     FILE
-    FLOAT
     FOR
-    GREATERTHAN
-    IDENTIFIER
     IF
     IMPORT
     IN
-    INTEGER
     IS
     ITERABLE
-    LCURLYBRACKET
-    LESSTHAN
     LIST
     LPAREN
     LSQUAREBRACKET
+    MAIN
     METHOD
     MINUS
     NOTEQUAL
@@ -48,17 +36,12 @@ Unused terminals:
     OR
     PLUS
     PRINT
-    RCURLYBRACKET
     READLINESYNC
     RETURN
     RPAREN
     RSQUAREBRACKET
-    SEMICOLON
     SET
-    STR
-    STRING
     TIMES
-    TRUE
     TRY
     VAR
     VOID
@@ -67,8 +50,35 @@ Unused terminals:
 
 Grammar
 
-Rule 0     S' -> clase
-Rule 1     clase -> INT MAIN
+Rule 0     S' -> class
+Rule 1     class -> map
+Rule 2     map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON
+Rule 3     map_identifier -> MAP
+Rule 4     map_identifier -> MAP map_type_specified
+Rule 5     map_type_specified -> LESSTHAN datatype COMMA datatype GREATERTHAN
+Rule 6     datatype -> INT
+Rule 7     datatype -> STRING
+Rule 8     datatype -> BOOL
+Rule 9     datatype -> DOUBLE
+Rule 10    datatype -> DYNAMIC
+Rule 11    datatype -> map_identifier
+Rule 12    map_content -> <empty>
+Rule 13    map_content -> map_pairs
+Rule 14    map_pair -> map_key COLON map_value
+Rule 15    map_pairs -> map_pair
+Rule 16    map_pairs -> map_pair COMMA map_pairs
+Rule 17    map_key -> INTEGER
+Rule 18    map_key -> FLOAT
+Rule 19    map_key -> STR
+Rule 20    map_key -> TRUE
+Rule 21    map_key -> FALSE
+Rule 22    map_key -> IDENTIFIER
+Rule 23    map_value -> INTEGER
+Rule 24    map_value -> FLOAT
+Rule 25    map_value -> STR
+Rule 26    map_value -> TRUE
+Rule 27    map_value -> FALSE
+Rule 28    map_value -> IDENTIFIER
 
 Terminals, with rules where they appear
 
@@ -77,42 +87,43 @@ AND                  :
 APOSTROPHE           : 
 ASYNC                : 
 AWAIT                : 
-BOOL                 : 
+BOOL                 : 8
 CATCH                : 
 CLOSE                : 
-COLON                : 
-COMA                 : 
+COLON                : 14
+COMMA                : 5 16
 COMMENT              : 
 DIVISION             : 
 DOLLAR               : 
 DOT                  : 
-DOUBLE               : 
+DOUBLE               : 9
 DOUBLEQUAL           : 
 DOUBQUOTMARK         : 
-DYNAMIC              : 
+DYNAMIC              : 10
 ELSE                 : 
-EQUAL                : 
+EQUAL                : 2
 EXIT                 : 
 EXMARK               : 
-FALSE                : 
+FALSE                : 21 27
 FILE                 : 
-FLOAT                : 
+FLOAT                : 18 24
 FOR                  : 
-GREATERTHAN          : 
-IDENTIFIER           : 
+GREATERTHAN          : 5
+IDENTIFIER           : 2 22 28
 IF                   : 
 IMPORT               : 
 IN                   : 
-INT                  : 1
-INTEGER              : 
+INT                  : 6
+INTEGER              : 17 23
 IS                   : 
 ITERABLE             : 
-LCURLYBRACKET        : 
-LESSTHAN             : 
+LCURLYBRACKET        : 2
+LESSTHAN             : 5
 LIST                 : 
 LPAREN               : 
 LSQUAREBRACKET       : 
-MAIN                 : 1
+MAIN                 : 
+MAP                  : 3 4
 METHOD               : 
 MINUS                : 
 NOTEQUAL             : 
@@ -120,17 +131,17 @@ OPENWRITE            :
 OR                   : 
 PLUS                 : 
 PRINT                : 
-RCURLYBRACKET        : 
+RCURLYBRACKET        : 2
 READLINESYNC         : 
 RETURN               : 
 RPAREN               : 
 RSQUAREBRACKET       : 
-SEMICOLON            : 
+SEMICOLON            : 2
 SET                  : 
-STR                  : 
-STRING               : 
+STR                  : 19 25
+STRING               : 7
 TIMES                : 
-TRUE                 : 
+TRUE                 : 20 26
 TRY                  : 
 VAR                  : 
 VOID                 : 
@@ -140,35 +151,420 @@ error                :
 
 Nonterminals, with rules where they appear
 
-clase                : 0
+class                : 0
+datatype             : 5 5
+map                  : 1
+map_content          : 2
+map_identifier       : 2 11
+map_key              : 14
+map_pair             : 15 16
+map_pairs            : 13 16
+map_type_specified   : 4
+map_value            : 14
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . clase
-    (1) clase -> . INT MAIN
+    (0) S' -> . class
+    (1) class -> . map
+    (2) map -> . map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON
+    (3) map_identifier -> . MAP
+    (4) map_identifier -> . MAP map_type_specified
 
-    INT             shift and go to state 2
+    MAP             shift and go to state 4
 
-    clase                          shift and go to state 1
+    class                          shift and go to state 1
+    map                            shift and go to state 2
+    map_identifier                 shift and go to state 3
 
 state 1
 
-    (0) S' -> clase .
+    (0) S' -> class .
 
 
 
 state 2
 
-    (1) clase -> INT . MAIN
+    (1) class -> map .
 
-    MAIN            shift and go to state 3
+    $end            reduce using rule 1 (class -> map .)
 
 
 state 3
 
-    (1) clase -> INT MAIN .
+    (2) map -> map_identifier . IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON
 
-    $end            reduce using rule 1 (clase -> INT MAIN .)
+    IDENTIFIER      shift and go to state 5
+
+
+state 4
+
+    (3) map_identifier -> MAP .
+    (4) map_identifier -> MAP . map_type_specified
+    (5) map_type_specified -> . LESSTHAN datatype COMMA datatype GREATERTHAN
+
+    IDENTIFIER      reduce using rule 3 (map_identifier -> MAP .)
+    COMMA           reduce using rule 3 (map_identifier -> MAP .)
+    GREATERTHAN     reduce using rule 3 (map_identifier -> MAP .)
+    LESSTHAN        shift and go to state 7
+
+    map_type_specified             shift and go to state 6
+
+state 5
+
+    (2) map -> map_identifier IDENTIFIER . EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON
+
+    EQUAL           shift and go to state 8
+
+
+state 6
+
+    (4) map_identifier -> MAP map_type_specified .
+
+    IDENTIFIER      reduce using rule 4 (map_identifier -> MAP map_type_specified .)
+    COMMA           reduce using rule 4 (map_identifier -> MAP map_type_specified .)
+    GREATERTHAN     reduce using rule 4 (map_identifier -> MAP map_type_specified .)
+
+
+state 7
+
+    (5) map_type_specified -> LESSTHAN . datatype COMMA datatype GREATERTHAN
+    (6) datatype -> . INT
+    (7) datatype -> . STRING
+    (8) datatype -> . BOOL
+    (9) datatype -> . DOUBLE
+    (10) datatype -> . DYNAMIC
+    (11) datatype -> . map_identifier
+    (3) map_identifier -> . MAP
+    (4) map_identifier -> . MAP map_type_specified
+
+    INT             shift and go to state 10
+    STRING          shift and go to state 11
+    BOOL            shift and go to state 12
+    DOUBLE          shift and go to state 13
+    DYNAMIC         shift and go to state 14
+    MAP             shift and go to state 4
+
+    datatype                       shift and go to state 9
+    map_identifier                 shift and go to state 15
+
+state 8
+
+    (2) map -> map_identifier IDENTIFIER EQUAL . LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON
+
+    LCURLYBRACKET   shift and go to state 16
+
+
+state 9
+
+    (5) map_type_specified -> LESSTHAN datatype . COMMA datatype GREATERTHAN
+
+    COMMA           shift and go to state 17
+
+
+state 10
+
+    (6) datatype -> INT .
+
+    COMMA           reduce using rule 6 (datatype -> INT .)
+    GREATERTHAN     reduce using rule 6 (datatype -> INT .)
+
+
+state 11
+
+    (7) datatype -> STRING .
+
+    COMMA           reduce using rule 7 (datatype -> STRING .)
+    GREATERTHAN     reduce using rule 7 (datatype -> STRING .)
+
+
+state 12
+
+    (8) datatype -> BOOL .
+
+    COMMA           reduce using rule 8 (datatype -> BOOL .)
+    GREATERTHAN     reduce using rule 8 (datatype -> BOOL .)
+
+
+state 13
+
+    (9) datatype -> DOUBLE .
+
+    COMMA           reduce using rule 9 (datatype -> DOUBLE .)
+    GREATERTHAN     reduce using rule 9 (datatype -> DOUBLE .)
+
+
+state 14
+
+    (10) datatype -> DYNAMIC .
+
+    COMMA           reduce using rule 10 (datatype -> DYNAMIC .)
+    GREATERTHAN     reduce using rule 10 (datatype -> DYNAMIC .)
+
+
+state 15
+
+    (11) datatype -> map_identifier .
+
+    COMMA           reduce using rule 11 (datatype -> map_identifier .)
+    GREATERTHAN     reduce using rule 11 (datatype -> map_identifier .)
+
+
+state 16
+
+    (2) map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET . map_content RCURLYBRACKET SEMICOLON
+    (12) map_content -> .
+    (13) map_content -> . map_pairs
+    (15) map_pairs -> . map_pair
+    (16) map_pairs -> . map_pair COMMA map_pairs
+    (14) map_pair -> . map_key COLON map_value
+    (17) map_key -> . INTEGER
+    (18) map_key -> . FLOAT
+    (19) map_key -> . STR
+    (20) map_key -> . TRUE
+    (21) map_key -> . FALSE
+    (22) map_key -> . IDENTIFIER
+
+    RCURLYBRACKET   reduce using rule 12 (map_content -> .)
+    INTEGER         shift and go to state 23
+    FLOAT           shift and go to state 24
+    STR             shift and go to state 25
+    TRUE            shift and go to state 26
+    FALSE           shift and go to state 27
+    IDENTIFIER      shift and go to state 18
+
+    map_content                    shift and go to state 19
+    map_pairs                      shift and go to state 20
+    map_pair                       shift and go to state 21
+    map_key                        shift and go to state 22
+
+state 17
+
+    (5) map_type_specified -> LESSTHAN datatype COMMA . datatype GREATERTHAN
+    (6) datatype -> . INT
+    (7) datatype -> . STRING
+    (8) datatype -> . BOOL
+    (9) datatype -> . DOUBLE
+    (10) datatype -> . DYNAMIC
+    (11) datatype -> . map_identifier
+    (3) map_identifier -> . MAP
+    (4) map_identifier -> . MAP map_type_specified
+
+    INT             shift and go to state 10
+    STRING          shift and go to state 11
+    BOOL            shift and go to state 12
+    DOUBLE          shift and go to state 13
+    DYNAMIC         shift and go to state 14
+    MAP             shift and go to state 4
+
+    datatype                       shift and go to state 28
+    map_identifier                 shift and go to state 15
+
+state 18
+
+    (22) map_key -> IDENTIFIER .
+
+    COLON           reduce using rule 22 (map_key -> IDENTIFIER .)
+
+
+state 19
+
+    (2) map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content . RCURLYBRACKET SEMICOLON
+
+    RCURLYBRACKET   shift and go to state 29
+
+
+state 20
+
+    (13) map_content -> map_pairs .
+
+    RCURLYBRACKET   reduce using rule 13 (map_content -> map_pairs .)
+
+
+state 21
+
+    (15) map_pairs -> map_pair .
+    (16) map_pairs -> map_pair . COMMA map_pairs
+
+    RCURLYBRACKET   reduce using rule 15 (map_pairs -> map_pair .)
+    COMMA           shift and go to state 30
+
+
+state 22
+
+    (14) map_pair -> map_key . COLON map_value
+
+    COLON           shift and go to state 31
+
+
+state 23
+
+    (17) map_key -> INTEGER .
+
+    COLON           reduce using rule 17 (map_key -> INTEGER .)
+
+
+state 24
+
+    (18) map_key -> FLOAT .
+
+    COLON           reduce using rule 18 (map_key -> FLOAT .)
+
+
+state 25
+
+    (19) map_key -> STR .
+
+    COLON           reduce using rule 19 (map_key -> STR .)
+
+
+state 26
+
+    (20) map_key -> TRUE .
+
+    COLON           reduce using rule 20 (map_key -> TRUE .)
+
+
+state 27
+
+    (21) map_key -> FALSE .
+
+    COLON           reduce using rule 21 (map_key -> FALSE .)
+
+
+state 28
+
+    (5) map_type_specified -> LESSTHAN datatype COMMA datatype . GREATERTHAN
+
+    GREATERTHAN     shift and go to state 32
+
+
+state 29
+
+    (2) map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET . SEMICOLON
+
+    SEMICOLON       shift and go to state 33
+
+
+state 30
+
+    (16) map_pairs -> map_pair COMMA . map_pairs
+    (15) map_pairs -> . map_pair
+    (16) map_pairs -> . map_pair COMMA map_pairs
+    (14) map_pair -> . map_key COLON map_value
+    (17) map_key -> . INTEGER
+    (18) map_key -> . FLOAT
+    (19) map_key -> . STR
+    (20) map_key -> . TRUE
+    (21) map_key -> . FALSE
+    (22) map_key -> . IDENTIFIER
+
+    INTEGER         shift and go to state 23
+    FLOAT           shift and go to state 24
+    STR             shift and go to state 25
+    TRUE            shift and go to state 26
+    FALSE           shift and go to state 27
+    IDENTIFIER      shift and go to state 18
+
+    map_pair                       shift and go to state 21
+    map_pairs                      shift and go to state 34
+    map_key                        shift and go to state 22
+
+state 31
+
+    (14) map_pair -> map_key COLON . map_value
+    (23) map_value -> . INTEGER
+    (24) map_value -> . FLOAT
+    (25) map_value -> . STR
+    (26) map_value -> . TRUE
+    (27) map_value -> . FALSE
+    (28) map_value -> . IDENTIFIER
+
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    TRUE            shift and go to state 39
+    FALSE           shift and go to state 40
+    IDENTIFIER      shift and go to state 41
+
+    map_value                      shift and go to state 35
+
+state 32
+
+    (5) map_type_specified -> LESSTHAN datatype COMMA datatype GREATERTHAN .
+
+    IDENTIFIER      reduce using rule 5 (map_type_specified -> LESSTHAN datatype COMMA datatype GREATERTHAN .)
+    COMMA           reduce using rule 5 (map_type_specified -> LESSTHAN datatype COMMA datatype GREATERTHAN .)
+    GREATERTHAN     reduce using rule 5 (map_type_specified -> LESSTHAN datatype COMMA datatype GREATERTHAN .)
+
+
+state 33
+
+    (2) map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON .
+
+    $end            reduce using rule 2 (map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON .)
+
+
+state 34
+
+    (16) map_pairs -> map_pair COMMA map_pairs .
+
+    RCURLYBRACKET   reduce using rule 16 (map_pairs -> map_pair COMMA map_pairs .)
+
+
+state 35
+
+    (14) map_pair -> map_key COLON map_value .
+
+    COMMA           reduce using rule 14 (map_pair -> map_key COLON map_value .)
+    RCURLYBRACKET   reduce using rule 14 (map_pair -> map_key COLON map_value .)
+
+
+state 36
+
+    (23) map_value -> INTEGER .
+
+    COMMA           reduce using rule 23 (map_value -> INTEGER .)
+    RCURLYBRACKET   reduce using rule 23 (map_value -> INTEGER .)
+
+
+state 37
+
+    (24) map_value -> FLOAT .
+
+    COMMA           reduce using rule 24 (map_value -> FLOAT .)
+    RCURLYBRACKET   reduce using rule 24 (map_value -> FLOAT .)
+
+
+state 38
+
+    (25) map_value -> STR .
+
+    COMMA           reduce using rule 25 (map_value -> STR .)
+    RCURLYBRACKET   reduce using rule 25 (map_value -> STR .)
+
+
+state 39
+
+    (26) map_value -> TRUE .
+
+    COMMA           reduce using rule 26 (map_value -> TRUE .)
+    RCURLYBRACKET   reduce using rule 26 (map_value -> TRUE .)
+
+
+state 40
+
+    (27) map_value -> FALSE .
+
+    COMMA           reduce using rule 27 (map_value -> FALSE .)
+    RCURLYBRACKET   reduce using rule 27 (map_value -> FALSE .)
+
+
+state 41
+
+    (28) map_value -> IDENTIFIER .
+
+    COMMA           reduce using rule 28 (map_value -> IDENTIFIER .)
+    RCURLYBRACKET   reduce using rule 28 (map_value -> IDENTIFIER .)
 

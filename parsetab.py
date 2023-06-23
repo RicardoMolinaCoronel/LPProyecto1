@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AMPERSAND AND APOSTROPHE ASYNC AWAIT BOOL CATCH CLOSE COLON COMA COMMENT DIVISION DOLLAR DOT DOUBLE DOUBLEQUAL DOUBQUOTMARK DYNAMIC ELSE EQUAL EXIT EXMARK FALSE FILE FLOAT FOR GREATERTHAN IDENTIFIER IF IMPORT IN INT INTEGER IS ITERABLE LCURLYBRACKET LESSTHAN LIST LPAREN LSQUAREBRACKET MAIN METHOD MINUS NOTEQUAL OPENWRITE OR PLUS PRINT RCURLYBRACKET READLINESYNC RETURN RPAREN RSQUAREBRACKET SEMICOLON SET STR STRING TIMES TRUE TRY VAR VOID WHILE WRITEclase : INT MAIN'
+_lr_signature = 'AMPERSAND AND APOSTROPHE ASYNC AWAIT BOOL CATCH CLOSE COLON COMMA COMMENT DIVISION DOLLAR DOT DOUBLE DOUBLEQUAL DOUBQUOTMARK DYNAMIC ELSE EQUAL EXIT EXMARK FALSE FILE FLOAT FOR GREATERTHAN IDENTIFIER IF IMPORT IN INT INTEGER IS ITERABLE LCURLYBRACKET LESSTHAN LIST LPAREN LSQUAREBRACKET MAIN MAP METHOD MINUS NOTEQUAL OPENWRITE OR PLUS PRINT RCURLYBRACKET READLINESYNC RETURN RPAREN RSQUAREBRACKET SEMICOLON SET STR STRING TIMES TRUE TRY VAR VOID WHILE WRITEclass : mapmap : map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLONmap_identifier : MAP\n                     | MAP map_type_specified\n  map_type_specified : LESSTHAN datatype COMMA datatype GREATERTHANdatatype : INT\n               | STRING\n               | BOOL\n               | DOUBLE\n               | DYNAMIC\n               | map_identifier\n  map_content :\n                  | map_pairs\n  map_pair : map_key COLON map_valuemap_pairs : map_pair\n                | map_pair COMMA map_pairs\n  map_key : INTEGER\n              | FLOAT\n              | STR\n              | TRUE\n              | FALSE\n              | IDENTIFIER\n  map_value : INTEGER\n              | FLOAT\n              | STR\n              | TRUE\n              | FALSE\n              | IDENTIFIER\n  '
     
-_lr_action_items = {'INT':([0,],[2,]),'$end':([1,3,],[0,-1,]),'MAIN':([2,],[3,]),}
+_lr_action_items = {'MAP':([0,7,17,],[4,4,4,]),'$end':([1,2,33,],[0,-1,-2,]),'IDENTIFIER':([3,4,6,16,30,31,32,],[5,-3,-4,18,18,41,-5,]),'COMMA':([4,6,9,10,11,12,13,14,15,21,32,35,36,37,38,39,40,41,],[-3,-4,17,-6,-7,-8,-9,-10,-11,30,-5,-14,-23,-24,-25,-26,-27,-28,]),'GREATERTHAN':([4,6,10,11,12,13,14,15,28,32,],[-3,-4,-6,-7,-8,-9,-10,-11,32,-5,]),'LESSTHAN':([4,],[7,]),'EQUAL':([5,],[8,]),'INT':([7,17,],[10,10,]),'STRING':([7,17,],[11,11,]),'BOOL':([7,17,],[12,12,]),'DOUBLE':([7,17,],[13,13,]),'DYNAMIC':([7,17,],[14,14,]),'LCURLYBRACKET':([8,],[16,]),'RCURLYBRACKET':([16,19,20,21,34,35,36,37,38,39,40,41,],[-12,29,-13,-15,-16,-14,-23,-24,-25,-26,-27,-28,]),'INTEGER':([16,30,31,],[23,23,36,]),'FLOAT':([16,30,31,],[24,24,37,]),'STR':([16,30,31,],[25,25,38,]),'TRUE':([16,30,31,],[26,26,39,]),'FALSE':([16,30,31,],[27,27,40,]),'COLON':([18,22,23,24,25,26,27,],[-22,31,-17,-18,-19,-20,-21,]),'SEMICOLON':([29,],[33,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'clase':([0,],[1,]),}
+_lr_goto_items = {'class':([0,],[1,]),'map':([0,],[2,]),'map_identifier':([0,7,17,],[3,15,15,]),'map_type_specified':([4,],[6,]),'datatype':([7,17,],[9,28,]),'map_content':([16,],[19,]),'map_pairs':([16,30,],[20,34,]),'map_pair':([16,30,],[21,21,]),'map_key':([16,30,],[22,22,]),'map_value':([31,],[35,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,6 +26,33 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> clase","S'",1,None,None,None),
-  ('clase -> INT MAIN','clase',2,'p_clase','main.py',111),
+  ("S' -> class","S'",1,None,None,None),
+  ('class -> map','class',1,'p_class','main.py',114),
+  ('map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON','map',7,'p_map','main.py',117),
+  ('map_identifier -> MAP','map_identifier',1,'p_map_identifier','main.py',120),
+  ('map_identifier -> MAP map_type_specified','map_identifier',2,'p_map_identifier','main.py',121),
+  ('map_type_specified -> LESSTHAN datatype COMMA datatype GREATERTHAN','map_type_specified',5,'p_map_type_specified','main.py',125),
+  ('datatype -> INT','datatype',1,'p_datatype','main.py',128),
+  ('datatype -> STRING','datatype',1,'p_datatype','main.py',129),
+  ('datatype -> BOOL','datatype',1,'p_datatype','main.py',130),
+  ('datatype -> DOUBLE','datatype',1,'p_datatype','main.py',131),
+  ('datatype -> DYNAMIC','datatype',1,'p_datatype','main.py',132),
+  ('datatype -> map_identifier','datatype',1,'p_datatype','main.py',133),
+  ('map_content -> <empty>','map_content',0,'p_map_content','main.py',137),
+  ('map_content -> map_pairs','map_content',1,'p_map_content','main.py',138),
+  ('map_pair -> map_key COLON map_value','map_pair',3,'p_map_pair','main.py',142),
+  ('map_pairs -> map_pair','map_pairs',1,'p_map_pairs','main.py',144),
+  ('map_pairs -> map_pair COMMA map_pairs','map_pairs',3,'p_map_pairs','main.py',145),
+  ('map_key -> INTEGER','map_key',1,'p_map_key','main.py',149),
+  ('map_key -> FLOAT','map_key',1,'p_map_key','main.py',150),
+  ('map_key -> STR','map_key',1,'p_map_key','main.py',151),
+  ('map_key -> TRUE','map_key',1,'p_map_key','main.py',152),
+  ('map_key -> FALSE','map_key',1,'p_map_key','main.py',153),
+  ('map_key -> IDENTIFIER','map_key',1,'p_map_key','main.py',154),
+  ('map_value -> INTEGER','map_value',1,'p_map_value','main.py',157),
+  ('map_value -> FLOAT','map_value',1,'p_map_value','main.py',158),
+  ('map_value -> STR','map_value',1,'p_map_value','main.py',159),
+  ('map_value -> TRUE','map_value',1,'p_map_value','main.py',160),
+  ('map_value -> FALSE','map_value',1,'p_map_value','main.py',161),
+  ('map_value -> IDENTIFIER','map_value',1,'p_map_value','main.py',162),
 ]

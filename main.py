@@ -1,7 +1,10 @@
 from lexico import tokens
 import ply.yacc as yacc
 
-
+prueba1='''
+Map mapa={persona:dasda,
+'sdasdas':dasd};
+'''
 #Testeos
 algoritmo1 = '''
 //ALGORITMO RICARDO MOLINA
@@ -108,7 +111,57 @@ main() async {
 
 '''
 def p_class(p):
-    'class : INT MAIN'
+    'class : map'
+
+def p_map(p):
+  'map : map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON'
+
+def p_map_identifier(p):
+  '''map_identifier : MAP
+                     | MAP map_type_specified
+  '''
+
+def p_map_type_specified(p):
+  'map_type_specified : LESSTHAN datatype COMMA datatype GREATERTHAN'
+
+def p_datatype(p):
+  '''datatype : INT
+               | STRING
+               | BOOL
+               | DOUBLE
+               | DYNAMIC
+               | map_identifier
+  '''
+
+def p_map_content(p):
+  '''map_content :
+                  | map_pairs
+  '''
+
+def p_map_pair(p):
+  'map_pair : map_key COLON map_value'
+def p_map_pairs(p):
+  '''map_pairs : map_pair
+                | map_pair COMMA map_pairs
+  '''
+
+def p_map_key(p):
+  '''map_key : INTEGER
+              | FLOAT
+              | STR
+              | TRUE
+              | FALSE
+              | IDENTIFIER
+  '''
+def p_map_value(p):
+  '''map_value : INTEGER
+              | FLOAT
+              | STR
+              | TRUE
+              | FALSE
+              | IDENTIFIER
+  '''
+
 
 def p_error(p):
   if p:
@@ -127,6 +180,6 @@ while True:
   except EOFError:
     break
   if not s: continue
-  result = sintactico.parse(s)
+  result = sintactico.parse(prueba1)
   if result != None: print(result)
 
