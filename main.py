@@ -14,6 +14,15 @@ if(n==5){
 void imprimirMediaNumero(int c1,{required int num1, required int num2}) => num1+num2;
 int x= num1+num2;
 '''
+
+prueba2 = '''
+
+
+for (var i = 0; i < 5; i++) {
+  message.write('!');
+}
+
+'''
 #Testeos
 algoritmo1 = '''
 //ALGORITMO RICARDO MOLINA
@@ -194,6 +203,13 @@ def p_elseStatement(p):
   '''elifStatement : ELSE LCURLYBRACKET RCURLYBRACKET
   '''
 
+def p_forStatement(p):
+  ''' for : For LPAREN declarationExpression conditions SEMICOLON task RPAREN LCURLYBRACKET RCURLYBRACKET
+  '''
+
+def p_taskStatement(p):
+  '''task: value EQUAL
+  '''
 def p_value(p):
   '''value : INTEGER
               | FLOAT
