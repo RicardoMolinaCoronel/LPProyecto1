@@ -33,7 +33,10 @@ reserved = reservadas.crear(
    'bool',
    'dynamic',
    'Map',
-   'required'
+   'required',
+   'final',
+   'Stack',
+   'of'
    ])
 
 

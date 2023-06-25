@@ -16,11 +16,13 @@ int x= num1+num2;
 '''
 
 prueba2 = '''
-
-
 for (var i = 0; i < 5; i++) {
   message.write('!');
 }
+final stack = Stack<int>();
+final smokeStack = Stack.of(list);
+
+
 
 '''
 #Testeos
@@ -210,6 +212,14 @@ def p_forStatement(p):
 def p_taskStatement(p):
   '''task: value EQUAL
   '''
+
+def p_stackStatement(p):
+  '''stack: FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN SEMICOLON
+          | FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
+  '''
+
+
+
 def p_value(p):
   '''value : INTEGER
               | FLOAT
