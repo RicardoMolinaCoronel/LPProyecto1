@@ -170,14 +170,12 @@ def p_map_content(p):
   '''map_content : map_pairs
                   | empty
   '''
-
 def p_map_pair(p):
   'map_pair : map_key COLON map_value'
 def p_map_pairs(p):
   '''map_pairs : map_pair
                 | map_pair COMMA map_pairs
   '''
-
 def p_map_key(p):
   '''map_key : value
   '''
@@ -206,11 +204,12 @@ def p_elseStatement(p):
   '''
 
 def p_forStatement(p):
-  ''' for : For LPAREN declarationExpression conditions SEMICOLON task RPAREN LCURLYBRACKET RCURLYBRACKET
+  ''' for : For LPAREN declarationExpression SEMICOLON conditions SEMICOLON task RPAREN LCURLYBRACKET RCURLYBRACKET
   '''
 
 def p_taskStatement(p):
-  '''task: value EQUAL
+  '''task: IDENTIFIER PLUS PLUS
+          | IDENTIFIER MINUS MINUS
   '''
 
 def p_stackStatement(p):
@@ -218,7 +217,10 @@ def p_stackStatement(p):
           | FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
   '''
 
+def p_inferedReturnFunction(p):
+  '''inferedReturnFunction: IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN  RCURLYBRACKET
 
+  '''
 
 def p_value(p):
   '''value : INTEGER
@@ -299,6 +301,8 @@ def p_optFunction_arguments(p):
 
 def p_expression(p):
   '''expression : IDENTIFIER PLUS IDENTIFIER
+                  | IDENTIFIER MINUS IDENTIFIER
+                  | IDENTIFIER
   '''
 
 def p_declarationExpression(p):
