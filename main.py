@@ -1,6 +1,8 @@
 from lexico import tokens
 import ply.yacc as yacc
 
+
+#BY RICARDO MOLINA
 prueba1='''
 Map<int,String> personas = {
    1 : 'ere',
@@ -15,15 +17,16 @@ void imprimirMediaNumero(int c1,{required int num1, required int num2}) => num1+
 int x= num1+num2;
 '''
 
+# BY JARED CASTILLO : FOR, STACK, INFERED RETURN FUNCTION STATEMENT
 prueba2 = '''
 for (var i = 0; i < 5; i++) {
   message.write('!');
 }
 final stack = Stack<int>();
 final smokeStack = Stack.of(list);
-
-
-
+suma(int a, int b) {
+  return a + b;
+}
 '''
 #Testeos
 algoritmo1 = '''
