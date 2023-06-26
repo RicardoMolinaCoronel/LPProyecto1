@@ -26,6 +26,12 @@ prueba2 = '''
 for(var i = 0; i < 5; i++){
 }
 '''
+
+Pstack='''
+final stack = Stack<int>();
+final smokeStack = Stack.of(list);
+'''
+
 pr3='''
 suma(int a, int b) {
   return a + b;
@@ -149,6 +155,11 @@ def p_class_content_declarationExpression(p):
 def p_class_content_for(p):
     '''class_content : forStatement
     '''
+
+
+def p_class_content_stack(p):
+  '''class_content : stack
+  '''
   
 def p_class_content_inferedFunction(p):
   '''class_content : inferedReturnFunction
@@ -240,7 +251,7 @@ def p_stack(p):
 
 
 def p_stackStatement(p):
-  '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN SEMICOLON
+  '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN RPAREN SEMICOLON
           | FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
   '''
 
@@ -292,7 +303,6 @@ def p_condition(p):
                 | BOOLEAN condition_operator BOOLEAN
                 | number condition_operator number
                 | STR condition_operator STR
-                | IDENTIFIER condition_operator IDENTIFIER
   '''
 
 def p_conditions(p):
@@ -376,7 +386,7 @@ sintactico = yacc.yacc()
 
 print("-------------------------------")
 print("PRUEBA DE SINTAXIS DE ALGORITMO ->")
-result = sintactico.parse(prueba2)
+result = sintactico.parse(Pstack)
 if result == None:
   print("La sintaxis es correcta")
 else:
