@@ -141,4 +141,14 @@ if(n==5){
   }
 void imprimirMediaNumero(int c1,{required int num1, required int num2}) => num1+num2;
 '''
-consultarTokens(data)
+
+data2 = '''for (var i = 0; i < 5; i++) {
+  message.write('!');
+}
+final stack = Stack<int>();
+final smokeStack = Stack.of(list);
+suma(int a, int b) {
+  return a + b;
+}
+'''
+consultarTokens(data2)

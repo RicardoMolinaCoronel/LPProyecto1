@@ -8,7 +8,7 @@ Map<int,String> personas = {
     1 : 'ere',
     2 :'sd'
 };
-if(n==5){
+if(!n==true){
 int x=5;
   }else if(n==6){
   int x=6;
@@ -23,7 +23,8 @@ int x= num1+num2;
 
 # BY JARED CASTILLO : FOR, STACK, INFERED RETURN FUNCTION STATEMENT
 prueba2 = '''
-for (var i = 0; i < 5; i++) {
+
+for(var i = 0; i < 5; i++) {
 }
 '''
 pr3='''
@@ -149,7 +150,9 @@ def p_class_content_declarationExpression(p):
 def p_class_content_inferedFunction(p):
   '''class_content : inferedReturnFunction
   '''
-
+def p_class_content_expression(p):
+  '''class_content : expression SEMICOLON
+  '''
 def p_class_content_repeat(p):
   '''class_content_repeat : class_content
                            | class_content_repeat class_content
@@ -219,16 +222,22 @@ def p_elseStatement(p):
   '''
 
 def p_forStatement(p):
-  ''' forStatement : FOR LPAREN declarationExpression conditions SEMICOLON taskStatement RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
+  '''forStatement : FOR LPAREN declarationExpression SEMICOLON conditions SEMICOLON taskStatement RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
   '''
 
 def p_taskStatement(p):
   '''taskStatement : IDENTIFIER PLUS PLUS
-          | IDENTIFIER MINUS MINUS
+                    | IDENTIFIER MINUS MINUS
   '''
 
 def p_stack(p):
   '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
+'''
+
+
+
+def p_stackStatement(p):
+  '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN SEMICOLON
           | FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
   '''
 
@@ -358,6 +367,7 @@ def p_error(p):
 # Build the parser
 sintactico = yacc.yacc()
 
+
 print("-------------------------------")
 print("PRUEBA DE SINTAXIS DE ALGORITMO ->")
 result = sintactico.parse(algoritmoPruebaSintaticoRicardoMolina)
@@ -365,4 +375,6 @@ if result == None:
   print("La sintaxis es correcta")
 else:
   print(result)
+
+
 
