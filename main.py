@@ -23,7 +23,7 @@ int x= num1+num2;
 
 # BY JARED CASTILLO : FOR, STACK, INFERED RETURN FUNCTION STATEMENT
 prueba2 = '''
-for(var i = 0; i < 5; i++ ){
+for(var i = 0; i < 5; i++){
 }
 '''
 pr3='''
