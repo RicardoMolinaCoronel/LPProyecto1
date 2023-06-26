@@ -19,7 +19,7 @@ int x= num1+num2;
 
 # BY JARED CASTILLO : FOR, STACK, INFERED RETURN FUNCTION STATEMENT
 prueba2 = '''
-for (var i = 0; i < 5; i++) {
+for(var i = 0; i < 5; i++) {
   message.write('!');
 }
 final stack = Stack<int>();
@@ -207,21 +207,21 @@ def p_elseStatement(p):
   '''
 
 def p_forStatement(p):
-  ''' for : For LPAREN declarationExpression SEMICOLON conditions SEMICOLON task RPAREN LCURLYBRACKET RCURLYBRACKET
+  ''' for : FOR LPAREN declarationExpression SEMICOLON conditions SEMICOLON task RPAREN LCURLYBRACKET RCURLYBRACKET
   '''
 
 def p_taskStatement(p):
-  '''task: IDENTIFIER PLUS PLUS
+  '''task : IDENTIFIER PLUS PLUS
           | IDENTIFIER MINUS MINUS
   '''
 
 def p_stackStatement(p):
-  '''stack: FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN SEMICOLON
+  '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN SEMICOLON
           | FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
   '''
 
 def p_inferedReturnFunction(p):
-  '''inferedReturnFunction: IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN  RCURLYBRACKET
+  '''inferedReturnFunction : IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN  RCURLYBRACKET
 
   '''
 
@@ -333,6 +333,6 @@ while True:
   except EOFError:
     break
   if not s: continue
-  result = sintactico.parse(prueba1)
+  result = sintactico.parse(prueba2)
   if result != None: print(result)
 

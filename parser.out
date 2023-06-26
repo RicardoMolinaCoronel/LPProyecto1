@@ -11,11 +11,9 @@ Unused terminals:
     COMMENT
     DIVISION
     DOLLAR
-    DOT
     DOUBQUOTMARK
     EXIT
     FILE
-    FOR
     IMPORT
     IN
     IS
@@ -24,12 +22,10 @@ Unused terminals:
     LSQUAREBRACKET
     MAIN
     METHOD
-    MINUS
     NOTEQUAL
     OPENWRITE
     PRINT
     READLINESYNC
-    RETURN
     RSQUAREBRACKET
     SET
     TIMES
@@ -75,107 +71,118 @@ Rule 32    elifStatement_repeat -> elifStatement elifStatement_repeat
 Rule 33    ifStatement -> IF LPAREN conditions RPAREN LCURLYBRACKET RCURLYBRACKET
 Rule 34    elifStatement -> ELSE ifStatement
 Rule 35    elifStatement -> ELSE LCURLYBRACKET RCURLYBRACKET
-Rule 36    value -> INTEGER
-Rule 37    value -> FLOAT
-Rule 38    value -> STR
-Rule 39    value -> BOOLEAN
-Rule 40    value -> IDENTIFIER
-Rule 41    deniable_values -> IDENTIFIER
-Rule 42    deniable_values -> BOOLEAN
-Rule 43    negation_values -> deniable_values
-Rule 44    negation_values -> EXMARK deniable_values
-Rule 45    condition_values -> negation_values
-Rule 46    condition_values -> INTEGER
-Rule 47    condition_values -> FLOAT
-Rule 48    condition_values -> STR
-Rule 49    condition_operator -> DOUBLEQUAL
-Rule 50    condition_operator -> LESSTHAN
-Rule 51    condition_operator -> GREATERTHAN
-Rule 52    number -> FLOAT
-Rule 53    number -> INTEGER
-Rule 54    condition -> IDENTIFIER condition_operator condition_values
-Rule 55    condition -> EXMARK IDENTIFIER condition_operator condition_values
-Rule 56    condition -> BOOLEAN condition_operator BOOLEAN
-Rule 57    condition -> number condition_operator number
-Rule 58    condition -> STR condition_operator STR
-Rule 59    conditions -> condition
-Rule 60    conditions -> condition condition_connector conditions
-Rule 61    condition_connector -> AND
-Rule 62    condition_connector -> OR
-Rule 63    function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-Rule 64    function_argument -> datatype IDENTIFIER
-Rule 65    function_argument -> empty
-Rule 66    function_arguments_repeat -> function_argument
-Rule 67    function_arguments_repeat -> function_argument COMMA function_arguments_repeat
-Rule 68    optFunction_argumentsExpression -> LCURLYBRACKET optFunction_arguments RCURLYBRACKET
-Rule 69    optFunction_argumentsExpression -> empty
-Rule 70    optFunction_argument -> REQUIRED datatype IDENTIFIER
-Rule 71    optFunction_arguments -> optFunction_argument
-Rule 72    optFunction_arguments -> optFunction_argument COMMA optFunction_arguments
-Rule 73    expression -> IDENTIFIER PLUS IDENTIFIER
-Rule 74    declarationExpression -> datatype IDENTIFIER SEMICOLON
-Rule 75    declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON
+Rule 36    for -> FOR LPAREN declarationExpression SEMICOLON conditions SEMICOLON task RPAREN LCURLYBRACKET RCURLYBRACKET
+Rule 37    task -> IDENTIFIER PLUS PLUS
+Rule 38    task -> IDENTIFIER MINUS MINUS
+Rule 39    stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN SEMICOLON
+Rule 40    stack -> FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
+Rule 41    inferedReturnFunction -> IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN RCURLYBRACKET
+Rule 42    value -> INTEGER
+Rule 43    value -> FLOAT
+Rule 44    value -> STR
+Rule 45    value -> BOOLEAN
+Rule 46    value -> IDENTIFIER
+Rule 47    deniable_values -> IDENTIFIER
+Rule 48    deniable_values -> BOOLEAN
+Rule 49    negation_values -> deniable_values
+Rule 50    negation_values -> EXMARK deniable_values
+Rule 51    condition_values -> negation_values
+Rule 52    condition_values -> INTEGER
+Rule 53    condition_values -> FLOAT
+Rule 54    condition_values -> STR
+Rule 55    condition_operator -> DOUBLEQUAL
+Rule 56    condition_operator -> LESSTHAN
+Rule 57    condition_operator -> GREATERTHAN
+Rule 58    number -> FLOAT
+Rule 59    number -> INTEGER
+Rule 60    condition -> IDENTIFIER condition_operator condition_values
+Rule 61    condition -> EXMARK IDENTIFIER condition_operator condition_values
+Rule 62    condition -> BOOLEAN condition_operator BOOLEAN
+Rule 63    condition -> number condition_operator number
+Rule 64    condition -> STR condition_operator STR
+Rule 65    conditions -> condition
+Rule 66    conditions -> condition condition_connector conditions
+Rule 67    condition_connector -> AND
+Rule 68    condition_connector -> OR
+Rule 69    function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
+Rule 70    function_argument -> datatype IDENTIFIER
+Rule 71    function_argument -> empty
+Rule 72    function_arguments_repeat -> function_argument
+Rule 73    function_arguments_repeat -> function_argument COMMA function_arguments_repeat
+Rule 74    optFunction_argumentsExpression -> LCURLYBRACKET optFunction_arguments RCURLYBRACKET
+Rule 75    optFunction_argumentsExpression -> empty
+Rule 76    optFunction_argument -> REQUIRED datatype IDENTIFIER
+Rule 77    optFunction_arguments -> optFunction_argument
+Rule 78    optFunction_arguments -> optFunction_argument COMMA optFunction_arguments
+Rule 79    expression -> IDENTIFIER PLUS IDENTIFIER
+Rule 80    expression -> IDENTIFIER MINUS IDENTIFIER
+Rule 81    expression -> IDENTIFIER
+Rule 82    declarationExpression -> datatype IDENTIFIER SEMICOLON
+Rule 83    declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON
 
 Terminals, with rules where they appear
 
 AMPERSAND            : 
-AND                  : 61
+AND                  : 67
 APOSTROPHE           : 
 ASYNC                : 
 AWAIT                : 
 BOOL                 : 8 16
-BOOLEAN              : 39 42 56 56
+BOOLEAN              : 45 48 62 62
 CATCH                : 
 CLOSE                : 
 COLON                : 24
-COMMA                : 5 26 67 72
+COMMA                : 5 26 73 78
 COMMENT              : 
 DIVISION             : 
 DOLLAR               : 
-DOT                  : 
+DOT                  : 40
 DOUBLE               : 9 17
-DOUBLEQUAL           : 49
+DOUBLEQUAL           : 55
 DOUBQUOTMARK         : 
 DYNAMIC              : 10 18
 ELSE                 : 34 35
-EQUAL                : 2 63 75
+EQUAL                : 2 39 40 69 83
 EXIT                 : 
-EXMARK               : 44 55
+EXMARK               : 50 61
 FILE                 : 
-FLOAT                : 37 47 52
-FOR                  : 
-GREATERTHAN          : 5 51 63
-IDENTIFIER           : 2 40 41 54 55 63 64 70 73 73 74 75
+FINAL                : 39 40
+FLOAT                : 43 53 58
+FOR                  : 36
+GREATERTHAN          : 5 39 57 69
+IDENTIFIER           : 2 37 38 39 40 40 41 46 47 60 61 69 70 76 79 79 80 80 81 82 83
 IF                   : 33
 IMPORT               : 
 IN                   : 
 INT                  : 6 14
-INTEGER              : 36 46 53
+INTEGER              : 42 52 59
 IS                   : 
 ITERABLE             : 
-LCURLYBRACKET        : 2 33 35 68
-LESSTHAN             : 5 50
+LCURLYBRACKET        : 2 33 35 36 41 74
+LESSTHAN             : 5 39 56
 LIST                 : 
-LPAREN               : 33 63
+LPAREN               : 33 36 40 41 69
 LSQUAREBRACKET       : 
 MAIN                 : 
 MAP                  : 3 4
 METHOD               : 
-MINUS                : 
+MINUS                : 38 38 80
 NOTEQUAL             : 
+OF                   : 40
 OPENWRITE            : 
-OR                   : 62
-PLUS                 : 73
+OR                   : 68
+PLUS                 : 37 37 79
 PRINT                : 
-RCURLYBRACKET        : 2 33 35 68
+RCURLYBRACKET        : 2 33 35 36 41 74
 READLINESYNC         : 
-REQUIRED             : 70
-RETURN               : 
-RPAREN               : 33 63
+REQUIRED             : 76
+RETURN               : 41
+RPAREN               : 33 36 40 41 69
 RSQUAREBRACKET       : 
-SEMICOLON            : 2 63 74 75
+SEMICOLON            : 2 36 36 39 40 69 82 83
 SET                  : 
-STR                  : 38 48 58 58
+STACK                : 39 40
+STR                  : 44 54 64 64
 STRING               : 7 15
 TIMES                : 
 TRY                  : 
@@ -188,23 +195,25 @@ error                :
 Nonterminals, with rules where they appear
 
 class                : 0
-condition            : 59 60
-condition_connector  : 60
-condition_operator   : 54 55 56 57 58
-condition_values     : 54 55
-conditions           : 33 60
-datatype             : 5 5 64 70 74 75
-declarationExpression : 1
-deniable_values      : 43 44
+condition            : 65 66
+condition_connector  : 66
+condition_operator   : 60 61 62 63 64
+condition_values     : 60 61
+conditions           : 33 36 66
+datatype             : 5 5 39 70 76 82 83
+declarationExpression : 1 36
+deniable_values      : 49 50
 elifStatement        : 31 32
 elifStatement_repeat : 30 32
-empty                : 23 65 69
-expression           : 63 75
-function_argument    : 66 67
-function_arguments_repeat : 63 67
+empty                : 23 71 75
+expression           : 69 83
+for                  : 
+function_argument    : 72 73
+function_arguments_repeat : 41 69 73
 function_lambda      : 1
 ifElseStatement      : 1
 ifStatement          : 29 30 34
+inferedReturnFunction : 
 map                  : 1
 map_content          : 2
 map_identifier       : 2 13 20
@@ -213,12 +222,14 @@ map_pair             : 25 26
 map_pairs            : 22 26
 map_type_specified   : 4
 map_value            : 24
-negation_values      : 45
-number               : 57 57
-optFunction_argument : 71 72
-optFunction_arguments : 68 72
-optFunction_argumentsExpression : 63
-returnType           : 63
+negation_values      : 51
+number               : 63 63
+optFunction_argument : 77 78
+optFunction_arguments : 74 78
+optFunction_argumentsExpression : 69
+returnType           : 69
+stack                : 
+task                 : 36
 value                : 27 28
 
 Parsing method: LALR
@@ -278,7 +289,7 @@ state 4
 state 5
 
     (1) class -> map ifElseStatement . function_lambda declarationExpression
-    (63) function_lambda -> . returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
+    (69) function_lambda -> . returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
     (14) returnType -> . INT
     (15) returnType -> . STRING
     (16) returnType -> . BOOL
@@ -374,8 +385,8 @@ state 10
 state 11
 
     (1) class -> map ifElseStatement function_lambda . declarationExpression
-    (74) declarationExpression -> . datatype IDENTIFIER SEMICOLON
-    (75) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
+    (82) declarationExpression -> . datatype IDENTIFIER SEMICOLON
+    (83) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
     (6) datatype -> . INT
     (7) datatype -> . STRING
     (8) datatype -> . BOOL
@@ -402,7 +413,7 @@ state 11
 
 state 12
 
-    (63) function_lambda -> returnType . IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
+    (69) function_lambda -> returnType . IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
 
     IDENTIFIER      shift and go to state 36
 
@@ -504,15 +515,15 @@ state 22
 state 23
 
     (33) ifStatement -> IF LPAREN . conditions RPAREN LCURLYBRACKET RCURLYBRACKET
-    (59) conditions -> . condition
-    (60) conditions -> . condition condition_connector conditions
-    (54) condition -> . IDENTIFIER condition_operator condition_values
-    (55) condition -> . EXMARK IDENTIFIER condition_operator condition_values
-    (56) condition -> . BOOLEAN condition_operator BOOLEAN
-    (57) condition -> . number condition_operator number
-    (58) condition -> . STR condition_operator STR
-    (52) number -> . FLOAT
-    (53) number -> . INTEGER
+    (65) conditions -> . condition
+    (66) conditions -> . condition condition_connector conditions
+    (60) condition -> . IDENTIFIER condition_operator condition_values
+    (61) condition -> . EXMARK IDENTIFIER condition_operator condition_values
+    (62) condition -> . BOOLEAN condition_operator BOOLEAN
+    (63) condition -> . number condition_operator number
+    (64) condition -> . STR condition_operator STR
+    (58) number -> . FLOAT
+    (59) number -> . INTEGER
 
     IDENTIFIER      shift and go to state 42
     EXMARK          shift and go to state 43
@@ -620,15 +631,15 @@ state 34
 
 state 35
 
-    (74) declarationExpression -> datatype . IDENTIFIER SEMICOLON
-    (75) declarationExpression -> datatype . IDENTIFIER EQUAL expression SEMICOLON
+    (82) declarationExpression -> datatype . IDENTIFIER SEMICOLON
+    (83) declarationExpression -> datatype . IDENTIFIER EQUAL expression SEMICOLON
 
     IDENTIFIER      shift and go to state 51
 
 
 state 36
 
-    (63) function_lambda -> returnType IDENTIFIER . LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
+    (69) function_lambda -> returnType IDENTIFIER . LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
 
     LPAREN          shift and go to state 52
 
@@ -676,12 +687,12 @@ state 40
 
 state 41
 
-    (59) conditions -> condition .
-    (60) conditions -> condition . condition_connector conditions
-    (61) condition_connector -> . AND
-    (62) condition_connector -> . OR
+    (65) conditions -> condition .
+    (66) conditions -> condition . condition_connector conditions
+    (67) condition_connector -> . AND
+    (68) condition_connector -> . OR
 
-    RPAREN          reduce using rule 59 (conditions -> condition .)
+    RPAREN          reduce using rule 65 (conditions -> condition .)
     AND             shift and go to state 56
     OR              shift and go to state 57
 
@@ -689,10 +700,10 @@ state 41
 
 state 42
 
-    (54) condition -> IDENTIFIER . condition_operator condition_values
-    (49) condition_operator -> . DOUBLEQUAL
-    (50) condition_operator -> . LESSTHAN
-    (51) condition_operator -> . GREATERTHAN
+    (60) condition -> IDENTIFIER . condition_operator condition_values
+    (55) condition_operator -> . DOUBLEQUAL
+    (56) condition_operator -> . LESSTHAN
+    (57) condition_operator -> . GREATERTHAN
 
     DOUBLEQUAL      shift and go to state 59
     LESSTHAN        shift and go to state 60
@@ -702,17 +713,17 @@ state 42
 
 state 43
 
-    (55) condition -> EXMARK . IDENTIFIER condition_operator condition_values
+    (61) condition -> EXMARK . IDENTIFIER condition_operator condition_values
 
     IDENTIFIER      shift and go to state 62
 
 
 state 44
 
-    (56) condition -> BOOLEAN . condition_operator BOOLEAN
-    (49) condition_operator -> . DOUBLEQUAL
-    (50) condition_operator -> . LESSTHAN
-    (51) condition_operator -> . GREATERTHAN
+    (62) condition -> BOOLEAN . condition_operator BOOLEAN
+    (55) condition_operator -> . DOUBLEQUAL
+    (56) condition_operator -> . LESSTHAN
+    (57) condition_operator -> . GREATERTHAN
 
     DOUBLEQUAL      shift and go to state 59
     LESSTHAN        shift and go to state 60
@@ -722,10 +733,10 @@ state 44
 
 state 45
 
-    (57) condition -> number . condition_operator number
-    (49) condition_operator -> . DOUBLEQUAL
-    (50) condition_operator -> . LESSTHAN
-    (51) condition_operator -> . GREATERTHAN
+    (63) condition -> number . condition_operator number
+    (55) condition_operator -> . DOUBLEQUAL
+    (56) condition_operator -> . LESSTHAN
+    (57) condition_operator -> . GREATERTHAN
 
     DOUBLEQUAL      shift and go to state 59
     LESSTHAN        shift and go to state 60
@@ -735,10 +746,10 @@ state 45
 
 state 46
 
-    (58) condition -> STR . condition_operator STR
-    (49) condition_operator -> . DOUBLEQUAL
-    (50) condition_operator -> . LESSTHAN
-    (51) condition_operator -> . GREATERTHAN
+    (64) condition -> STR . condition_operator STR
+    (55) condition_operator -> . DOUBLEQUAL
+    (56) condition_operator -> . LESSTHAN
+    (57) condition_operator -> . GREATERTHAN
 
     DOUBLEQUAL      shift and go to state 59
     LESSTHAN        shift and go to state 60
@@ -748,26 +759,26 @@ state 46
 
 state 47
 
-    (52) number -> FLOAT .
+    (58) number -> FLOAT .
 
-    DOUBLEQUAL      reduce using rule 52 (number -> FLOAT .)
-    LESSTHAN        reduce using rule 52 (number -> FLOAT .)
-    GREATERTHAN     reduce using rule 52 (number -> FLOAT .)
-    AND             reduce using rule 52 (number -> FLOAT .)
-    OR              reduce using rule 52 (number -> FLOAT .)
-    RPAREN          reduce using rule 52 (number -> FLOAT .)
+    DOUBLEQUAL      reduce using rule 58 (number -> FLOAT .)
+    LESSTHAN        reduce using rule 58 (number -> FLOAT .)
+    GREATERTHAN     reduce using rule 58 (number -> FLOAT .)
+    AND             reduce using rule 58 (number -> FLOAT .)
+    OR              reduce using rule 58 (number -> FLOAT .)
+    RPAREN          reduce using rule 58 (number -> FLOAT .)
 
 
 state 48
 
-    (53) number -> INTEGER .
+    (59) number -> INTEGER .
 
-    DOUBLEQUAL      reduce using rule 53 (number -> INTEGER .)
-    LESSTHAN        reduce using rule 53 (number -> INTEGER .)
-    GREATERTHAN     reduce using rule 53 (number -> INTEGER .)
-    AND             reduce using rule 53 (number -> INTEGER .)
-    OR              reduce using rule 53 (number -> INTEGER .)
-    RPAREN          reduce using rule 53 (number -> INTEGER .)
+    DOUBLEQUAL      reduce using rule 59 (number -> INTEGER .)
+    LESSTHAN        reduce using rule 59 (number -> INTEGER .)
+    GREATERTHAN     reduce using rule 59 (number -> INTEGER .)
+    AND             reduce using rule 59 (number -> INTEGER .)
+    OR              reduce using rule 59 (number -> INTEGER .)
+    RPAREN          reduce using rule 59 (number -> INTEGER .)
 
 
 state 49
@@ -780,11 +791,11 @@ state 49
     (21) empty -> .
     (24) map_pair -> . map_key COLON map_value
     (27) map_key -> . value
-    (36) value -> . INTEGER
-    (37) value -> . FLOAT
-    (38) value -> . STR
-    (39) value -> . BOOLEAN
-    (40) value -> . IDENTIFIER
+    (42) value -> . INTEGER
+    (43) value -> . FLOAT
+    (44) value -> . STR
+    (45) value -> . BOOLEAN
+    (46) value -> . IDENTIFIER
 
     RCURLYBRACKET   reduce using rule 21 (empty -> .)
     INTEGER         shift and go to state 73
@@ -828,8 +839,8 @@ state 50
 
 state 51
 
-    (74) declarationExpression -> datatype IDENTIFIER . SEMICOLON
-    (75) declarationExpression -> datatype IDENTIFIER . EQUAL expression SEMICOLON
+    (82) declarationExpression -> datatype IDENTIFIER . SEMICOLON
+    (83) declarationExpression -> datatype IDENTIFIER . EQUAL expression SEMICOLON
 
     SEMICOLON       shift and go to state 78
     EQUAL           shift and go to state 79
@@ -837,11 +848,11 @@ state 51
 
 state 52
 
-    (63) function_lambda -> returnType IDENTIFIER LPAREN . function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (66) function_arguments_repeat -> . function_argument
-    (67) function_arguments_repeat -> . function_argument COMMA function_arguments_repeat
-    (64) function_argument -> . datatype IDENTIFIER
-    (65) function_argument -> . empty
+    (69) function_lambda -> returnType IDENTIFIER LPAREN . function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
+    (72) function_arguments_repeat -> . function_argument
+    (73) function_arguments_repeat -> . function_argument COMMA function_arguments_repeat
+    (70) function_argument -> . datatype IDENTIFIER
+    (71) function_argument -> . empty
     (6) datatype -> . INT
     (7) datatype -> . STRING
     (8) datatype -> . BOOL
@@ -895,16 +906,16 @@ state 54
 
 state 55
 
-    (60) conditions -> condition condition_connector . conditions
-    (59) conditions -> . condition
-    (60) conditions -> . condition condition_connector conditions
-    (54) condition -> . IDENTIFIER condition_operator condition_values
-    (55) condition -> . EXMARK IDENTIFIER condition_operator condition_values
-    (56) condition -> . BOOLEAN condition_operator BOOLEAN
-    (57) condition -> . number condition_operator number
-    (58) condition -> . STR condition_operator STR
-    (52) number -> . FLOAT
-    (53) number -> . INTEGER
+    (66) conditions -> condition condition_connector . conditions
+    (65) conditions -> . condition
+    (66) conditions -> . condition condition_connector conditions
+    (60) condition -> . IDENTIFIER condition_operator condition_values
+    (61) condition -> . EXMARK IDENTIFIER condition_operator condition_values
+    (62) condition -> . BOOLEAN condition_operator BOOLEAN
+    (63) condition -> . number condition_operator number
+    (64) condition -> . STR condition_operator STR
+    (58) number -> . FLOAT
+    (59) number -> . INTEGER
 
     IDENTIFIER      shift and go to state 42
     EXMARK          shift and go to state 43
@@ -919,39 +930,39 @@ state 55
 
 state 56
 
-    (61) condition_connector -> AND .
+    (67) condition_connector -> AND .
 
-    IDENTIFIER      reduce using rule 61 (condition_connector -> AND .)
-    EXMARK          reduce using rule 61 (condition_connector -> AND .)
-    BOOLEAN         reduce using rule 61 (condition_connector -> AND .)
-    STR             reduce using rule 61 (condition_connector -> AND .)
-    FLOAT           reduce using rule 61 (condition_connector -> AND .)
-    INTEGER         reduce using rule 61 (condition_connector -> AND .)
+    IDENTIFIER      reduce using rule 67 (condition_connector -> AND .)
+    EXMARK          reduce using rule 67 (condition_connector -> AND .)
+    BOOLEAN         reduce using rule 67 (condition_connector -> AND .)
+    STR             reduce using rule 67 (condition_connector -> AND .)
+    FLOAT           reduce using rule 67 (condition_connector -> AND .)
+    INTEGER         reduce using rule 67 (condition_connector -> AND .)
 
 
 state 57
 
-    (62) condition_connector -> OR .
+    (68) condition_connector -> OR .
 
-    IDENTIFIER      reduce using rule 62 (condition_connector -> OR .)
-    EXMARK          reduce using rule 62 (condition_connector -> OR .)
-    BOOLEAN         reduce using rule 62 (condition_connector -> OR .)
-    STR             reduce using rule 62 (condition_connector -> OR .)
-    FLOAT           reduce using rule 62 (condition_connector -> OR .)
-    INTEGER         reduce using rule 62 (condition_connector -> OR .)
+    IDENTIFIER      reduce using rule 68 (condition_connector -> OR .)
+    EXMARK          reduce using rule 68 (condition_connector -> OR .)
+    BOOLEAN         reduce using rule 68 (condition_connector -> OR .)
+    STR             reduce using rule 68 (condition_connector -> OR .)
+    FLOAT           reduce using rule 68 (condition_connector -> OR .)
+    INTEGER         reduce using rule 68 (condition_connector -> OR .)
 
 
 state 58
 
-    (54) condition -> IDENTIFIER condition_operator . condition_values
-    (45) condition_values -> . negation_values
-    (46) condition_values -> . INTEGER
-    (47) condition_values -> . FLOAT
-    (48) condition_values -> . STR
-    (43) negation_values -> . deniable_values
-    (44) negation_values -> . EXMARK deniable_values
-    (41) deniable_values -> . IDENTIFIER
-    (42) deniable_values -> . BOOLEAN
+    (60) condition -> IDENTIFIER condition_operator . condition_values
+    (51) condition_values -> . negation_values
+    (52) condition_values -> . INTEGER
+    (53) condition_values -> . FLOAT
+    (54) condition_values -> . STR
+    (49) negation_values -> . deniable_values
+    (50) negation_values -> . EXMARK deniable_values
+    (47) deniable_values -> . IDENTIFIER
+    (48) deniable_values -> . BOOLEAN
 
     INTEGER         shift and go to state 89
     FLOAT           shift and go to state 90
@@ -966,46 +977,46 @@ state 58
 
 state 59
 
-    (49) condition_operator -> DOUBLEQUAL .
+    (55) condition_operator -> DOUBLEQUAL .
 
-    INTEGER         reduce using rule 49 (condition_operator -> DOUBLEQUAL .)
-    FLOAT           reduce using rule 49 (condition_operator -> DOUBLEQUAL .)
-    STR             reduce using rule 49 (condition_operator -> DOUBLEQUAL .)
-    EXMARK          reduce using rule 49 (condition_operator -> DOUBLEQUAL .)
-    IDENTIFIER      reduce using rule 49 (condition_operator -> DOUBLEQUAL .)
-    BOOLEAN         reduce using rule 49 (condition_operator -> DOUBLEQUAL .)
+    INTEGER         reduce using rule 55 (condition_operator -> DOUBLEQUAL .)
+    FLOAT           reduce using rule 55 (condition_operator -> DOUBLEQUAL .)
+    STR             reduce using rule 55 (condition_operator -> DOUBLEQUAL .)
+    EXMARK          reduce using rule 55 (condition_operator -> DOUBLEQUAL .)
+    IDENTIFIER      reduce using rule 55 (condition_operator -> DOUBLEQUAL .)
+    BOOLEAN         reduce using rule 55 (condition_operator -> DOUBLEQUAL .)
 
 
 state 60
 
-    (50) condition_operator -> LESSTHAN .
+    (56) condition_operator -> LESSTHAN .
 
-    INTEGER         reduce using rule 50 (condition_operator -> LESSTHAN .)
-    FLOAT           reduce using rule 50 (condition_operator -> LESSTHAN .)
-    STR             reduce using rule 50 (condition_operator -> LESSTHAN .)
-    EXMARK          reduce using rule 50 (condition_operator -> LESSTHAN .)
-    IDENTIFIER      reduce using rule 50 (condition_operator -> LESSTHAN .)
-    BOOLEAN         reduce using rule 50 (condition_operator -> LESSTHAN .)
+    INTEGER         reduce using rule 56 (condition_operator -> LESSTHAN .)
+    FLOAT           reduce using rule 56 (condition_operator -> LESSTHAN .)
+    STR             reduce using rule 56 (condition_operator -> LESSTHAN .)
+    EXMARK          reduce using rule 56 (condition_operator -> LESSTHAN .)
+    IDENTIFIER      reduce using rule 56 (condition_operator -> LESSTHAN .)
+    BOOLEAN         reduce using rule 56 (condition_operator -> LESSTHAN .)
 
 
 state 61
 
-    (51) condition_operator -> GREATERTHAN .
+    (57) condition_operator -> GREATERTHAN .
 
-    INTEGER         reduce using rule 51 (condition_operator -> GREATERTHAN .)
-    FLOAT           reduce using rule 51 (condition_operator -> GREATERTHAN .)
-    STR             reduce using rule 51 (condition_operator -> GREATERTHAN .)
-    EXMARK          reduce using rule 51 (condition_operator -> GREATERTHAN .)
-    IDENTIFIER      reduce using rule 51 (condition_operator -> GREATERTHAN .)
-    BOOLEAN         reduce using rule 51 (condition_operator -> GREATERTHAN .)
+    INTEGER         reduce using rule 57 (condition_operator -> GREATERTHAN .)
+    FLOAT           reduce using rule 57 (condition_operator -> GREATERTHAN .)
+    STR             reduce using rule 57 (condition_operator -> GREATERTHAN .)
+    EXMARK          reduce using rule 57 (condition_operator -> GREATERTHAN .)
+    IDENTIFIER      reduce using rule 57 (condition_operator -> GREATERTHAN .)
+    BOOLEAN         reduce using rule 57 (condition_operator -> GREATERTHAN .)
 
 
 state 62
 
-    (55) condition -> EXMARK IDENTIFIER . condition_operator condition_values
-    (49) condition_operator -> . DOUBLEQUAL
-    (50) condition_operator -> . LESSTHAN
-    (51) condition_operator -> . GREATERTHAN
+    (61) condition -> EXMARK IDENTIFIER . condition_operator condition_values
+    (55) condition_operator -> . DOUBLEQUAL
+    (56) condition_operator -> . LESSTHAN
+    (57) condition_operator -> . GREATERTHAN
 
     DOUBLEQUAL      shift and go to state 59
     LESSTHAN        shift and go to state 60
@@ -1015,16 +1026,16 @@ state 62
 
 state 63
 
-    (56) condition -> BOOLEAN condition_operator . BOOLEAN
+    (62) condition -> BOOLEAN condition_operator . BOOLEAN
 
     BOOLEAN         shift and go to state 96
 
 
 state 64
 
-    (57) condition -> number condition_operator . number
-    (52) number -> . FLOAT
-    (53) number -> . INTEGER
+    (63) condition -> number condition_operator . number
+    (58) number -> . FLOAT
+    (59) number -> . INTEGER
 
     FLOAT           shift and go to state 47
     INTEGER         shift and go to state 48
@@ -1033,18 +1044,18 @@ state 64
 
 state 65
 
-    (58) condition -> STR condition_operator . STR
+    (64) condition -> STR condition_operator . STR
 
     STR             shift and go to state 98
 
 
 state 66
 
-    (40) value -> IDENTIFIER .
+    (46) value -> IDENTIFIER .
 
-    COLON           reduce using rule 40 (value -> IDENTIFIER .)
-    COMMA           reduce using rule 40 (value -> IDENTIFIER .)
-    RCURLYBRACKET   reduce using rule 40 (value -> IDENTIFIER .)
+    COLON           reduce using rule 46 (value -> IDENTIFIER .)
+    COMMA           reduce using rule 46 (value -> IDENTIFIER .)
+    RCURLYBRACKET   reduce using rule 46 (value -> IDENTIFIER .)
 
 
 state 67
@@ -1093,38 +1104,38 @@ state 72
 
 state 73
 
-    (36) value -> INTEGER .
+    (42) value -> INTEGER .
 
-    COLON           reduce using rule 36 (value -> INTEGER .)
-    COMMA           reduce using rule 36 (value -> INTEGER .)
-    RCURLYBRACKET   reduce using rule 36 (value -> INTEGER .)
+    COLON           reduce using rule 42 (value -> INTEGER .)
+    COMMA           reduce using rule 42 (value -> INTEGER .)
+    RCURLYBRACKET   reduce using rule 42 (value -> INTEGER .)
 
 
 state 74
 
-    (37) value -> FLOAT .
+    (43) value -> FLOAT .
 
-    COLON           reduce using rule 37 (value -> FLOAT .)
-    COMMA           reduce using rule 37 (value -> FLOAT .)
-    RCURLYBRACKET   reduce using rule 37 (value -> FLOAT .)
+    COLON           reduce using rule 43 (value -> FLOAT .)
+    COMMA           reduce using rule 43 (value -> FLOAT .)
+    RCURLYBRACKET   reduce using rule 43 (value -> FLOAT .)
 
 
 state 75
 
-    (38) value -> STR .
+    (44) value -> STR .
 
-    COLON           reduce using rule 38 (value -> STR .)
-    COMMA           reduce using rule 38 (value -> STR .)
-    RCURLYBRACKET   reduce using rule 38 (value -> STR .)
+    COLON           reduce using rule 44 (value -> STR .)
+    COMMA           reduce using rule 44 (value -> STR .)
+    RCURLYBRACKET   reduce using rule 44 (value -> STR .)
 
 
 state 76
 
-    (39) value -> BOOLEAN .
+    (45) value -> BOOLEAN .
 
-    COLON           reduce using rule 39 (value -> BOOLEAN .)
-    COMMA           reduce using rule 39 (value -> BOOLEAN .)
-    RCURLYBRACKET   reduce using rule 39 (value -> BOOLEAN .)
+    COLON           reduce using rule 45 (value -> BOOLEAN .)
+    COMMA           reduce using rule 45 (value -> BOOLEAN .)
+    RCURLYBRACKET   reduce using rule 45 (value -> BOOLEAN .)
 
 
 state 77
@@ -1136,15 +1147,17 @@ state 77
 
 state 78
 
-    (74) declarationExpression -> datatype IDENTIFIER SEMICOLON .
+    (82) declarationExpression -> datatype IDENTIFIER SEMICOLON .
 
-    $end            reduce using rule 74 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 82 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
 
 
 state 79
 
-    (75) declarationExpression -> datatype IDENTIFIER EQUAL . expression SEMICOLON
-    (73) expression -> . IDENTIFIER PLUS IDENTIFIER
+    (83) declarationExpression -> datatype IDENTIFIER EQUAL . expression SEMICOLON
+    (79) expression -> . IDENTIFIER PLUS IDENTIFIER
+    (80) expression -> . IDENTIFIER MINUS IDENTIFIER
+    (81) expression -> . IDENTIFIER
 
     IDENTIFIER      shift and go to state 103
 
@@ -1152,9 +1165,9 @@ state 79
 
 state 80
 
-    (63) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat . optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (68) optFunction_argumentsExpression -> . LCURLYBRACKET optFunction_arguments RCURLYBRACKET
-    (69) optFunction_argumentsExpression -> . empty
+    (69) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat . optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
+    (74) optFunction_argumentsExpression -> . LCURLYBRACKET optFunction_arguments RCURLYBRACKET
+    (75) optFunction_argumentsExpression -> . empty
     (21) empty -> .
 
     LCURLYBRACKET   shift and go to state 106
@@ -1165,28 +1178,28 @@ state 80
 
 state 81
 
-    (66) function_arguments_repeat -> function_argument .
-    (67) function_arguments_repeat -> function_argument . COMMA function_arguments_repeat
+    (72) function_arguments_repeat -> function_argument .
+    (73) function_arguments_repeat -> function_argument . COMMA function_arguments_repeat
 
-    LCURLYBRACKET   reduce using rule 66 (function_arguments_repeat -> function_argument .)
-    RPAREN          reduce using rule 66 (function_arguments_repeat -> function_argument .)
+    LCURLYBRACKET   reduce using rule 72 (function_arguments_repeat -> function_argument .)
+    RPAREN          reduce using rule 72 (function_arguments_repeat -> function_argument .)
     COMMA           shift and go to state 108
 
 
 state 82
 
-    (64) function_argument -> datatype . IDENTIFIER
+    (70) function_argument -> datatype . IDENTIFIER
 
     IDENTIFIER      shift and go to state 109
 
 
 state 83
 
-    (65) function_argument -> empty .
+    (71) function_argument -> empty .
 
-    COMMA           reduce using rule 65 (function_argument -> empty .)
-    LCURLYBRACKET   reduce using rule 65 (function_argument -> empty .)
-    RPAREN          reduce using rule 65 (function_argument -> empty .)
+    COMMA           reduce using rule 71 (function_argument -> empty .)
+    LCURLYBRACKET   reduce using rule 71 (function_argument -> empty .)
+    RPAREN          reduce using rule 71 (function_argument -> empty .)
 
 
 state 84
@@ -1198,79 +1211,79 @@ state 84
 
 state 85
 
-    (60) conditions -> condition condition_connector conditions .
+    (66) conditions -> condition condition_connector conditions .
 
-    RPAREN          reduce using rule 60 (conditions -> condition condition_connector conditions .)
+    RPAREN          reduce using rule 66 (conditions -> condition condition_connector conditions .)
 
 
 state 86
 
-    (41) deniable_values -> IDENTIFIER .
+    (47) deniable_values -> IDENTIFIER .
 
-    AND             reduce using rule 41 (deniable_values -> IDENTIFIER .)
-    OR              reduce using rule 41 (deniable_values -> IDENTIFIER .)
-    RPAREN          reduce using rule 41 (deniable_values -> IDENTIFIER .)
+    AND             reduce using rule 47 (deniable_values -> IDENTIFIER .)
+    OR              reduce using rule 47 (deniable_values -> IDENTIFIER .)
+    RPAREN          reduce using rule 47 (deniable_values -> IDENTIFIER .)
 
 
 state 87
 
-    (54) condition -> IDENTIFIER condition_operator condition_values .
+    (60) condition -> IDENTIFIER condition_operator condition_values .
 
-    AND             reduce using rule 54 (condition -> IDENTIFIER condition_operator condition_values .)
-    OR              reduce using rule 54 (condition -> IDENTIFIER condition_operator condition_values .)
-    RPAREN          reduce using rule 54 (condition -> IDENTIFIER condition_operator condition_values .)
+    AND             reduce using rule 60 (condition -> IDENTIFIER condition_operator condition_values .)
+    OR              reduce using rule 60 (condition -> IDENTIFIER condition_operator condition_values .)
+    RPAREN          reduce using rule 60 (condition -> IDENTIFIER condition_operator condition_values .)
 
 
 state 88
 
-    (45) condition_values -> negation_values .
+    (51) condition_values -> negation_values .
 
-    AND             reduce using rule 45 (condition_values -> negation_values .)
-    OR              reduce using rule 45 (condition_values -> negation_values .)
-    RPAREN          reduce using rule 45 (condition_values -> negation_values .)
+    AND             reduce using rule 51 (condition_values -> negation_values .)
+    OR              reduce using rule 51 (condition_values -> negation_values .)
+    RPAREN          reduce using rule 51 (condition_values -> negation_values .)
 
 
 state 89
 
-    (46) condition_values -> INTEGER .
+    (52) condition_values -> INTEGER .
 
-    AND             reduce using rule 46 (condition_values -> INTEGER .)
-    OR              reduce using rule 46 (condition_values -> INTEGER .)
-    RPAREN          reduce using rule 46 (condition_values -> INTEGER .)
+    AND             reduce using rule 52 (condition_values -> INTEGER .)
+    OR              reduce using rule 52 (condition_values -> INTEGER .)
+    RPAREN          reduce using rule 52 (condition_values -> INTEGER .)
 
 
 state 90
 
-    (47) condition_values -> FLOAT .
+    (53) condition_values -> FLOAT .
 
-    AND             reduce using rule 47 (condition_values -> FLOAT .)
-    OR              reduce using rule 47 (condition_values -> FLOAT .)
-    RPAREN          reduce using rule 47 (condition_values -> FLOAT .)
+    AND             reduce using rule 53 (condition_values -> FLOAT .)
+    OR              reduce using rule 53 (condition_values -> FLOAT .)
+    RPAREN          reduce using rule 53 (condition_values -> FLOAT .)
 
 
 state 91
 
-    (48) condition_values -> STR .
+    (54) condition_values -> STR .
 
-    AND             reduce using rule 48 (condition_values -> STR .)
-    OR              reduce using rule 48 (condition_values -> STR .)
-    RPAREN          reduce using rule 48 (condition_values -> STR .)
+    AND             reduce using rule 54 (condition_values -> STR .)
+    OR              reduce using rule 54 (condition_values -> STR .)
+    RPAREN          reduce using rule 54 (condition_values -> STR .)
 
 
 state 92
 
-    (43) negation_values -> deniable_values .
+    (49) negation_values -> deniable_values .
 
-    AND             reduce using rule 43 (negation_values -> deniable_values .)
-    OR              reduce using rule 43 (negation_values -> deniable_values .)
-    RPAREN          reduce using rule 43 (negation_values -> deniable_values .)
+    AND             reduce using rule 49 (negation_values -> deniable_values .)
+    OR              reduce using rule 49 (negation_values -> deniable_values .)
+    RPAREN          reduce using rule 49 (negation_values -> deniable_values .)
 
 
 state 93
 
-    (44) negation_values -> EXMARK . deniable_values
-    (41) deniable_values -> . IDENTIFIER
-    (42) deniable_values -> . BOOLEAN
+    (50) negation_values -> EXMARK . deniable_values
+    (47) deniable_values -> . IDENTIFIER
+    (48) deniable_values -> . BOOLEAN
 
     IDENTIFIER      shift and go to state 86
     BOOLEAN         shift and go to state 94
@@ -1279,24 +1292,24 @@ state 93
 
 state 94
 
-    (42) deniable_values -> BOOLEAN .
+    (48) deniable_values -> BOOLEAN .
 
-    AND             reduce using rule 42 (deniable_values -> BOOLEAN .)
-    OR              reduce using rule 42 (deniable_values -> BOOLEAN .)
-    RPAREN          reduce using rule 42 (deniable_values -> BOOLEAN .)
+    AND             reduce using rule 48 (deniable_values -> BOOLEAN .)
+    OR              reduce using rule 48 (deniable_values -> BOOLEAN .)
+    RPAREN          reduce using rule 48 (deniable_values -> BOOLEAN .)
 
 
 state 95
 
-    (55) condition -> EXMARK IDENTIFIER condition_operator . condition_values
-    (45) condition_values -> . negation_values
-    (46) condition_values -> . INTEGER
-    (47) condition_values -> . FLOAT
-    (48) condition_values -> . STR
-    (43) negation_values -> . deniable_values
-    (44) negation_values -> . EXMARK deniable_values
-    (41) deniable_values -> . IDENTIFIER
-    (42) deniable_values -> . BOOLEAN
+    (61) condition -> EXMARK IDENTIFIER condition_operator . condition_values
+    (51) condition_values -> . negation_values
+    (52) condition_values -> . INTEGER
+    (53) condition_values -> . FLOAT
+    (54) condition_values -> . STR
+    (49) negation_values -> . deniable_values
+    (50) negation_values -> . EXMARK deniable_values
+    (47) deniable_values -> . IDENTIFIER
+    (48) deniable_values -> . BOOLEAN
 
     INTEGER         shift and go to state 89
     FLOAT           shift and go to state 90
@@ -1311,29 +1324,29 @@ state 95
 
 state 96
 
-    (56) condition -> BOOLEAN condition_operator BOOLEAN .
+    (62) condition -> BOOLEAN condition_operator BOOLEAN .
 
-    AND             reduce using rule 56 (condition -> BOOLEAN condition_operator BOOLEAN .)
-    OR              reduce using rule 56 (condition -> BOOLEAN condition_operator BOOLEAN .)
-    RPAREN          reduce using rule 56 (condition -> BOOLEAN condition_operator BOOLEAN .)
+    AND             reduce using rule 62 (condition -> BOOLEAN condition_operator BOOLEAN .)
+    OR              reduce using rule 62 (condition -> BOOLEAN condition_operator BOOLEAN .)
+    RPAREN          reduce using rule 62 (condition -> BOOLEAN condition_operator BOOLEAN .)
 
 
 state 97
 
-    (57) condition -> number condition_operator number .
+    (63) condition -> number condition_operator number .
 
-    AND             reduce using rule 57 (condition -> number condition_operator number .)
-    OR              reduce using rule 57 (condition -> number condition_operator number .)
-    RPAREN          reduce using rule 57 (condition -> number condition_operator number .)
+    AND             reduce using rule 63 (condition -> number condition_operator number .)
+    OR              reduce using rule 63 (condition -> number condition_operator number .)
+    RPAREN          reduce using rule 63 (condition -> number condition_operator number .)
 
 
 state 98
 
-    (58) condition -> STR condition_operator STR .
+    (64) condition -> STR condition_operator STR .
 
-    AND             reduce using rule 58 (condition -> STR condition_operator STR .)
-    OR              reduce using rule 58 (condition -> STR condition_operator STR .)
-    RPAREN          reduce using rule 58 (condition -> STR condition_operator STR .)
+    AND             reduce using rule 64 (condition -> STR condition_operator STR .)
+    OR              reduce using rule 64 (condition -> STR condition_operator STR .)
+    RPAREN          reduce using rule 64 (condition -> STR condition_operator STR .)
 
 
 state 99
@@ -1350,11 +1363,11 @@ state 100
     (26) map_pairs -> . map_pair COMMA map_pairs
     (24) map_pair -> . map_key COLON map_value
     (27) map_key -> . value
-    (36) value -> . INTEGER
-    (37) value -> . FLOAT
-    (38) value -> . STR
-    (39) value -> . BOOLEAN
-    (40) value -> . IDENTIFIER
+    (42) value -> . INTEGER
+    (43) value -> . FLOAT
+    (44) value -> . STR
+    (45) value -> . BOOLEAN
+    (46) value -> . IDENTIFIER
 
     INTEGER         shift and go to state 73
     FLOAT           shift and go to state 74
@@ -1371,11 +1384,11 @@ state 101
 
     (24) map_pair -> map_key COLON . map_value
     (28) map_value -> . value
-    (36) value -> . INTEGER
-    (37) value -> . FLOAT
-    (38) value -> . STR
-    (39) value -> . BOOLEAN
-    (40) value -> . IDENTIFIER
+    (42) value -> . INTEGER
+    (43) value -> . FLOAT
+    (44) value -> . STR
+    (45) value -> . BOOLEAN
+    (46) value -> . IDENTIFIER
 
     INTEGER         shift and go to state 73
     FLOAT           shift and go to state 74
@@ -1397,51 +1410,55 @@ state 102
 
 state 103
 
-    (73) expression -> IDENTIFIER . PLUS IDENTIFIER
+    (79) expression -> IDENTIFIER . PLUS IDENTIFIER
+    (80) expression -> IDENTIFIER . MINUS IDENTIFIER
+    (81) expression -> IDENTIFIER .
 
     PLUS            shift and go to state 117
+    MINUS           shift and go to state 118
+    SEMICOLON       reduce using rule 81 (expression -> IDENTIFIER .)
 
 
 state 104
 
-    (75) declarationExpression -> datatype IDENTIFIER EQUAL expression . SEMICOLON
+    (83) declarationExpression -> datatype IDENTIFIER EQUAL expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 118
+    SEMICOLON       shift and go to state 119
 
 
 state 105
 
-    (63) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression . RPAREN EQUAL GREATERTHAN expression SEMICOLON
+    (69) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression . RPAREN EQUAL GREATERTHAN expression SEMICOLON
 
-    RPAREN          shift and go to state 119
+    RPAREN          shift and go to state 120
 
 
 state 106
 
-    (68) optFunction_argumentsExpression -> LCURLYBRACKET . optFunction_arguments RCURLYBRACKET
-    (71) optFunction_arguments -> . optFunction_argument
-    (72) optFunction_arguments -> . optFunction_argument COMMA optFunction_arguments
-    (70) optFunction_argument -> . REQUIRED datatype IDENTIFIER
+    (74) optFunction_argumentsExpression -> LCURLYBRACKET . optFunction_arguments RCURLYBRACKET
+    (77) optFunction_arguments -> . optFunction_argument
+    (78) optFunction_arguments -> . optFunction_argument COMMA optFunction_arguments
+    (76) optFunction_argument -> . REQUIRED datatype IDENTIFIER
 
-    REQUIRED        shift and go to state 122
+    REQUIRED        shift and go to state 123
 
-    optFunction_arguments          shift and go to state 120
-    optFunction_argument           shift and go to state 121
+    optFunction_arguments          shift and go to state 121
+    optFunction_argument           shift and go to state 122
 
 state 107
 
-    (69) optFunction_argumentsExpression -> empty .
+    (75) optFunction_argumentsExpression -> empty .
 
-    RPAREN          reduce using rule 69 (optFunction_argumentsExpression -> empty .)
+    RPAREN          reduce using rule 75 (optFunction_argumentsExpression -> empty .)
 
 
 state 108
 
-    (67) function_arguments_repeat -> function_argument COMMA . function_arguments_repeat
-    (66) function_arguments_repeat -> . function_argument
-    (67) function_arguments_repeat -> . function_argument COMMA function_arguments_repeat
-    (64) function_argument -> . datatype IDENTIFIER
-    (65) function_argument -> . empty
+    (73) function_arguments_repeat -> function_argument COMMA . function_arguments_repeat
+    (72) function_arguments_repeat -> . function_argument
+    (73) function_arguments_repeat -> . function_argument COMMA function_arguments_repeat
+    (70) function_argument -> . datatype IDENTIFIER
+    (71) function_argument -> . empty
     (6) datatype -> . INT
     (7) datatype -> . STRING
     (8) datatype -> . BOOL
@@ -1467,18 +1484,18 @@ state 108
     MAP             shift and go to state 4
 
     function_argument              shift and go to state 81
-    function_arguments_repeat      shift and go to state 123
+    function_arguments_repeat      shift and go to state 124
     datatype                       shift and go to state 82
     empty                          shift and go to state 83
     map_identifier                 shift and go to state 33
 
 state 109
 
-    (64) function_argument -> datatype IDENTIFIER .
+    (70) function_argument -> datatype IDENTIFIER .
 
-    COMMA           reduce using rule 64 (function_argument -> datatype IDENTIFIER .)
-    LCURLYBRACKET   reduce using rule 64 (function_argument -> datatype IDENTIFIER .)
-    RPAREN          reduce using rule 64 (function_argument -> datatype IDENTIFIER .)
+    COMMA           reduce using rule 70 (function_argument -> datatype IDENTIFIER .)
+    LCURLYBRACKET   reduce using rule 70 (function_argument -> datatype IDENTIFIER .)
+    RPAREN          reduce using rule 70 (function_argument -> datatype IDENTIFIER .)
 
 
 state 110
@@ -1497,20 +1514,20 @@ state 110
 
 state 111
 
-    (44) negation_values -> EXMARK deniable_values .
+    (50) negation_values -> EXMARK deniable_values .
 
-    AND             reduce using rule 44 (negation_values -> EXMARK deniable_values .)
-    OR              reduce using rule 44 (negation_values -> EXMARK deniable_values .)
-    RPAREN          reduce using rule 44 (negation_values -> EXMARK deniable_values .)
+    AND             reduce using rule 50 (negation_values -> EXMARK deniable_values .)
+    OR              reduce using rule 50 (negation_values -> EXMARK deniable_values .)
+    RPAREN          reduce using rule 50 (negation_values -> EXMARK deniable_values .)
 
 
 state 112
 
-    (55) condition -> EXMARK IDENTIFIER condition_operator condition_values .
+    (61) condition -> EXMARK IDENTIFIER condition_operator condition_values .
 
-    AND             reduce using rule 55 (condition -> EXMARK IDENTIFIER condition_operator condition_values .)
-    OR              reduce using rule 55 (condition -> EXMARK IDENTIFIER condition_operator condition_values .)
-    RPAREN          reduce using rule 55 (condition -> EXMARK IDENTIFIER condition_operator condition_values .)
+    AND             reduce using rule 61 (condition -> EXMARK IDENTIFIER condition_operator condition_values .)
+    OR              reduce using rule 61 (condition -> EXMARK IDENTIFIER condition_operator condition_values .)
+    RPAREN          reduce using rule 61 (condition -> EXMARK IDENTIFIER condition_operator condition_values .)
 
 
 state 113
@@ -1545,44 +1562,51 @@ state 116
 
 state 117
 
-    (73) expression -> IDENTIFIER PLUS . IDENTIFIER
+    (79) expression -> IDENTIFIER PLUS . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 124
+    IDENTIFIER      shift and go to state 125
 
 
 state 118
 
-    (75) declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .
+    (80) expression -> IDENTIFIER MINUS . IDENTIFIER
 
-    $end            reduce using rule 75 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    IDENTIFIER      shift and go to state 126
 
 
 state 119
 
-    (63) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN . EQUAL GREATERTHAN expression SEMICOLON
+    (83) declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .
 
-    EQUAL           shift and go to state 125
+    $end            reduce using rule 83 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
 
 
 state 120
 
-    (68) optFunction_argumentsExpression -> LCURLYBRACKET optFunction_arguments . RCURLYBRACKET
+    (69) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN . EQUAL GREATERTHAN expression SEMICOLON
 
-    RCURLYBRACKET   shift and go to state 126
+    EQUAL           shift and go to state 127
 
 
 state 121
 
-    (71) optFunction_arguments -> optFunction_argument .
-    (72) optFunction_arguments -> optFunction_argument . COMMA optFunction_arguments
+    (74) optFunction_argumentsExpression -> LCURLYBRACKET optFunction_arguments . RCURLYBRACKET
 
-    RCURLYBRACKET   reduce using rule 71 (optFunction_arguments -> optFunction_argument .)
-    COMMA           shift and go to state 127
+    RCURLYBRACKET   shift and go to state 128
 
 
 state 122
 
-    (70) optFunction_argument -> REQUIRED . datatype IDENTIFIER
+    (77) optFunction_arguments -> optFunction_argument .
+    (78) optFunction_arguments -> optFunction_argument . COMMA optFunction_arguments
+
+    RCURLYBRACKET   reduce using rule 77 (optFunction_arguments -> optFunction_argument .)
+    COMMA           shift and go to state 129
+
+
+state 123
+
+    (76) optFunction_argument -> REQUIRED . datatype IDENTIFIER
     (6) datatype -> . INT
     (7) datatype -> . STRING
     (8) datatype -> . BOOL
@@ -1603,98 +1627,107 @@ state 122
     VOID            shift and go to state 32
     MAP             shift and go to state 4
 
-    datatype                       shift and go to state 128
+    datatype                       shift and go to state 130
     map_identifier                 shift and go to state 33
-
-state 123
-
-    (67) function_arguments_repeat -> function_argument COMMA function_arguments_repeat .
-
-    LCURLYBRACKET   reduce using rule 67 (function_arguments_repeat -> function_argument COMMA function_arguments_repeat .)
-    RPAREN          reduce using rule 67 (function_arguments_repeat -> function_argument COMMA function_arguments_repeat .)
-
 
 state 124
 
-    (73) expression -> IDENTIFIER PLUS IDENTIFIER .
+    (73) function_arguments_repeat -> function_argument COMMA function_arguments_repeat .
 
-    SEMICOLON       reduce using rule 73 (expression -> IDENTIFIER PLUS IDENTIFIER .)
+    LCURLYBRACKET   reduce using rule 73 (function_arguments_repeat -> function_argument COMMA function_arguments_repeat .)
+    RPAREN          reduce using rule 73 (function_arguments_repeat -> function_argument COMMA function_arguments_repeat .)
 
 
 state 125
 
-    (63) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL . GREATERTHAN expression SEMICOLON
+    (79) expression -> IDENTIFIER PLUS IDENTIFIER .
 
-    GREATERTHAN     shift and go to state 129
+    SEMICOLON       reduce using rule 79 (expression -> IDENTIFIER PLUS IDENTIFIER .)
 
 
 state 126
 
-    (68) optFunction_argumentsExpression -> LCURLYBRACKET optFunction_arguments RCURLYBRACKET .
+    (80) expression -> IDENTIFIER MINUS IDENTIFIER .
 
-    RPAREN          reduce using rule 68 (optFunction_argumentsExpression -> LCURLYBRACKET optFunction_arguments RCURLYBRACKET .)
+    SEMICOLON       reduce using rule 80 (expression -> IDENTIFIER MINUS IDENTIFIER .)
 
 
 state 127
 
-    (72) optFunction_arguments -> optFunction_argument COMMA . optFunction_arguments
-    (71) optFunction_arguments -> . optFunction_argument
-    (72) optFunction_arguments -> . optFunction_argument COMMA optFunction_arguments
-    (70) optFunction_argument -> . REQUIRED datatype IDENTIFIER
+    (69) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL . GREATERTHAN expression SEMICOLON
 
-    REQUIRED        shift and go to state 122
+    GREATERTHAN     shift and go to state 131
 
-    optFunction_argument           shift and go to state 121
-    optFunction_arguments          shift and go to state 130
 
 state 128
 
-    (70) optFunction_argument -> REQUIRED datatype . IDENTIFIER
+    (74) optFunction_argumentsExpression -> LCURLYBRACKET optFunction_arguments RCURLYBRACKET .
 
-    IDENTIFIER      shift and go to state 131
+    RPAREN          reduce using rule 74 (optFunction_argumentsExpression -> LCURLYBRACKET optFunction_arguments RCURLYBRACKET .)
 
 
 state 129
 
-    (63) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN . expression SEMICOLON
-    (73) expression -> . IDENTIFIER PLUS IDENTIFIER
+    (78) optFunction_arguments -> optFunction_argument COMMA . optFunction_arguments
+    (77) optFunction_arguments -> . optFunction_argument
+    (78) optFunction_arguments -> . optFunction_argument COMMA optFunction_arguments
+    (76) optFunction_argument -> . REQUIRED datatype IDENTIFIER
 
-    IDENTIFIER      shift and go to state 103
+    REQUIRED        shift and go to state 123
 
-    expression                     shift and go to state 132
+    optFunction_argument           shift and go to state 122
+    optFunction_arguments          shift and go to state 132
 
 state 130
 
-    (72) optFunction_arguments -> optFunction_argument COMMA optFunction_arguments .
+    (76) optFunction_argument -> REQUIRED datatype . IDENTIFIER
 
-    RCURLYBRACKET   reduce using rule 72 (optFunction_arguments -> optFunction_argument COMMA optFunction_arguments .)
+    IDENTIFIER      shift and go to state 133
 
 
 state 131
 
-    (70) optFunction_argument -> REQUIRED datatype IDENTIFIER .
+    (69) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN . expression SEMICOLON
+    (79) expression -> . IDENTIFIER PLUS IDENTIFIER
+    (80) expression -> . IDENTIFIER MINUS IDENTIFIER
+    (81) expression -> . IDENTIFIER
 
-    COMMA           reduce using rule 70 (optFunction_argument -> REQUIRED datatype IDENTIFIER .)
-    RCURLYBRACKET   reduce using rule 70 (optFunction_argument -> REQUIRED datatype IDENTIFIER .)
+    IDENTIFIER      shift and go to state 103
 
+    expression                     shift and go to state 134
 
 state 132
 
-    (63) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression . SEMICOLON
+    (78) optFunction_arguments -> optFunction_argument COMMA optFunction_arguments .
 
-    SEMICOLON       shift and go to state 133
+    RCURLYBRACKET   reduce using rule 78 (optFunction_arguments -> optFunction_argument COMMA optFunction_arguments .)
 
 
 state 133
 
-    (63) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .
+    (76) optFunction_argument -> REQUIRED datatype IDENTIFIER .
 
-    INT             reduce using rule 63 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
-    STRING          reduce using rule 63 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
-    BOOL            reduce using rule 63 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
-    DOUBLE          reduce using rule 63 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
-    DYNAMIC         reduce using rule 63 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
-    VAR             reduce using rule 63 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
-    VOID            reduce using rule 63 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
-    MAP             reduce using rule 63 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
+    COMMA           reduce using rule 76 (optFunction_argument -> REQUIRED datatype IDENTIFIER .)
+    RCURLYBRACKET   reduce using rule 76 (optFunction_argument -> REQUIRED datatype IDENTIFIER .)
+
+
+state 134
+
+    (69) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression . SEMICOLON
+
+    SEMICOLON       shift and go to state 135
+
+
+state 135
+
+    (69) function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .
+
+    INT             reduce using rule 69 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
+    STRING          reduce using rule 69 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
+    BOOL            reduce using rule 69 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
+    DOUBLE          reduce using rule 69 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
+    DYNAMIC         reduce using rule 69 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
+    VAR             reduce using rule 69 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
+    VOID            reduce using rule 69 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
+    MAP             reduce using rule 69 (function_lambda -> returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
 
