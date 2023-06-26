@@ -2,16 +2,20 @@ from lexico import tokens
 import ply.yacc as yacc
 
 
-#BY RICARDO MOLINA
-prueba1='''
+#BY RICARDO MOLINA : class_content,ifElseStatement,conditions,Map,declarationExpression,function_lambda,parte forStatement
+algoritmoPruebaSintaticoRicardoMolina='''
 Map<int,String> personas = {
-   1 : 'ere',
+    1 : 'ere',
     2 :'sd'
 };
 if(n==5){
+int x=5;
   }else if(n==6){
+  int x=6;
   }else if(n==7){
+  int x=7;
   }else{
+  int x=8;
   }
 void imprimirMediaNumero(int c1,{required int num1, required int num2}) => num1+num2;
 int x= num1+num2;
@@ -20,16 +24,15 @@ int x= num1+num2;
 # BY JARED CASTILLO : FOR, STACK, INFERED RETURN FUNCTION STATEMENT
 prueba2 = '''
 for (var i = 0; i < 5; i++) {
-  message.write('!');
 }
-final stack = Stack<int>();
-final smokeStack = Stack.of(list);
-suma(int a, int b) {
+'''
+pr3='''
+suma(int a) {
   return a + b;
 }
 '''
 #Testeos
-algoritmo1 = '''
+algoritmoLexico1 = '''
 //ALGORITMO RICARDO MOLINA
 main() {
   print(insertionSort([8,9, 4, 2, 6,10,12]));
@@ -38,11 +41,6 @@ List<int> insertionSort(List<int> list) {
   for (int j = 1; j < list.length; j++) {
     int key = list[j];
     int i = j - 1;
-    while (i >= 0 && list[i] > key) {
-      list[i + 1] = list[i];
-      i = i - 1;
-      list[i + 1] = key;
-    }
   }
   return list;
 }
@@ -134,8 +132,28 @@ main() async {
 
 '''
 def p_class(p):
-    'class : map ifElseStatement function_lambda declarationExpression'
+    'class : class_content_repeat'
 
+def p_class_content_map(p):
+  '''class_content : map
+  '''
+def p_class_content_ifElse(p):
+  '''class_content : ifElseStatement
+  '''
+def p_class_content_lambdaFunction(p):
+  '''class_content : function_lambda
+  '''
+def p_class_content_declarationExpression(p):
+  '''class_content : declarationExpression
+  '''
+def p_class_content_inferedFunction(p):
+  '''class_content : inferedReturnFunction
+  '''
+
+def p_class_content_repeat(p):
+  '''class_content_repeat : class_content
+                           | class_content_repeat class_content
+  '''
 def p_map(p):
   'map : map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON'
 
@@ -148,14 +166,8 @@ def p_map_type_specified(p):
   'map_type_specified : LESSTHAN datatype COMMA datatype GREATERTHAN'
 
 def p_datatype(p):
-  '''datatype : INT
-               | STRING
-               | BOOL
-               | DOUBLE
-               | DYNAMIC
+  '''datatype : returnType
                | VAR
-               | VOID
-               | map_identifier
   '''
 def p_returnType(p):
   '''returnType : INT
@@ -196,32 +208,32 @@ def p_elifStatement_repeat(p):
                            | elifStatement elifStatement_repeat
   '''
 def p_ifStatement(p):
-  '''ifStatement : IF LPAREN conditions RPAREN LCURLYBRACKET RCURLYBRACKET
+  '''ifStatement : IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
   '''
 
 def p_elifStatement(p):
   '''elifStatement : ELSE ifStatement
   '''
 def p_elseStatement(p):
-  '''elifStatement : ELSE LCURLYBRACKET RCURLYBRACKET
+  '''elifStatement : ELSE LCURLYBRACKET class_content_repeat RCURLYBRACKET
   '''
 
 def p_forStatement(p):
-  ''' for : For LPAREN declarationExpression SEMICOLON conditions SEMICOLON task RPAREN LCURLYBRACKET RCURLYBRACKET
+  ''' forStatement : FOR LPAREN declarationExpression conditions SEMICOLON taskStatement RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
   '''
 
 def p_taskStatement(p):
-  '''task: IDENTIFIER PLUS PLUS
+  '''taskStatement : IDENTIFIER PLUS PLUS
           | IDENTIFIER MINUS MINUS
   '''
 
-def p_stackStatement(p):
-  '''stack: FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN SEMICOLON
+def p_stack(p):
+  '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
           | FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
   '''
 
 def p_inferedReturnFunction(p):
-  '''inferedReturnFunction: IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN  RCURLYBRACKET
+  '''inferedReturnFunction : IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
 
   '''
 
@@ -232,7 +244,10 @@ def p_value(p):
               | BOOLEAN
               | IDENTIFIER
   '''
-
+def p_opt_value(p):
+  '''opt_value : value
+                | empty
+  '''
 def p_deniable_values(p):
   '''deniable_values : IDENTIFIER
                       | BOOLEAN
@@ -276,12 +291,13 @@ def p_condition_connector(p):
   '''
 
 def p_function_lambda(p):
-  '''function_lambda : returnType IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
+  '''function_lambda : datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
   '''
 
 def p_function_argument(p):
   ''' function_argument : datatype IDENTIFIER
-                         | empty
+                        | empty
+
   '''
 
 def p_function_arguments_repeat(p):
@@ -292,9 +308,11 @@ def p_function_arguments_repeat(p):
 def p_optFunction_argumentsExpression(p):
   ''' optFunction_argumentsExpression : LCURLYBRACKET optFunction_arguments RCURLYBRACKET
                                        | empty
+
   '''
 def p_optFunction_argument(p):
   '''optFunction_argument : REQUIRED datatype IDENTIFIER
+
   '''
 
 def p_optFunction_arguments(p):
@@ -303,9 +321,20 @@ def p_optFunction_arguments(p):
   '''
 
 def p_expression(p):
-  '''expression : IDENTIFIER PLUS IDENTIFIER
-                  | IDENTIFIER MINUS IDENTIFIER
-                  | IDENTIFIER
+  '''expression : operableTypes operatorExpression operableTypes
+                  | value
+  '''
+
+def p_operablTypes(p):
+  '''operableTypes : IDENTIFIER
+                    | number
+
+  '''
+def p_operatorExpression(p):
+  '''operatorExpression : PLUS
+                         | MINUS
+                         | TIMES
+                         | DIVISION
   '''
 
 def p_declarationExpression(p):
@@ -315,6 +344,8 @@ def p_declarationExpression(p):
 def p_declarationExpression_asign(p):
   '''declarationExpression : datatype IDENTIFIER EQUAL expression SEMICOLON
   '''
+
+
 
 def p_error(p):
   if p:
@@ -327,12 +358,11 @@ def p_error(p):
 # Build the parser
 sintactico = yacc.yacc()
 
-while True:
-  try:
-    s = input('dart > ')
-  except EOFError:
-    break
-  if not s: continue
-  result = sintactico.parse(prueba1)
-  if result != None: print(result)
+print("-------------------------------")
+print("PRUEBA DE SINTAXIS DE ALGORITMO ->")
+result = sintactico.parse(algoritmoPruebaSintaticoRicardoMolina)
+if result == None:
+  print("La sintaxis es correcta")
+else:
+  print(result)
 
