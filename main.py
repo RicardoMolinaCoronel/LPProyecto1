@@ -23,12 +23,11 @@ int x= num1+num2;
 
 # BY JARED CASTILLO : FOR, STACK, INFERED RETURN FUNCTION STATEMENT
 prueba2 = '''
-
-for(var i = 0; i < 5; i++) {
+for(var i = 0; i < 5; i++ ){
 }
 '''
 pr3='''
-suma(int a) {
+suma(int a, int b) {
   return a + b;
 }
 '''
@@ -147,6 +146,10 @@ def p_class_content_lambdaFunction(p):
 def p_class_content_declarationExpression(p):
   '''class_content : declarationExpression
   '''
+def p_class_content_for(p):
+    '''class_content : forStatement
+    '''
+  
 def p_class_content_inferedFunction(p):
   '''class_content : inferedReturnFunction
   '''
@@ -190,6 +193,7 @@ def p_map_content(p):
   '''
 def p_map_pair(p):
   'map_pair : map_key COLON map_value'
+
 def p_map_pairs(p):
   '''map_pairs : map_pair
                 | map_pair COMMA map_pairs
@@ -222,12 +226,11 @@ def p_elseStatement(p):
   '''
 
 def p_forStatement(p):
-  '''forStatement : FOR LPAREN declarationExpression SEMICOLON conditions SEMICOLON taskStatement RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
+  '''forStatement : FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON taskStatement RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
   '''
 
 def p_taskStatement(p):
-  '''taskStatement : IDENTIFIER PLUS PLUS
-                    | IDENTIFIER MINUS MINUS
+  '''taskStatement : IDENTIFIER operatorExpression operatorExpression
   '''
 
 def p_stack(p):
@@ -276,6 +279,8 @@ def p_condition_operator(p):
   '''condition_operator : DOUBLEQUAL
                          | LESSTHAN
                          | GREATERTHAN
+                         | LESSTHAN EQUAL
+                         | GREATERTHAN EQUAL
   '''
 def p_number(p):
   '''number : FLOAT
@@ -287,6 +292,7 @@ def p_condition(p):
                 | BOOLEAN condition_operator BOOLEAN
                 | number condition_operator number
                 | STR condition_operator STR
+                | IDENTIFIER condition_operator IDENTIFIER
   '''
 
 def p_conditions(p):
@@ -370,7 +376,7 @@ sintactico = yacc.yacc()
 
 print("-------------------------------")
 print("PRUEBA DE SINTAXIS DE ALGORITMO ->")
-result = sintactico.parse(algoritmoPruebaSintaticoRicardoMolina)
+result = sintactico.parse(prueba2)
 if result == None:
   print("La sintaxis es correcta")
 else:
