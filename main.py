@@ -3,7 +3,7 @@ import ply.yacc as yacc
 
 
 #BY RICARDO MOLINA : class_content,ifElseStatement,conditions,Map,declarationExpression,function_lambda,parte forStatement
-algoritmoPruebaSintaticoRicardoMolina='''
+algoritmoPruebaSintaticoRicardoMolina = '''
 Map<int,String> personas = {
     1 : 'ere',
     2 :'sd'
@@ -22,9 +22,23 @@ int x= num1+num2;
 '''
 
 # BY JARED CASTILLO : FOR, STACK, INFERED RETURN FUNCTION STATEMENT
-prueba2 = '''
-for(var i = 0; i < 5; i++){
+algoritmoPruebaSintaticoJaredCastillo = '''
+while(a < b) {
+  x++;
+ }
+ 
+final stack = Stack<int>();
+final smokeStack = Stack.of(list);
+
+suma(int a, int b) {
+  return a + b;
 }
+'''
+
+prueba2 = '''
+for (var i = 0; i < 5; i++) {
+}
+
 '''
 
 Pstack='''
@@ -156,6 +170,9 @@ def p_class_content_for(p):
     '''class_content : forStatement
     '''
 
+def p_class_content_while(p):
+  '''class_content : while
+  '''
 
 def p_class_content_stack(p):
   '''class_content : stack
@@ -237,7 +254,7 @@ def p_elseStatement(p):
   '''
 
 def p_forStatement(p):
-  '''forStatement : FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON taskStatement RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
+  '''forStatement : FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
   '''
 
 def p_taskStatement(p):
@@ -246,10 +263,11 @@ def p_taskStatement(p):
 
 def p_stack(p):
   '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
-'''
+  '''
 
-
-
+def p_whileStatement(p):
+  '''while : WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
+  '''
 def p_stackStatement(p):
   '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN RPAREN SEMICOLON
           | FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
@@ -257,7 +275,6 @@ def p_stackStatement(p):
 
 def p_inferedReturnFunction(p):
   '''inferedReturnFunction : IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
-
   '''
 
 def p_value(p):
@@ -348,6 +365,7 @@ def p_optFunction_arguments(p):
 def p_expression(p):
   '''expression : operableTypes operatorExpression operableTypes
                   | value
+                  | operableTypes operatorExpression
   '''
 
 def p_operablTypes(p):
@@ -360,6 +378,7 @@ def p_operatorExpression(p):
                          | MINUS
                          | TIMES
                          | DIVISION
+                         | PLUS PLUS
   '''
 
 def p_declarationExpression(p):
@@ -386,7 +405,7 @@ sintactico = yacc.yacc()
 
 print("-------------------------------")
 print("PRUEBA DE SINTAXIS DE ALGORITMO ->")
-result = sintactico.parse(Pstack)
+result = sintactico.parse(algoritmoPruebaSintaticoJaredCastillo)
 if result == None:
   print("La sintaxis es correcta")
 else:

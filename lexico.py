@@ -36,7 +36,8 @@ reserved = reservadas.crear(
    'required',
    'final',
    'Stack',
-   'of'
+   'of',
+   'do'
    ])
 
 
