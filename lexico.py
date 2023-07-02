@@ -45,7 +45,7 @@ tokens = ('INTEGER','FLOAT','IDENTIFIER','BOOLEAN','PLUS', 'MINUS', 'TIMES', 'DI
           'COMMENT','DOT','COMMA','GREATERTHAN','LESSTHAN','NOTEQUAL',
           'DOUBQUOTMARK','STR','EQUAL','DOUBLEQUAL',"LCURLYBRACKET","RCURLYBRACKET",
           'LSQUAREBRACKET','RSQUAREBRACKET','SEMICOLON','AMPERSAND', 'COLON', 'EXMARK',
-          'AND', 'OR', 'APOSTROPHE','METHOD', 'DOLLAR') + tuple(reserved.values())
+          'AND', 'OR', 'APOSTROPHE','METHOD', 'DOLLAR', 'PIPELINE') + tuple(reserved.values())
 
 '''
 Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return) - algoritmo1
@@ -89,6 +89,7 @@ t_OR = r'\|\|'
 t_APOSTROPHE = r'\''
 t_METHOD = r'[a-zA-Z\_]+\(\)$'
 t_DOLLAR=r'\$'
+t_PIPELINE= r'\|'
 
 t_ignore = " \t"
 

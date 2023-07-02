@@ -124,16 +124,15 @@ Rule 87    optFunction_arguments -> optFunction_argument
 Rule 88    optFunction_arguments -> optFunction_argument COMMA optFunction_arguments
 Rule 89    expression -> operableTypes operatorExpression operableTypes
 Rule 90    expression -> value
-Rule 91    expression -> operableTypes operatorExpression
+Rule 91    expression -> operableTypes operatorExpression operatorExpression
 Rule 92    operableTypes -> IDENTIFIER
 Rule 93    operableTypes -> number
 Rule 94    operatorExpression -> PLUS
 Rule 95    operatorExpression -> MINUS
 Rule 96    operatorExpression -> TIMES
 Rule 97    operatorExpression -> DIVISION
-Rule 98    operatorExpression -> PLUS PLUS
-Rule 99    declarationExpression -> datatype IDENTIFIER SEMICOLON
-Rule 100   declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON
+Rule 98    declarationExpression -> datatype IDENTIFIER SEMICOLON
+Rule 99    declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON
 
 Terminals, with rules where they appear
 
@@ -158,7 +157,7 @@ DOUBLEQUAL           : 63
 DOUBQUOTMARK         : 
 DYNAMIC              : 23
 ELSE                 : 39 40
-EQUAL                : 13 43 45 46 66 67 79 100
+EQUAL                : 13 43 45 46 66 67 79 99
 EXIT                 : 
 EXMARK               : 58 71
 FILE                 : 
@@ -166,7 +165,7 @@ FINAL                : 43 45 46
 FLOAT                : 49 61 68
 FOR                  : 41
 GREATERTHAN          : 16 43 45 65 67 79
-IDENTIFIER           : 13 42 43 45 46 46 47 52 55 70 71 79 80 86 92 99 100
+IDENTIFIER           : 13 42 43 45 46 46 47 52 55 70 71 79 80 86 92 98 99
 IF                   : 38
 IMPORT               : 
 IN                   : 
@@ -187,7 +186,7 @@ NOTEQUAL             :
 OF                   : 46
 OPENWRITE            : 
 OR                   : 78
-PLUS                 : 94 98 98
+PLUS                 : 94
 PRINT                : 
 RCURLYBRACKET        : 13 38 40 41 44 47 84
 READLINESYNC         : 
@@ -195,7 +194,7 @@ REQUIRED             : 86
 RETURN               : 47
 RPAREN               : 38 41 43 44 45 46 47 79
 RSQUAREBRACKET       : 
-SEMICOLON            : 10 13 41 41 43 45 46 47 79 99 100
+SEMICOLON            : 10 13 41 41 43 45 46 47 79 98 99
 SET                  : 
 STACK                : 43 45 46
 STR                  : 50 62 74 74
@@ -218,13 +217,13 @@ condition_connector  : 76
 condition_operator   : 70 71 72 73 74
 condition_values     : 70 71
 conditions           : 38 44 76
-datatype             : 16 16 43 45 79 80 86 99 100
+datatype             : 16 16 43 45 79 80 86 98 99
 declarationExpression : 5 41
 deniable_values      : 57 58
 elifStatement        : 36 37
 elifStatement_repeat : 35 37
 empty                : 28 54 81 85
-expression           : 10 41 47 79 100
+expression           : 10 41 47 79 99
 forStatement         : 6
 function_argument    : 82 83
 function_arguments_repeat : 47 79 83
@@ -243,7 +242,7 @@ map_value            : 29
 negation_values      : 59
 number               : 73 73 93
 operableTypes        : 89 89 91
-operatorExpression   : 42 42 89 91
+operatorExpression   : 42 42 89 91 91
 optFunction_argument : 87 88
 optFunction_arguments : 84 88
 optFunction_argumentsExpression : 79
@@ -275,8 +274,8 @@ state 0
     (34) ifElseStatement -> . ifStatement
     (35) ifElseStatement -> . ifStatement elifStatement_repeat
     (79) function_lambda -> . datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (99) declarationExpression -> . datatype IDENTIFIER SEMICOLON
-    (100) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
+    (98) declarationExpression -> . datatype IDENTIFIER SEMICOLON
+    (99) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
     (41) forStatement -> . FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
     (44) while -> . WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
     (43) stack -> . FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
@@ -285,7 +284,7 @@ state 0
     (47) inferedReturnFunction -> . IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (14) map_identifier -> . MAP
     (15) map_identifier -> . MAP map_type_specified
     (38) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -369,8 +368,8 @@ state 2
     (34) ifElseStatement -> . ifStatement
     (35) ifElseStatement -> . ifStatement elifStatement_repeat
     (79) function_lambda -> . datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (99) declarationExpression -> . datatype IDENTIFIER SEMICOLON
-    (100) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
+    (98) declarationExpression -> . datatype IDENTIFIER SEMICOLON
+    (99) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
     (41) forStatement -> . FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
     (44) while -> . WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
     (43) stack -> . FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
@@ -379,7 +378,7 @@ state 2
     (47) inferedReturnFunction -> . IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (14) map_identifier -> . MAP
     (15) map_identifier -> . MAP map_type_specified
     (38) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -732,8 +731,8 @@ state 15
 state 16
 
     (79) function_lambda -> datatype . IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (99) declarationExpression -> datatype . IDENTIFIER SEMICOLON
-    (100) declarationExpression -> datatype . IDENTIFIER EQUAL expression SEMICOLON
+    (98) declarationExpression -> datatype . IDENTIFIER SEMICOLON
+    (99) declarationExpression -> datatype . IDENTIFIER EQUAL expression SEMICOLON
 
     IDENTIFIER      shift and go to state 44
 
@@ -764,12 +763,11 @@ state 19
 state 20
 
     (89) expression -> operableTypes . operatorExpression operableTypes
-    (91) expression -> operableTypes . operatorExpression
+    (91) expression -> operableTypes . operatorExpression operatorExpression
     (94) operatorExpression -> . PLUS
     (95) operatorExpression -> . MINUS
     (96) operatorExpression -> . TIMES
     (97) operatorExpression -> . DIVISION
-    (98) operatorExpression -> . PLUS PLUS
 
     PLUS            shift and go to state 49
     MINUS           shift and go to state 50
@@ -1105,8 +1103,8 @@ state 43
 state 44
 
     (79) function_lambda -> datatype IDENTIFIER . LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (99) declarationExpression -> datatype IDENTIFIER . SEMICOLON
-    (100) declarationExpression -> datatype IDENTIFIER . EQUAL expression SEMICOLON
+    (98) declarationExpression -> datatype IDENTIFIER . SEMICOLON
+    (99) declarationExpression -> datatype IDENTIFIER . EQUAL expression SEMICOLON
 
     LPAREN          shift and go to state 65
     SEMICOLON       shift and go to state 67
@@ -1116,8 +1114,8 @@ state 44
 state 45
 
     (41) forStatement -> FOR LPAREN . declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
-    (99) declarationExpression -> . datatype IDENTIFIER SEMICOLON
-    (100) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
+    (98) declarationExpression -> . datatype IDENTIFIER SEMICOLON
+    (99) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
     (17) datatype -> . returnType
     (18) datatype -> . VAR
     (19) returnType -> . INT
@@ -1180,32 +1178,41 @@ state 47
 state 48
 
     (89) expression -> operableTypes operatorExpression . operableTypes
-    (91) expression -> operableTypes operatorExpression .
+    (91) expression -> operableTypes operatorExpression . operatorExpression
     (92) operableTypes -> . IDENTIFIER
     (93) operableTypes -> . number
+    (94) operatorExpression -> . PLUS
+    (95) operatorExpression -> . MINUS
+    (96) operatorExpression -> . TIMES
+    (97) operatorExpression -> . DIVISION
     (68) number -> . FLOAT
     (69) number -> . INTEGER
 
-    SEMICOLON       reduce using rule 91 (expression -> operableTypes operatorExpression .)
-    RPAREN          reduce using rule 91 (expression -> operableTypes operatorExpression .)
-    IDENTIFIER      shift and go to state 81
+    IDENTIFIER      shift and go to state 82
+    PLUS            shift and go to state 49
+    MINUS           shift and go to state 50
+    TIMES           shift and go to state 51
+    DIVISION        shift and go to state 52
     FLOAT           shift and go to state 77
     INTEGER         shift and go to state 78
 
     operableTypes                  shift and go to state 80
+    operatorExpression             shift and go to state 81
     number                         shift and go to state 26
 
 state 49
 
     (94) operatorExpression -> PLUS .
-    (98) operatorExpression -> PLUS . PLUS
 
     IDENTIFIER      reduce using rule 94 (operatorExpression -> PLUS .)
+    PLUS            reduce using rule 94 (operatorExpression -> PLUS .)
+    MINUS           reduce using rule 94 (operatorExpression -> PLUS .)
+    TIMES           reduce using rule 94 (operatorExpression -> PLUS .)
+    DIVISION        reduce using rule 94 (operatorExpression -> PLUS .)
     FLOAT           reduce using rule 94 (operatorExpression -> PLUS .)
     INTEGER         reduce using rule 94 (operatorExpression -> PLUS .)
     SEMICOLON       reduce using rule 94 (operatorExpression -> PLUS .)
     RPAREN          reduce using rule 94 (operatorExpression -> PLUS .)
-    PLUS            shift and go to state 82
 
 
 state 50
@@ -1213,6 +1220,10 @@ state 50
     (95) operatorExpression -> MINUS .
 
     IDENTIFIER      reduce using rule 95 (operatorExpression -> MINUS .)
+    PLUS            reduce using rule 95 (operatorExpression -> MINUS .)
+    MINUS           reduce using rule 95 (operatorExpression -> MINUS .)
+    TIMES           reduce using rule 95 (operatorExpression -> MINUS .)
+    DIVISION        reduce using rule 95 (operatorExpression -> MINUS .)
     FLOAT           reduce using rule 95 (operatorExpression -> MINUS .)
     INTEGER         reduce using rule 95 (operatorExpression -> MINUS .)
     SEMICOLON       reduce using rule 95 (operatorExpression -> MINUS .)
@@ -1224,6 +1235,10 @@ state 51
     (96) operatorExpression -> TIMES .
 
     IDENTIFIER      reduce using rule 96 (operatorExpression -> TIMES .)
+    PLUS            reduce using rule 96 (operatorExpression -> TIMES .)
+    MINUS           reduce using rule 96 (operatorExpression -> TIMES .)
+    TIMES           reduce using rule 96 (operatorExpression -> TIMES .)
+    DIVISION        reduce using rule 96 (operatorExpression -> TIMES .)
     FLOAT           reduce using rule 96 (operatorExpression -> TIMES .)
     INTEGER         reduce using rule 96 (operatorExpression -> TIMES .)
     SEMICOLON       reduce using rule 96 (operatorExpression -> TIMES .)
@@ -1235,6 +1250,10 @@ state 52
     (97) operatorExpression -> DIVISION .
 
     IDENTIFIER      reduce using rule 97 (operatorExpression -> DIVISION .)
+    PLUS            reduce using rule 97 (operatorExpression -> DIVISION .)
+    MINUS           reduce using rule 97 (operatorExpression -> DIVISION .)
+    TIMES           reduce using rule 97 (operatorExpression -> DIVISION .)
+    DIVISION        reduce using rule 97 (operatorExpression -> DIVISION .)
     FLOAT           reduce using rule 97 (operatorExpression -> DIVISION .)
     INTEGER         reduce using rule 97 (operatorExpression -> DIVISION .)
     SEMICOLON       reduce using rule 97 (operatorExpression -> DIVISION .)
@@ -1420,8 +1439,8 @@ state 64
     (34) ifElseStatement -> . ifStatement
     (35) ifElseStatement -> . ifStatement elifStatement_repeat
     (79) function_lambda -> . datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (99) declarationExpression -> . datatype IDENTIFIER SEMICOLON
-    (100) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
+    (98) declarationExpression -> . datatype IDENTIFIER SEMICOLON
+    (99) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
     (41) forStatement -> . FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
     (44) while -> . WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
     (43) stack -> . FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
@@ -1430,7 +1449,7 @@ state 64
     (47) inferedReturnFunction -> . IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (14) map_identifier -> . MAP
     (15) map_identifier -> . MAP map_type_specified
     (38) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -1531,10 +1550,10 @@ state 65
 
 state 66
 
-    (100) declarationExpression -> datatype IDENTIFIER EQUAL . expression SEMICOLON
+    (99) declarationExpression -> datatype IDENTIFIER EQUAL . expression SEMICOLON
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (92) operableTypes -> . IDENTIFIER
     (93) operableTypes -> . number
     (48) value -> . INTEGER
@@ -1558,28 +1577,28 @@ state 66
 
 state 67
 
-    (99) declarationExpression -> datatype IDENTIFIER SEMICOLON .
+    (98) declarationExpression -> datatype IDENTIFIER SEMICOLON .
 
-    FOR             reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    WHILE           reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    FINAL           reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    IDENTIFIER      reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    MAP             reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    IF              reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    VAR             reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    INTEGER         reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    FLOAT           reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    STR             reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    BOOLEAN         reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    INT             reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    STRING          reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    BOOL            reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    DOUBLE          reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    DYNAMIC         reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    VOID            reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    $end            reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    SEMICOLON       reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
-    RCURLYBRACKET   reduce using rule 99 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    FOR             reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    WHILE           reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    FINAL           reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    IDENTIFIER      reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    MAP             reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    IF              reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    VAR             reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    INTEGER         reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    FLOAT           reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    STR             reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    BOOLEAN         reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    INT             reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    STRING          reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    BOOL            reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    DOUBLE          reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    DYNAMIC         reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    VOID            reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    SEMICOLON       reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
+    RCURLYBRACKET   reduce using rule 98 (declarationExpression -> datatype IDENTIFIER SEMICOLON .)
 
 
 state 68
@@ -1591,8 +1610,8 @@ state 68
 
 state 69
 
-    (99) declarationExpression -> datatype . IDENTIFIER SEMICOLON
-    (100) declarationExpression -> datatype . IDENTIFIER EQUAL expression SEMICOLON
+    (98) declarationExpression -> datatype . IDENTIFIER SEMICOLON
+    (99) declarationExpression -> datatype . IDENTIFIER EQUAL expression SEMICOLON
 
     IDENTIFIER      shift and go to state 94
 
@@ -1729,21 +1748,18 @@ state 80
 
 state 81
 
-    (92) operableTypes -> IDENTIFIER .
+    (91) expression -> operableTypes operatorExpression operatorExpression .
 
-    SEMICOLON       reduce using rule 92 (operableTypes -> IDENTIFIER .)
-    RPAREN          reduce using rule 92 (operableTypes -> IDENTIFIER .)
+    SEMICOLON       reduce using rule 91 (expression -> operableTypes operatorExpression operatorExpression .)
+    RPAREN          reduce using rule 91 (expression -> operableTypes operatorExpression operatorExpression .)
 
 
 state 82
 
-    (98) operatorExpression -> PLUS PLUS .
+    (92) operableTypes -> IDENTIFIER .
 
-    IDENTIFIER      reduce using rule 98 (operatorExpression -> PLUS PLUS .)
-    FLOAT           reduce using rule 98 (operatorExpression -> PLUS PLUS .)
-    INTEGER         reduce using rule 98 (operatorExpression -> PLUS PLUS .)
-    SEMICOLON       reduce using rule 98 (operatorExpression -> PLUS PLUS .)
-    RPAREN          reduce using rule 98 (operatorExpression -> PLUS PLUS .)
+    SEMICOLON       reduce using rule 92 (operableTypes -> IDENTIFIER .)
+    RPAREN          reduce using rule 92 (operableTypes -> IDENTIFIER .)
 
 
 state 83
@@ -1862,8 +1878,8 @@ state 89
     (34) ifElseStatement -> . ifStatement
     (35) ifElseStatement -> . ifStatement elifStatement_repeat
     (79) function_lambda -> . datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (99) declarationExpression -> . datatype IDENTIFIER SEMICOLON
-    (100) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
+    (98) declarationExpression -> . datatype IDENTIFIER SEMICOLON
+    (99) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
     (41) forStatement -> . FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
     (44) while -> . WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
     (43) stack -> . FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
@@ -1872,7 +1888,7 @@ state 89
     (47) inferedReturnFunction -> . IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (14) map_identifier -> . MAP
     (15) map_identifier -> . MAP map_type_specified
     (38) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -1960,7 +1976,7 @@ state 91
 
 state 92
 
-    (100) declarationExpression -> datatype IDENTIFIER EQUAL expression . SEMICOLON
+    (99) declarationExpression -> datatype IDENTIFIER EQUAL expression . SEMICOLON
 
     SEMICOLON       shift and go to state 125
 
@@ -1988,8 +2004,8 @@ state 93
 
 state 94
 
-    (99) declarationExpression -> datatype IDENTIFIER . SEMICOLON
-    (100) declarationExpression -> datatype IDENTIFIER . EQUAL expression SEMICOLON
+    (98) declarationExpression -> datatype IDENTIFIER . SEMICOLON
+    (99) declarationExpression -> datatype IDENTIFIER . EQUAL expression SEMICOLON
 
     SEMICOLON       shift and go to state 67
     EQUAL           shift and go to state 66
@@ -2341,28 +2357,28 @@ state 124
 
 state 125
 
-    (100) declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .
+    (99) declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .
 
-    FOR             reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    WHILE           reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    FINAL           reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    IDENTIFIER      reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    MAP             reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    IF              reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    VAR             reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    INTEGER         reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    FLOAT           reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    STR             reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    BOOLEAN         reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    INT             reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    STRING          reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    BOOL            reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    DOUBLE          reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    DYNAMIC         reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    VOID            reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    $end            reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    SEMICOLON       reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
-    RCURLYBRACKET   reduce using rule 100 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    FOR             reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    WHILE           reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    FINAL           reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    MAP             reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    IF              reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    VAR             reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    INTEGER         reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    FLOAT           reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    STR             reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    BOOLEAN         reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    INT             reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    STRING          reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    BOOL            reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    DOUBLE          reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    DYNAMIC         reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    VOID            reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    $end            reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    SEMICOLON       reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
+    RCURLYBRACKET   reduce using rule 99 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
 
 
 state 126
@@ -2390,8 +2406,8 @@ state 127
     (34) ifElseStatement -> . ifStatement
     (35) ifElseStatement -> . ifStatement elifStatement_repeat
     (79) function_lambda -> . datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (99) declarationExpression -> . datatype IDENTIFIER SEMICOLON
-    (100) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
+    (98) declarationExpression -> . datatype IDENTIFIER SEMICOLON
+    (99) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
     (41) forStatement -> . FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
     (44) while -> . WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
     (43) stack -> . FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
@@ -2400,7 +2416,7 @@ state 127
     (47) inferedReturnFunction -> . IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (14) map_identifier -> . MAP
     (15) map_identifier -> . MAP map_type_specified
     (38) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -2696,8 +2712,8 @@ state 147
     (34) ifElseStatement -> . ifStatement
     (35) ifElseStatement -> . ifStatement elifStatement_repeat
     (79) function_lambda -> . datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (99) declarationExpression -> . datatype IDENTIFIER SEMICOLON
-    (100) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
+    (98) declarationExpression -> . datatype IDENTIFIER SEMICOLON
+    (99) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
     (41) forStatement -> . FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
     (44) while -> . WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
     (43) stack -> . FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
@@ -2706,7 +2722,7 @@ state 147
     (47) inferedReturnFunction -> . IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (14) map_identifier -> . MAP
     (15) map_identifier -> . MAP map_type_specified
     (38) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -2821,7 +2837,7 @@ state 151
     (47) inferedReturnFunction -> IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN . expression SEMICOLON RCURLYBRACKET
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (92) operableTypes -> . IDENTIFIER
     (93) operableTypes -> . number
     (48) value -> . INTEGER
@@ -2899,7 +2915,7 @@ state 156
     (41) forStatement -> FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON . expression RPAREN LCURLYBRACKET RCURLYBRACKET
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (92) operableTypes -> . IDENTIFIER
     (93) operableTypes -> . number
     (48) value -> . INTEGER
@@ -2938,8 +2954,8 @@ state 157
     (34) ifElseStatement -> . ifStatement
     (35) ifElseStatement -> . ifStatement elifStatement_repeat
     (79) function_lambda -> . datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (99) declarationExpression -> . datatype IDENTIFIER SEMICOLON
-    (100) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
+    (98) declarationExpression -> . datatype IDENTIFIER SEMICOLON
+    (99) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
     (41) forStatement -> . FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
     (44) while -> . WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
     (43) stack -> . FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
@@ -2948,7 +2964,7 @@ state 157
     (47) inferedReturnFunction -> . IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (14) map_identifier -> . MAP
     (15) map_identifier -> . MAP map_type_specified
     (38) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -3069,8 +3085,8 @@ state 163
     (34) ifElseStatement -> . ifStatement
     (35) ifElseStatement -> . ifStatement elifStatement_repeat
     (79) function_lambda -> . datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-    (99) declarationExpression -> . datatype IDENTIFIER SEMICOLON
-    (100) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
+    (98) declarationExpression -> . datatype IDENTIFIER SEMICOLON
+    (99) declarationExpression -> . datatype IDENTIFIER EQUAL expression SEMICOLON
     (41) forStatement -> . FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
     (44) while -> . WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
     (43) stack -> . FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
@@ -3079,7 +3095,7 @@ state 163
     (47) inferedReturnFunction -> . IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (14) map_identifier -> . MAP
     (15) map_identifier -> . MAP map_type_specified
     (38) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -3312,7 +3328,7 @@ state 179
     (79) function_lambda -> datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN . expression SEMICOLON
     (89) expression -> . operableTypes operatorExpression operableTypes
     (90) expression -> . value
-    (91) expression -> . operableTypes operatorExpression
+    (91) expression -> . operableTypes operatorExpression operatorExpression
     (92) operableTypes -> . IDENTIFIER
     (93) operableTypes -> . number
     (48) value -> . INTEGER

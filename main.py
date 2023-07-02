@@ -148,8 +148,6 @@ main() async {
   print('Numeros mayor que $x en set: ${mayorQueX(mySet, 5)}');
   print('Puntos mayor que $x en map: ${mayorQueX(puntos.values, 5)}');
 }
-
-
 '''
 def p_class(p):
     'class : class_content_repeat'
@@ -330,6 +328,8 @@ def p_conditions(p):
 def p_condition_connector(p):
   '''condition_connector : AND
                           | OR
+                          | AMPERSAND AMPERSAND
+                          | PIPELINE PIPELINE
   '''
 
 def p_function_lambda(p):
@@ -339,7 +339,6 @@ def p_function_lambda(p):
 def p_function_argument(p):
   ''' function_argument : datatype IDENTIFIER
                         | empty
-
   '''
 
 def p_function_arguments_repeat(p):
@@ -350,7 +349,6 @@ def p_function_arguments_repeat(p):
 def p_optFunction_argumentsExpression(p):
   ''' optFunction_argumentsExpression : LCURLYBRACKET optFunction_arguments RCURLYBRACKET
                                        | empty
-
   '''
 def p_optFunction_argument(p):
   '''optFunction_argument : REQUIRED datatype IDENTIFIER
@@ -365,20 +363,18 @@ def p_optFunction_arguments(p):
 def p_expression(p):
   '''expression : operableTypes operatorExpression operableTypes
                   | value
-                  | operableTypes operatorExpression
+                  | operableTypes operatorExpression operatorExpression
   '''
 
 def p_operablTypes(p):
   '''operableTypes : IDENTIFIER
                     | number
-
   '''
 def p_operatorExpression(p):
   '''operatorExpression : PLUS
                          | MINUS
                          | TIMES
                          | DIVISION
-                         | PLUS PLUS
   '''
 
 def p_declarationExpression(p):
@@ -387,6 +383,28 @@ def p_declarationExpression(p):
 
 def p_declarationExpression_asign(p):
   '''declarationExpression : datatype IDENTIFIER EQUAL expression SEMICOLON
+  '''
+
+#SEMANTIC RULES
+def boolvalues(p):
+  ''' boolvalue: TRUE
+                | FALSE
+  '''
+
+def p_semanticbool(p):
+  ''' bool: BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
+  '''
+
+def p_booloperation(p):
+  ''' booloperation: boolvalue condition_connector boolvalue
+                  | IDENTIFIER condition_connector boolvalue
+                  | IDENTIFIER condition_connector IDENTIFIER
+                  | boolvalue condition_connector IDENTIFIER
+  '''
+
+def p_booloperations(p):
+  ''' booloperations: booloperation
+                    | booloperation condition_connector booloperations
   '''
 
 
@@ -401,7 +419,7 @@ def p_error(p):
 
 # Build the parser
 sintactico = yacc.yacc()
-
+semantico = yacc.yacc()
 
 print("-------------------------------")
 print("PRUEBA DE SINTAXIS DE ALGORITMO ->")
@@ -412,4 +430,10 @@ else:
   print(result)
 
 
-
+print("-------------------------------")
+print("PRUEBA SEMANTICO DE ALGORITMO ->")
+result = semantico.parse(algoritmoPruebaSintaticoJaredCastillo)
+if result == None:
+  print("La sintaxis es correcta")
+else:
+  print(result)
