@@ -143,10 +143,21 @@ Rule 110   booloperation -> IDENTIFIER condition_connector IDENTIFIER
 Rule 111   booloperation -> boolvalue condition_connector IDENTIFIER
 Rule 112   booloperations -> booloperation
 Rule 113   booloperations -> booloperation condition_connector booloperations
-Rule 114   semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-Rule 115   semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-Rule 116   insidelist -> value
-Rule 117   insidelist -> value COMMA insidelist
+Rule 114   semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+Rule 115   semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+Rule 116   semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+Rule 117   semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+Rule 118   semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
+Rule 119   insidelist -> value
+Rule 120   insidelist -> value COMMA insidelist
+Rule 121   insidelistint -> INTEGER
+Rule 122   insidelistint -> INTEGER COMMA insidelistint
+Rule 123   insideliststr -> STR
+Rule 124   insideliststr -> STR COMMA insideliststr
+Rule 125   insidelistbool -> boolvalue
+Rule 126   insidelistbool -> boolvalue COMMA insidelistbool
+Rule 127   insidelistdouble -> FLOAT
+Rule 128   insidelistdouble -> FLOAT COMMA insidelistdouble
 
 Terminals, with rules where they appear
 
@@ -155,44 +166,44 @@ AND                  : 79
 APOSTROPHE           : 
 ASYNC                : 
 AWAIT                : 
-BOOL                 : 23 106 107
+BOOL                 : 23 106 107 117
 BOOLEAN              : 52 58 74 74
 CATCH                : 
 CLOSE                : 
 COLON                : 31
-COMMA                : 18 33 87 92 117
+COMMA                : 18 33 87 92 120 122 124 126 128
 COMMENT              : 
 DIVISION             : 101
 DO                   : 
 DOLLAR               : 
 DOT                  : 47
-DOUBLE               : 24
+DOUBLE               : 24 118
 DOUBLEQUAL           : 65
 DOUBQUOTMARK         : 
-DYNAMIC              : 25 115
+DYNAMIC              : 25 114
 ELSE                 : 41 42
-EQUAL                : 15 44 46 47 68 69 83 103 106 107 114 115
+EQUAL                : 15 44 46 47 68 69 83 103 106 107 114 115 116 117 118
 EXIT                 : 
 EXMARK               : 60 73
 FALSE                : 105
 FILE                 : 
 FINAL                : 44 46 47
-FLOAT                : 50 63 70
+FLOAT                : 50 63 70 127 128
 FOR                  : 43
-GREATERTHAN          : 18 44 46 67 69 83 114 115
-IDENTIFIER           : 15 44 46 47 47 48 53 57 72 73 83 84 90 96 102 103 106 107 109 110 110 111 114 115
+GREATERTHAN          : 18 44 46 67 69 83 114 115 116 117 118
+IDENTIFIER           : 15 44 46 47 47 48 53 57 72 73 83 84 90 96 102 103 106 107 109 110 110 111 114 115 116 117 118
 IF                   : 40
 IMPORT               : 
 IN                   : 
-INT                  : 21
-INTEGER              : 49 62 71
+INT                  : 21 115
+INTEGER              : 49 62 71 121 122
 IS                   : 
 ITERABLE             : 
 LCURLYBRACKET        : 15 40 42 43 45 48 88
-LESSTHAN             : 18 44 46 66 68 114 115
-LIST                 : 114 115
+LESSTHAN             : 18 44 46 66 68 114 115 116 117 118
+LIST                 : 114 115 116 117 118
 LPAREN               : 40 43 44 45 46 47 48 83
-LSQUAREBRACKET       : 114 115
+LSQUAREBRACKET       : 114 115 116 117 118
 MAIN                 : 
 MAP                  : 16 17
 METHOD               : 
@@ -209,12 +220,12 @@ READLINESYNC         :
 REQUIRED             : 90
 RETURN               : 48
 RPAREN               : 40 43 44 45 46 47 48 83
-RSQUAREBRACKET       : 114 115
-SEMICOLON            : 10 15 43 43 44 46 47 48 83 102 103 106 107 114 115
+RSQUAREBRACKET       : 114 115 116 117 118
+SEMICOLON            : 10 15 43 43 44 46 47 48 83 102 103 106 107 114 115 116 117 118
 SET                  : 
 STACK                : 44 46 47
-STR                  : 51 64 76 76
-STRING               : 22
+STR                  : 51 64 76 76 123 124
+STRING               : 22 116
 TIMES                : 100
 TRUE                 : 104
 TRY                  : 
@@ -229,7 +240,7 @@ Nonterminals, with rules where they appear
 bool                 : 13
 booloperation        : 112 113
 booloperations       : 107 113
-boolvalue            : 54 106 108 108 109 111
+boolvalue            : 54 106 108 108 109 111 125 126
 class                : 0
 class_content        : 11 12
 class_content_repeat : 1 12 40 42 45
@@ -238,7 +249,7 @@ condition_connector  : 78 108 109 110 111 113
 condition_operator   : 72 73 74 75 76
 condition_values     : 72 73
 conditions           : 40 45 78
-datatype             : 18 18 44 46 83 84 90 102 103 114
+datatype             : 18 18 44 46 83 84 90 102 103
 declarationExpression : 5 43
 deniable_values      : 59 60
 elifStatement        : 38 39
@@ -252,7 +263,11 @@ function_lambda      : 4
 ifElseStatement      : 3
 ifStatement          : 36 37 41
 inferedReturnFunction : 9
-insidelist           : 114 115 117
+insidelist           : 114 120
+insidelistbool       : 117 126
+insidelistdouble     : 118 128
+insidelistint        : 115 122
+insideliststr        : 116 124
 map                  : 2
 map_content          : 15
 map_identifier       : 15 27
@@ -272,7 +287,7 @@ opt_value            : 44
 returnType           : 19
 semanticlist         : 14
 stack                : 8
-value                : 34 35 55 94 116 117
+value                : 34 35 55 94 119 120
 while                : 7
 
 Parsing method: LALR
@@ -311,8 +326,11 @@ state 0
     (95) expression -> . operableTypes operatorExpression operatorExpression
     (106) bool -> . BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
     (107) bool -> . BOOL IDENTIFIER EQUAL booloperations SEMICOLON
-    (114) semanticlist -> . LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (115) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (115) semanticlist -> . LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+    (116) semanticlist -> . LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+    (117) semanticlist -> . LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+    (118) semanticlist -> . LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
     (40) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -344,16 +362,16 @@ state 0
     IDENTIFIER      shift and go to state 16
     BOOL            shift and go to state 24
     LIST            shift and go to state 26
-    MAP             shift and go to state 28
-    IF              shift and go to state 29
-    VAR             shift and go to state 31
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
-    DOUBLE          shift and go to state 39
+    MAP             shift and go to state 31
+    IF              shift and go to state 32
+    VAR             shift and go to state 34
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
     TRUE            shift and go to state 41
@@ -379,8 +397,8 @@ state 0
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
     boolvalue                      shift and go to state 25
-    returnType                     shift and go to state 30
-    number                         shift and go to state 32
+    returnType                     shift and go to state 33
+    number                         shift and go to state 35
 
 state 1
 
@@ -420,8 +438,11 @@ state 2
     (95) expression -> . operableTypes operatorExpression operatorExpression
     (106) bool -> . BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
     (107) bool -> . BOOL IDENTIFIER EQUAL booloperations SEMICOLON
-    (114) semanticlist -> . LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (115) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (115) semanticlist -> . LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+    (116) semanticlist -> . LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+    (117) semanticlist -> . LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+    (118) semanticlist -> . LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
     (40) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -454,16 +475,16 @@ state 2
     IDENTIFIER      shift and go to state 16
     BOOL            shift and go to state 24
     LIST            shift and go to state 26
-    MAP             shift and go to state 28
-    IF              shift and go to state 29
-    VAR             shift and go to state 31
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
-    DOUBLE          shift and go to state 39
+    MAP             shift and go to state 31
+    IF              shift and go to state 32
+    VAR             shift and go to state 34
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
     TRUE            shift and go to state 41
@@ -487,8 +508,8 @@ state 2
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
     boolvalue                      shift and go to state 25
-    returnType                     shift and go to state 30
-    number                         shift and go to state 32
+    returnType                     shift and go to state 33
+    number                         shift and go to state 35
 
 state 3
 
@@ -948,8 +969,11 @@ state 25
 
 state 26
 
-    (114) semanticlist -> LIST . LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (115) semanticlist -> LIST . LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> LIST . LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (115) semanticlist -> LIST . LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+    (116) semanticlist -> LIST . LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+    (117) semanticlist -> LIST . LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+    (118) semanticlist -> LIST . LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
 
     LESSTHAN        shift and go to state 60
 
@@ -965,43 +989,70 @@ state 27
 
 state 28
 
+    (21) returnType -> INT .
+
+    IDENTIFIER      reduce using rule 21 (returnType -> INT .)
+    COMMA           reduce using rule 21 (returnType -> INT .)
+    GREATERTHAN     reduce using rule 21 (returnType -> INT .)
+
+
+state 29
+
+    (22) returnType -> STRING .
+
+    IDENTIFIER      reduce using rule 22 (returnType -> STRING .)
+    COMMA           reduce using rule 22 (returnType -> STRING .)
+    GREATERTHAN     reduce using rule 22 (returnType -> STRING .)
+
+
+state 30
+
+    (24) returnType -> DOUBLE .
+
+    IDENTIFIER      reduce using rule 24 (returnType -> DOUBLE .)
+    COMMA           reduce using rule 24 (returnType -> DOUBLE .)
+    GREATERTHAN     reduce using rule 24 (returnType -> DOUBLE .)
+
+
+state 31
+
     (16) map_identifier -> MAP .
     (17) map_identifier -> MAP . map_type_specified
     (18) map_type_specified -> . LESSTHAN datatype COMMA datatype GREATERTHAN
 
     IDENTIFIER      reduce using rule 16 (map_identifier -> MAP .)
-    GREATERTHAN     reduce using rule 16 (map_identifier -> MAP .)
     COMMA           reduce using rule 16 (map_identifier -> MAP .)
+    GREATERTHAN     reduce using rule 16 (map_identifier -> MAP .)
     LESSTHAN        shift and go to state 62
 
     map_type_specified             shift and go to state 61
 
-state 29
+state 32
 
     (40) ifStatement -> IF . LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
 
     LPAREN          shift and go to state 63
 
 
-state 30
+state 33
 
     (19) datatype -> returnType .
 
     IDENTIFIER      reduce using rule 19 (datatype -> returnType .)
-    GREATERTHAN     reduce using rule 19 (datatype -> returnType .)
     COMMA           reduce using rule 19 (datatype -> returnType .)
+    GREATERTHAN     reduce using rule 19 (datatype -> returnType .)
 
 
-state 31
+state 34
 
     (20) datatype -> VAR .
 
     IDENTIFIER      reduce using rule 20 (datatype -> VAR .)
-    GREATERTHAN     reduce using rule 20 (datatype -> VAR .)
     COMMA           reduce using rule 20 (datatype -> VAR .)
+    GREATERTHAN     reduce using rule 20 (datatype -> VAR .)
 
 
-state 32
+state 35
 
     (97) operableTypes -> number .
 
@@ -1013,7 +1064,7 @@ state 32
     RPAREN          reduce using rule 97 (operableTypes -> number .)
 
 
-state 33
+state 36
 
     (49) value -> INTEGER .
     (71) number -> INTEGER .
@@ -1026,7 +1077,7 @@ state 33
     DIVISION        reduce using rule 71 (number -> INTEGER .)
 
 
-state 34
+state 37
 
     (50) value -> FLOAT .
     (70) number -> FLOAT .
@@ -1039,7 +1090,7 @@ state 34
     DIVISION        reduce using rule 70 (number -> FLOAT .)
 
 
-state 35
+state 38
 
     (51) value -> STR .
 
@@ -1051,7 +1102,7 @@ state 35
     RSQUAREBRACKET  reduce using rule 51 (value -> STR .)
 
 
-state 36
+state 39
 
     (52) value -> BOOLEAN .
 
@@ -1063,40 +1114,13 @@ state 36
     RSQUAREBRACKET  reduce using rule 52 (value -> BOOLEAN .)
 
 
-state 37
-
-    (21) returnType -> INT .
-
-    IDENTIFIER      reduce using rule 21 (returnType -> INT .)
-    GREATERTHAN     reduce using rule 21 (returnType -> INT .)
-    COMMA           reduce using rule 21 (returnType -> INT .)
-
-
-state 38
-
-    (22) returnType -> STRING .
-
-    IDENTIFIER      reduce using rule 22 (returnType -> STRING .)
-    GREATERTHAN     reduce using rule 22 (returnType -> STRING .)
-    COMMA           reduce using rule 22 (returnType -> STRING .)
-
-
-state 39
-
-    (24) returnType -> DOUBLE .
-
-    IDENTIFIER      reduce using rule 24 (returnType -> DOUBLE .)
-    GREATERTHAN     reduce using rule 24 (returnType -> DOUBLE .)
-    COMMA           reduce using rule 24 (returnType -> DOUBLE .)
-
-
 state 40
 
     (26) returnType -> VOID .
 
     IDENTIFIER      reduce using rule 26 (returnType -> VOID .)
-    GREATERTHAN     reduce using rule 26 (returnType -> VOID .)
     COMMA           reduce using rule 26 (returnType -> VOID .)
+    GREATERTHAN     reduce using rule 26 (returnType -> VOID .)
 
 
 state 41
@@ -1214,22 +1238,22 @@ state 46
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
 
-    VAR             shift and go to state 31
+    VAR             shift and go to state 34
     COMMA           reduce using rule 28 (empty -> .)
     RPAREN          reduce using rule 28 (empty -> .)
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
     BOOL            shift and go to state 69
-    DOUBLE          shift and go to state 39
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
-    MAP             shift and go to state 28
+    MAP             shift and go to state 31
 
     function_arguments_repeat      shift and go to state 65
     function_argument              shift and go to state 66
     datatype                       shift and go to state 67
     empty                          shift and go to state 68
-    returnType                     shift and go to state 30
+    returnType                     shift and go to state 33
     map_identifier                 shift and go to state 70
 
 state 47
@@ -1303,7 +1327,7 @@ state 49
     (40) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
 
     LCURLYBRACKET   shift and go to state 73
-    IF              shift and go to state 29
+    IF              shift and go to state 32
 
     ifStatement                    shift and go to state 72
 
@@ -1335,18 +1359,18 @@ state 51
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
 
-    VAR             shift and go to state 31
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
+    VAR             shift and go to state 34
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
     BOOL            shift and go to state 69
-    DOUBLE          shift and go to state 39
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
-    MAP             shift and go to state 28
+    MAP             shift and go to state 31
 
     declarationExpression          shift and go to state 77
     datatype                       shift and go to state 78
-    returnType                     shift and go to state 30
+    returnType                     shift and go to state 33
     map_identifier                 shift and go to state 70
 
 state 52
@@ -1405,7 +1429,7 @@ state 54
 
     operableTypes                  shift and go to state 89
     operatorExpression             shift and go to state 90
-    number                         shift and go to state 32
+    number                         shift and go to state 35
 
 state 55
 
@@ -1477,40 +1501,26 @@ state 59
 
 state 60
 
-    (114) semanticlist -> LIST LESSTHAN . datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (115) semanticlist -> LIST LESSTHAN . DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (19) datatype -> . returnType
-    (20) datatype -> . VAR
-    (21) returnType -> . INT
-    (22) returnType -> . STRING
-    (23) returnType -> . BOOL
-    (24) returnType -> . DOUBLE
-    (25) returnType -> . DYNAMIC
-    (26) returnType -> . VOID
-    (27) returnType -> . map_identifier
-    (16) map_identifier -> . MAP
-    (17) map_identifier -> . MAP map_type_specified
+    (114) semanticlist -> LIST LESSTHAN . DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (115) semanticlist -> LIST LESSTHAN . INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+    (116) semanticlist -> LIST LESSTHAN . STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+    (117) semanticlist -> LIST LESSTHAN . BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+    (118) semanticlist -> LIST LESSTHAN . DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
 
-    DYNAMIC         shift and go to state 94
-    VAR             shift and go to state 31
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
-    BOOL            shift and go to state 69
-    DOUBLE          shift and go to state 39
-    VOID            shift and go to state 40
-    MAP             shift and go to state 28
+    DYNAMIC         shift and go to state 93
+    INT             shift and go to state 94
+    STRING          shift and go to state 95
+    BOOL            shift and go to state 96
+    DOUBLE          shift and go to state 97
 
-    datatype                       shift and go to state 93
-    returnType                     shift and go to state 30
-    map_identifier                 shift and go to state 70
 
 state 61
 
     (17) map_identifier -> MAP map_type_specified .
 
     IDENTIFIER      reduce using rule 17 (map_identifier -> MAP map_type_specified .)
-    GREATERTHAN     reduce using rule 17 (map_identifier -> MAP map_type_specified .)
     COMMA           reduce using rule 17 (map_identifier -> MAP map_type_specified .)
+    GREATERTHAN     reduce using rule 17 (map_identifier -> MAP map_type_specified .)
 
 
 state 62
@@ -1528,17 +1538,17 @@ state 62
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
 
-    VAR             shift and go to state 31
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
+    VAR             shift and go to state 34
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
     BOOL            shift and go to state 69
-    DOUBLE          shift and go to state 39
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
-    MAP             shift and go to state 28
+    MAP             shift and go to state 31
 
-    datatype                       shift and go to state 95
-    returnType                     shift and go to state 30
+    datatype                       shift and go to state 98
+    returnType                     shift and go to state 33
     map_identifier                 shift and go to state 70
 
 state 63
@@ -1561,7 +1571,7 @@ state 63
     FLOAT           shift and go to state 86
     INTEGER         shift and go to state 87
 
-    conditions                     shift and go to state 96
+    conditions                     shift and go to state 99
     condition                      shift and go to state 80
     number                         shift and go to state 84
 
@@ -1569,14 +1579,14 @@ state 64
 
     (15) map -> map_identifier IDENTIFIER EQUAL . LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON
 
-    LCURLYBRACKET   shift and go to state 97
+    LCURLYBRACKET   shift and go to state 100
 
 
 state 65
 
     (48) inferedReturnFunction -> IDENTIFIER LPAREN function_arguments_repeat . RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
 
-    RPAREN          shift and go to state 98
+    RPAREN          shift and go to state 101
 
 
 state 66
@@ -1586,14 +1596,14 @@ state 66
 
     RPAREN          reduce using rule 86 (function_arguments_repeat -> function_argument .)
     LCURLYBRACKET   reduce using rule 86 (function_arguments_repeat -> function_argument .)
-    COMMA           shift and go to state 99
+    COMMA           shift and go to state 102
 
 
 state 67
 
     (84) function_argument -> datatype . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 100
+    IDENTIFIER      shift and go to state 103
 
 
 state 68
@@ -1610,8 +1620,8 @@ state 69
     (23) returnType -> BOOL .
 
     IDENTIFIER      reduce using rule 23 (returnType -> BOOL .)
-    GREATERTHAN     reduce using rule 23 (returnType -> BOOL .)
     COMMA           reduce using rule 23 (returnType -> BOOL .)
+    GREATERTHAN     reduce using rule 23 (returnType -> BOOL .)
 
 
 state 70
@@ -1619,8 +1629,8 @@ state 70
     (27) returnType -> map_identifier .
 
     IDENTIFIER      reduce using rule 27 (returnType -> map_identifier .)
-    GREATERTHAN     reduce using rule 27 (returnType -> map_identifier .)
     COMMA           reduce using rule 27 (returnType -> map_identifier .)
+    GREATERTHAN     reduce using rule 27 (returnType -> map_identifier .)
 
 
 state 71
@@ -1713,8 +1723,11 @@ state 73
     (95) expression -> . operableTypes operatorExpression operatorExpression
     (106) bool -> . BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
     (107) bool -> . BOOL IDENTIFIER EQUAL booloperations SEMICOLON
-    (114) semanticlist -> . LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (115) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (115) semanticlist -> . LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+    (116) semanticlist -> . LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+    (117) semanticlist -> . LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+    (118) semanticlist -> . LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
     (40) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -1746,22 +1759,22 @@ state 73
     IDENTIFIER      shift and go to state 16
     BOOL            shift and go to state 24
     LIST            shift and go to state 26
-    MAP             shift and go to state 28
-    IF              shift and go to state 29
-    VAR             shift and go to state 31
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
-    DOUBLE          shift and go to state 39
+    MAP             shift and go to state 31
+    IF              shift and go to state 32
+    VAR             shift and go to state 34
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    class_content_repeat           shift and go to state 101
+    class_content_repeat           shift and go to state 104
     class_content                  shift and go to state 3
     map                            shift and go to state 4
     ifElseStatement                shift and go to state 5
@@ -1780,8 +1793,8 @@ state 73
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
     boolvalue                      shift and go to state 25
-    returnType                     shift and go to state 30
-    number                         shift and go to state 32
+    returnType                     shift and go to state 33
+    number                         shift and go to state 35
 
 state 74
 
@@ -1803,23 +1816,23 @@ state 74
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
 
-    VAR             shift and go to state 31
+    VAR             shift and go to state 34
     COMMA           reduce using rule 28 (empty -> .)
     LCURLYBRACKET   reduce using rule 28 (empty -> .)
     RPAREN          reduce using rule 28 (empty -> .)
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
     BOOL            shift and go to state 69
-    DOUBLE          shift and go to state 39
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
-    MAP             shift and go to state 28
+    MAP             shift and go to state 31
 
     datatype                       shift and go to state 67
-    function_arguments_repeat      shift and go to state 102
+    function_arguments_repeat      shift and go to state 105
     function_argument              shift and go to state 66
     empty                          shift and go to state 68
-    returnType                     shift and go to state 30
+    returnType                     shift and go to state 33
     map_identifier                 shift and go to state 70
 
 state 75
@@ -1841,18 +1854,18 @@ state 75
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    IDENTIFIER      shift and go to state 103
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
+    IDENTIFIER      shift and go to state 106
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    expression                     shift and go to state 104
+    expression                     shift and go to state 107
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
-    number                         shift and go to state 32
+    number                         shift and go to state 35
     boolvalue                      shift and go to state 25
 
 state 76
@@ -1888,7 +1901,7 @@ state 77
 
     (43) forStatement -> FOR LPAREN declarationExpression . SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
 
-    SEMICOLON       shift and go to state 105
+    SEMICOLON       shift and go to state 108
 
 
 state 78
@@ -1896,14 +1909,14 @@ state 78
     (102) declarationExpression -> datatype . IDENTIFIER SEMICOLON
     (103) declarationExpression -> datatype . IDENTIFIER EQUAL expression SEMICOLON
 
-    IDENTIFIER      shift and go to state 106
+    IDENTIFIER      shift and go to state 109
 
 
 state 79
 
     (45) while -> WHILE LPAREN conditions . RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
 
-    RPAREN          shift and go to state 107
+    RPAREN          shift and go to state 110
 
 
 state 80
@@ -1916,12 +1929,12 @@ state 80
     (82) condition_connector -> . PIPELINE PIPELINE
 
     RPAREN          reduce using rule 77 (conditions -> condition .)
-    AND             shift and go to state 109
-    OR              shift and go to state 110
-    AMPERSAND       shift and go to state 111
-    PIPELINE        shift and go to state 112
+    AND             shift and go to state 112
+    OR              shift and go to state 113
+    AMPERSAND       shift and go to state 114
+    PIPELINE        shift and go to state 115
 
-    condition_connector            shift and go to state 108
+    condition_connector            shift and go to state 111
 
 state 81
 
@@ -1932,17 +1945,17 @@ state 81
     (68) condition_operator -> . LESSTHAN EQUAL
     (69) condition_operator -> . GREATERTHAN EQUAL
 
-    DOUBLEQUAL      shift and go to state 114
-    LESSTHAN        shift and go to state 115
-    GREATERTHAN     shift and go to state 116
+    DOUBLEQUAL      shift and go to state 117
+    LESSTHAN        shift and go to state 118
+    GREATERTHAN     shift and go to state 119
 
-    condition_operator             shift and go to state 113
+    condition_operator             shift and go to state 116
 
 state 82
 
     (73) condition -> EXMARK . IDENTIFIER condition_operator condition_values
 
-    IDENTIFIER      shift and go to state 117
+    IDENTIFIER      shift and go to state 120
 
 
 state 83
@@ -1954,11 +1967,11 @@ state 83
     (68) condition_operator -> . LESSTHAN EQUAL
     (69) condition_operator -> . GREATERTHAN EQUAL
 
-    DOUBLEQUAL      shift and go to state 114
-    LESSTHAN        shift and go to state 115
-    GREATERTHAN     shift and go to state 116
+    DOUBLEQUAL      shift and go to state 117
+    LESSTHAN        shift and go to state 118
+    GREATERTHAN     shift and go to state 119
 
-    condition_operator             shift and go to state 118
+    condition_operator             shift and go to state 121
 
 state 84
 
@@ -1969,11 +1982,11 @@ state 84
     (68) condition_operator -> . LESSTHAN EQUAL
     (69) condition_operator -> . GREATERTHAN EQUAL
 
-    DOUBLEQUAL      shift and go to state 114
-    LESSTHAN        shift and go to state 115
-    GREATERTHAN     shift and go to state 116
+    DOUBLEQUAL      shift and go to state 117
+    LESSTHAN        shift and go to state 118
+    GREATERTHAN     shift and go to state 119
 
-    condition_operator             shift and go to state 119
+    condition_operator             shift and go to state 122
 
 state 85
 
@@ -1984,11 +1997,11 @@ state 85
     (68) condition_operator -> . LESSTHAN EQUAL
     (69) condition_operator -> . GREATERTHAN EQUAL
 
-    DOUBLEQUAL      shift and go to state 114
-    LESSTHAN        shift and go to state 115
-    GREATERTHAN     shift and go to state 116
+    DOUBLEQUAL      shift and go to state 117
+    LESSTHAN        shift and go to state 118
+    GREATERTHAN     shift and go to state 119
 
-    condition_operator             shift and go to state 120
+    condition_operator             shift and go to state 123
 
 state 86
 
@@ -2026,7 +2039,7 @@ state 88
     (46) stack -> FINAL IDENTIFIER EQUAL . STACK LESSTHAN datatype GREATERTHAN LPAREN RPAREN SEMICOLON
     (47) stack -> FINAL IDENTIFIER EQUAL . STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
 
-    STACK           shift and go to state 121
+    STACK           shift and go to state 124
 
 
 state 89
@@ -2068,45 +2081,62 @@ state 92
 
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
-    IDENTIFIER      shift and go to state 122
+    IDENTIFIER      shift and go to state 125
 
-    boolvalue                      shift and go to state 123
-    booloperations                 shift and go to state 124
-    booloperation                  shift and go to state 125
+    boolvalue                      shift and go to state 126
+    booloperations                 shift and go to state 127
+    booloperation                  shift and go to state 128
 
 state 93
 
-    (114) semanticlist -> LIST LESSTHAN datatype . GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> LIST LESSTHAN DYNAMIC . GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
 
-    GREATERTHAN     shift and go to state 126
+    GREATERTHAN     shift and go to state 129
 
 
 state 94
 
-    (115) semanticlist -> LIST LESSTHAN DYNAMIC . GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (25) returnType -> DYNAMIC .
+    (115) semanticlist -> LIST LESSTHAN INT . GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
 
-  ! shift/reduce conflict for GREATERTHAN resolved as shift
-    GREATERTHAN     shift and go to state 127
-
-  ! GREATERTHAN     [ reduce using rule 25 (returnType -> DYNAMIC .) ]
+    GREATERTHAN     shift and go to state 130
 
 
 state 95
 
-    (18) map_type_specified -> LESSTHAN datatype . COMMA datatype GREATERTHAN
+    (116) semanticlist -> LIST LESSTHAN STRING . GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
 
-    COMMA           shift and go to state 128
+    GREATERTHAN     shift and go to state 131
 
 
 state 96
 
-    (40) ifStatement -> IF LPAREN conditions . RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
+    (117) semanticlist -> LIST LESSTHAN BOOL . GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
 
-    RPAREN          shift and go to state 129
+    GREATERTHAN     shift and go to state 132
 
 
 state 97
+
+    (118) semanticlist -> LIST LESSTHAN DOUBLE . GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
+
+    GREATERTHAN     shift and go to state 133
+
+
+state 98
+
+    (18) map_type_specified -> LESSTHAN datatype . COMMA datatype GREATERTHAN
+
+    COMMA           shift and go to state 134
+
+
+state 99
+
+    (40) ifStatement -> IF LPAREN conditions . RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
+
+    RPAREN          shift and go to state 135
+
+
+state 100
 
     (15) map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET . map_content RCURLYBRACKET SEMICOLON
     (29) map_content -> . map_pairs
@@ -2126,30 +2156,30 @@ state 97
     (105) boolvalue -> . FALSE
 
     RCURLYBRACKET   reduce using rule 28 (empty -> .)
-    INTEGER         shift and go to state 137
-    FLOAT           shift and go to state 138
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    IDENTIFIER      shift and go to state 130
+    INTEGER         shift and go to state 143
+    FLOAT           shift and go to state 144
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    IDENTIFIER      shift and go to state 136
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    map_content                    shift and go to state 131
-    map_pairs                      shift and go to state 132
-    empty                          shift and go to state 133
-    map_pair                       shift and go to state 134
-    map_key                        shift and go to state 135
-    value                          shift and go to state 136
+    map_content                    shift and go to state 137
+    map_pairs                      shift and go to state 138
+    empty                          shift and go to state 139
+    map_pair                       shift and go to state 140
+    map_key                        shift and go to state 141
+    value                          shift and go to state 142
     boolvalue                      shift and go to state 25
 
-state 98
+state 101
 
     (48) inferedReturnFunction -> IDENTIFIER LPAREN function_arguments_repeat RPAREN . LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
 
-    LCURLYBRACKET   shift and go to state 139
+    LCURLYBRACKET   shift and go to state 145
 
 
-state 99
+state 102
 
     (87) function_arguments_repeat -> function_argument COMMA . function_arguments_repeat
     (86) function_arguments_repeat -> . function_argument
@@ -2169,26 +2199,26 @@ state 99
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
 
-    VAR             shift and go to state 31
+    VAR             shift and go to state 34
     COMMA           reduce using rule 28 (empty -> .)
     RPAREN          reduce using rule 28 (empty -> .)
     LCURLYBRACKET   reduce using rule 28 (empty -> .)
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
     BOOL            shift and go to state 69
-    DOUBLE          shift and go to state 39
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
-    MAP             shift and go to state 28
+    MAP             shift and go to state 31
 
     function_argument              shift and go to state 66
-    function_arguments_repeat      shift and go to state 140
+    function_arguments_repeat      shift and go to state 146
     datatype                       shift and go to state 67
     empty                          shift and go to state 68
-    returnType                     shift and go to state 30
+    returnType                     shift and go to state 33
     map_identifier                 shift and go to state 70
 
-state 100
+state 103
 
     (84) function_argument -> datatype IDENTIFIER .
 
@@ -2197,7 +2227,7 @@ state 100
     LCURLYBRACKET   reduce using rule 84 (function_argument -> datatype IDENTIFIER .)
 
 
-state 101
+state 104
 
     (42) elifStatement -> ELSE LCURLYBRACKET class_content_repeat . RCURLYBRACKET
     (12) class_content_repeat -> class_content_repeat . class_content
@@ -2229,8 +2259,11 @@ state 101
     (95) expression -> . operableTypes operatorExpression operatorExpression
     (106) bool -> . BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
     (107) bool -> . BOOL IDENTIFIER EQUAL booloperations SEMICOLON
-    (114) semanticlist -> . LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (115) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (115) semanticlist -> . LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+    (116) semanticlist -> . LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+    (117) semanticlist -> . LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+    (118) semanticlist -> . LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
     (40) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -2256,23 +2289,23 @@ state 101
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    RCURLYBRACKET   shift and go to state 141
+    RCURLYBRACKET   shift and go to state 147
     FOR             shift and go to state 19
     WHILE           shift and go to state 20
     FINAL           shift and go to state 21
     IDENTIFIER      shift and go to state 16
     BOOL            shift and go to state 24
     LIST            shift and go to state 26
-    MAP             shift and go to state 28
-    IF              shift and go to state 29
-    VAR             shift and go to state 31
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
-    DOUBLE          shift and go to state 39
+    MAP             shift and go to state 31
+    IF              shift and go to state 32
+    VAR             shift and go to state 34
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
     TRUE            shift and go to state 41
@@ -2296,23 +2329,23 @@ state 101
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
     boolvalue                      shift and go to state 25
-    returnType                     shift and go to state 30
-    number                         shift and go to state 32
+    returnType                     shift and go to state 33
+    number                         shift and go to state 35
 
-state 102
+state 105
 
     (83) function_lambda -> datatype IDENTIFIER LPAREN function_arguments_repeat . optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
     (88) optFunction_argumentsExpression -> . LCURLYBRACKET optFunction_arguments RCURLYBRACKET
     (89) optFunction_argumentsExpression -> . empty
     (28) empty -> .
 
-    LCURLYBRACKET   shift and go to state 143
+    LCURLYBRACKET   shift and go to state 149
     RPAREN          reduce using rule 28 (empty -> .)
 
-    optFunction_argumentsExpression shift and go to state 142
-    empty                          shift and go to state 144
+    optFunction_argumentsExpression shift and go to state 148
+    empty                          shift and go to state 150
 
-state 103
+state 106
 
     (96) operableTypes -> IDENTIFIER .
     (53) value -> IDENTIFIER .
@@ -2325,14 +2358,14 @@ state 103
     RPAREN          reduce using rule 53 (value -> IDENTIFIER .)
 
 
-state 104
+state 107
 
     (103) declarationExpression -> datatype IDENTIFIER EQUAL expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 145
+    SEMICOLON       shift and go to state 151
 
 
-state 105
+state 108
 
     (43) forStatement -> FOR LPAREN declarationExpression SEMICOLON . condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
     (72) condition -> . IDENTIFIER condition_operator condition_values
@@ -2350,10 +2383,10 @@ state 105
     FLOAT           shift and go to state 86
     INTEGER         shift and go to state 87
 
-    condition                      shift and go to state 146
+    condition                      shift and go to state 152
     number                         shift and go to state 84
 
-state 106
+state 109
 
     (102) declarationExpression -> datatype IDENTIFIER . SEMICOLON
     (103) declarationExpression -> datatype IDENTIFIER . EQUAL expression SEMICOLON
@@ -2362,14 +2395,14 @@ state 106
     EQUAL           shift and go to state 75
 
 
-state 107
+state 110
 
     (45) while -> WHILE LPAREN conditions RPAREN . LCURLYBRACKET class_content_repeat RCURLYBRACKET
 
-    LCURLYBRACKET   shift and go to state 147
+    LCURLYBRACKET   shift and go to state 153
 
 
-state 108
+state 111
 
     (78) conditions -> condition condition_connector . conditions
     (77) conditions -> . condition
@@ -2390,10 +2423,10 @@ state 108
     INTEGER         shift and go to state 87
 
     condition                      shift and go to state 80
-    conditions                     shift and go to state 148
+    conditions                     shift and go to state 154
     number                         shift and go to state 84
 
-state 109
+state 112
 
     (79) condition_connector -> AND .
 
@@ -2407,7 +2440,7 @@ state 109
     FALSE           reduce using rule 79 (condition_connector -> AND .)
 
 
-state 110
+state 113
 
     (80) condition_connector -> OR .
 
@@ -2421,21 +2454,21 @@ state 110
     FALSE           reduce using rule 80 (condition_connector -> OR .)
 
 
-state 111
+state 114
 
     (81) condition_connector -> AMPERSAND . AMPERSAND
 
-    AMPERSAND       shift and go to state 149
+    AMPERSAND       shift and go to state 155
 
 
-state 112
+state 115
 
     (82) condition_connector -> PIPELINE . PIPELINE
 
-    PIPELINE        shift and go to state 150
+    PIPELINE        shift and go to state 156
 
 
-state 113
+state 116
 
     (72) condition -> IDENTIFIER condition_operator . condition_values
     (61) condition_values -> . negation_values
@@ -2447,18 +2480,18 @@ state 113
     (57) deniable_values -> . IDENTIFIER
     (58) deniable_values -> . BOOLEAN
 
-    INTEGER         shift and go to state 154
-    FLOAT           shift and go to state 155
-    STR             shift and go to state 156
-    EXMARK          shift and go to state 158
-    IDENTIFIER      shift and go to state 151
-    BOOLEAN         shift and go to state 159
+    INTEGER         shift and go to state 160
+    FLOAT           shift and go to state 161
+    STR             shift and go to state 162
+    EXMARK          shift and go to state 164
+    IDENTIFIER      shift and go to state 157
+    BOOLEAN         shift and go to state 165
 
-    condition_values               shift and go to state 152
-    negation_values                shift and go to state 153
-    deniable_values                shift and go to state 157
+    condition_values               shift and go to state 158
+    negation_values                shift and go to state 159
+    deniable_values                shift and go to state 163
 
-state 114
+state 117
 
     (65) condition_operator -> DOUBLEQUAL .
 
@@ -2470,7 +2503,7 @@ state 114
     BOOLEAN         reduce using rule 65 (condition_operator -> DOUBLEQUAL .)
 
 
-state 115
+state 118
 
     (66) condition_operator -> LESSTHAN .
     (68) condition_operator -> LESSTHAN . EQUAL
@@ -2481,10 +2514,10 @@ state 115
     EXMARK          reduce using rule 66 (condition_operator -> LESSTHAN .)
     IDENTIFIER      reduce using rule 66 (condition_operator -> LESSTHAN .)
     BOOLEAN         reduce using rule 66 (condition_operator -> LESSTHAN .)
-    EQUAL           shift and go to state 160
+    EQUAL           shift and go to state 166
 
 
-state 116
+state 119
 
     (67) condition_operator -> GREATERTHAN .
     (69) condition_operator -> GREATERTHAN . EQUAL
@@ -2495,10 +2528,10 @@ state 116
     EXMARK          reduce using rule 67 (condition_operator -> GREATERTHAN .)
     IDENTIFIER      reduce using rule 67 (condition_operator -> GREATERTHAN .)
     BOOLEAN         reduce using rule 67 (condition_operator -> GREATERTHAN .)
-    EQUAL           shift and go to state 161
+    EQUAL           shift and go to state 167
 
 
-state 117
+state 120
 
     (73) condition -> EXMARK IDENTIFIER . condition_operator condition_values
     (65) condition_operator -> . DOUBLEQUAL
@@ -2507,20 +2540,20 @@ state 117
     (68) condition_operator -> . LESSTHAN EQUAL
     (69) condition_operator -> . GREATERTHAN EQUAL
 
-    DOUBLEQUAL      shift and go to state 114
-    LESSTHAN        shift and go to state 115
-    GREATERTHAN     shift and go to state 116
+    DOUBLEQUAL      shift and go to state 117
+    LESSTHAN        shift and go to state 118
+    GREATERTHAN     shift and go to state 119
 
-    condition_operator             shift and go to state 162
+    condition_operator             shift and go to state 168
 
-state 118
+state 121
 
     (74) condition -> BOOLEAN condition_operator . BOOLEAN
 
-    BOOLEAN         shift and go to state 163
+    BOOLEAN         shift and go to state 169
 
 
-state 119
+state 122
 
     (75) condition -> number condition_operator . number
     (70) number -> . FLOAT
@@ -2529,26 +2562,26 @@ state 119
     FLOAT           shift and go to state 86
     INTEGER         shift and go to state 87
 
-    number                         shift and go to state 164
+    number                         shift and go to state 170
 
-state 120
+state 123
 
     (76) condition -> STR condition_operator . STR
 
-    STR             shift and go to state 165
+    STR             shift and go to state 171
 
 
-state 121
+state 124
 
     (44) stack -> FINAL IDENTIFIER EQUAL STACK . LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
     (46) stack -> FINAL IDENTIFIER EQUAL STACK . LESSTHAN datatype GREATERTHAN LPAREN RPAREN SEMICOLON
     (47) stack -> FINAL IDENTIFIER EQUAL STACK . DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
 
-    LESSTHAN        shift and go to state 166
-    DOT             shift and go to state 167
+    LESSTHAN        shift and go to state 172
+    DOT             shift and go to state 173
 
 
-state 122
+state 125
 
     (109) booloperation -> IDENTIFIER . condition_connector boolvalue
     (110) booloperation -> IDENTIFIER . condition_connector IDENTIFIER
@@ -2557,14 +2590,14 @@ state 122
     (81) condition_connector -> . AMPERSAND AMPERSAND
     (82) condition_connector -> . PIPELINE PIPELINE
 
-    AND             shift and go to state 109
-    OR              shift and go to state 110
-    AMPERSAND       shift and go to state 111
-    PIPELINE        shift and go to state 112
+    AND             shift and go to state 112
+    OR              shift and go to state 113
+    AMPERSAND       shift and go to state 114
+    PIPELINE        shift and go to state 115
 
-    condition_connector            shift and go to state 168
+    condition_connector            shift and go to state 174
 
-state 123
+state 126
 
     (106) bool -> BOOL IDENTIFIER EQUAL boolvalue . SEMICOLON
     (108) booloperation -> boolvalue . condition_connector boolvalue
@@ -2574,22 +2607,22 @@ state 123
     (81) condition_connector -> . AMPERSAND AMPERSAND
     (82) condition_connector -> . PIPELINE PIPELINE
 
-    SEMICOLON       shift and go to state 169
-    AND             shift and go to state 109
-    OR              shift and go to state 110
-    AMPERSAND       shift and go to state 111
-    PIPELINE        shift and go to state 112
+    SEMICOLON       shift and go to state 175
+    AND             shift and go to state 112
+    OR              shift and go to state 113
+    AMPERSAND       shift and go to state 114
+    PIPELINE        shift and go to state 115
 
-    condition_connector            shift and go to state 170
+    condition_connector            shift and go to state 176
 
-state 124
+state 127
 
     (107) bool -> BOOL IDENTIFIER EQUAL booloperations . SEMICOLON
 
-    SEMICOLON       shift and go to state 171
+    SEMICOLON       shift and go to state 177
 
 
-state 125
+state 128
 
     (112) booloperations -> booloperation .
     (113) booloperations -> booloperation . condition_connector booloperations
@@ -2599,28 +2632,49 @@ state 125
     (82) condition_connector -> . PIPELINE PIPELINE
 
     SEMICOLON       reduce using rule 112 (booloperations -> booloperation .)
-    AND             shift and go to state 109
-    OR              shift and go to state 110
-    AMPERSAND       shift and go to state 111
-    PIPELINE        shift and go to state 112
+    AND             shift and go to state 112
+    OR              shift and go to state 113
+    AMPERSAND       shift and go to state 114
+    PIPELINE        shift and go to state 115
 
-    condition_connector            shift and go to state 172
+    condition_connector            shift and go to state 178
 
-state 126
+state 129
 
-    (114) semanticlist -> LIST LESSTHAN datatype GREATERTHAN . IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN . IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
 
-    IDENTIFIER      shift and go to state 173
-
-
-state 127
-
-    (115) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN . IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-
-    IDENTIFIER      shift and go to state 174
+    IDENTIFIER      shift and go to state 179
 
 
-state 128
+state 130
+
+    (115) semanticlist -> LIST LESSTHAN INT GREATERTHAN . IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+
+    IDENTIFIER      shift and go to state 180
+
+
+state 131
+
+    (116) semanticlist -> LIST LESSTHAN STRING GREATERTHAN . IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+
+    IDENTIFIER      shift and go to state 181
+
+
+state 132
+
+    (117) semanticlist -> LIST LESSTHAN BOOL GREATERTHAN . IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+
+    IDENTIFIER      shift and go to state 182
+
+
+state 133
+
+    (118) semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN . IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
+
+    IDENTIFIER      shift and go to state 183
+
+
+state 134
 
     (18) map_type_specified -> LESSTHAN datatype COMMA . datatype GREATERTHAN
     (19) datatype -> . returnType
@@ -2635,27 +2689,27 @@ state 128
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
 
-    VAR             shift and go to state 31
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
+    VAR             shift and go to state 34
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
     BOOL            shift and go to state 69
-    DOUBLE          shift and go to state 39
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
-    MAP             shift and go to state 28
+    MAP             shift and go to state 31
 
-    datatype                       shift and go to state 175
-    returnType                     shift and go to state 30
+    datatype                       shift and go to state 184
+    returnType                     shift and go to state 33
     map_identifier                 shift and go to state 70
 
-state 129
+state 135
 
     (40) ifStatement -> IF LPAREN conditions RPAREN . LCURLYBRACKET class_content_repeat RCURLYBRACKET
 
-    LCURLYBRACKET   shift and go to state 176
+    LCURLYBRACKET   shift and go to state 185
 
 
-state 130
+state 136
 
     (53) value -> IDENTIFIER .
 
@@ -2666,51 +2720,51 @@ state 130
     RPAREN          reduce using rule 53 (value -> IDENTIFIER .)
 
 
-state 131
+state 137
 
     (15) map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content . RCURLYBRACKET SEMICOLON
 
-    RCURLYBRACKET   shift and go to state 177
+    RCURLYBRACKET   shift and go to state 186
 
 
-state 132
+state 138
 
     (29) map_content -> map_pairs .
 
     RCURLYBRACKET   reduce using rule 29 (map_content -> map_pairs .)
 
 
-state 133
+state 139
 
     (30) map_content -> empty .
 
     RCURLYBRACKET   reduce using rule 30 (map_content -> empty .)
 
 
-state 134
+state 140
 
     (32) map_pairs -> map_pair .
     (33) map_pairs -> map_pair . COMMA map_pairs
 
     RCURLYBRACKET   reduce using rule 32 (map_pairs -> map_pair .)
-    COMMA           shift and go to state 178
+    COMMA           shift and go to state 187
 
 
-state 135
+state 141
 
     (31) map_pair -> map_key . COLON map_value
 
-    COLON           shift and go to state 179
+    COLON           shift and go to state 188
 
 
-state 136
+state 142
 
     (34) map_key -> value .
 
     COLON           reduce using rule 34 (map_key -> value .)
 
 
-state 137
+state 143
 
     (49) value -> INTEGER .
 
@@ -2721,7 +2775,7 @@ state 137
     RPAREN          reduce using rule 49 (value -> INTEGER .)
 
 
-state 138
+state 144
 
     (50) value -> FLOAT .
 
@@ -2732,14 +2786,14 @@ state 138
     RPAREN          reduce using rule 50 (value -> FLOAT .)
 
 
-state 139
+state 145
 
     (48) inferedReturnFunction -> IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET . RETURN expression SEMICOLON RCURLYBRACKET
 
-    RETURN          shift and go to state 180
+    RETURN          shift and go to state 189
 
 
-state 140
+state 146
 
     (87) function_arguments_repeat -> function_argument COMMA function_arguments_repeat .
 
@@ -2747,7 +2801,7 @@ state 140
     LCURLYBRACKET   reduce using rule 87 (function_arguments_repeat -> function_argument COMMA function_arguments_repeat .)
 
 
-state 141
+state 147
 
     (42) elifStatement -> ELSE LCURLYBRACKET class_content_repeat RCURLYBRACKET .
 
@@ -2776,33 +2830,33 @@ state 141
     RCURLYBRACKET   reduce using rule 42 (elifStatement -> ELSE LCURLYBRACKET class_content_repeat RCURLYBRACKET .)
 
 
-state 142
+state 148
 
     (83) function_lambda -> datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression . RPAREN EQUAL GREATERTHAN expression SEMICOLON
 
-    RPAREN          shift and go to state 181
+    RPAREN          shift and go to state 190
 
 
-state 143
+state 149
 
     (88) optFunction_argumentsExpression -> LCURLYBRACKET . optFunction_arguments RCURLYBRACKET
     (91) optFunction_arguments -> . optFunction_argument
     (92) optFunction_arguments -> . optFunction_argument COMMA optFunction_arguments
     (90) optFunction_argument -> . REQUIRED datatype IDENTIFIER
 
-    REQUIRED        shift and go to state 184
+    REQUIRED        shift and go to state 193
 
-    optFunction_arguments          shift and go to state 182
-    optFunction_argument           shift and go to state 183
+    optFunction_arguments          shift and go to state 191
+    optFunction_argument           shift and go to state 192
 
-state 144
+state 150
 
     (89) optFunction_argumentsExpression -> empty .
 
     RPAREN          reduce using rule 89 (optFunction_argumentsExpression -> empty .)
 
 
-state 145
+state 151
 
     (103) declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .
 
@@ -2831,14 +2885,14 @@ state 145
     RCURLYBRACKET   reduce using rule 103 (declarationExpression -> datatype IDENTIFIER EQUAL expression SEMICOLON .)
 
 
-state 146
+state 152
 
     (43) forStatement -> FOR LPAREN declarationExpression SEMICOLON condition . SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
 
-    SEMICOLON       shift and go to state 185
+    SEMICOLON       shift and go to state 194
 
 
-state 147
+state 153
 
     (45) while -> WHILE LPAREN conditions RPAREN LCURLYBRACKET . class_content_repeat RCURLYBRACKET
     (11) class_content_repeat -> . class_content
@@ -2871,8 +2925,11 @@ state 147
     (95) expression -> . operableTypes operatorExpression operatorExpression
     (106) bool -> . BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
     (107) bool -> . BOOL IDENTIFIER EQUAL booloperations SEMICOLON
-    (114) semanticlist -> . LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (115) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (115) semanticlist -> . LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+    (116) semanticlist -> . LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+    (117) semanticlist -> . LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+    (118) semanticlist -> . LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
     (40) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -2904,22 +2961,22 @@ state 147
     IDENTIFIER      shift and go to state 16
     BOOL            shift and go to state 24
     LIST            shift and go to state 26
-    MAP             shift and go to state 28
-    IF              shift and go to state 29
-    VAR             shift and go to state 31
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
-    DOUBLE          shift and go to state 39
+    MAP             shift and go to state 31
+    IF              shift and go to state 32
+    VAR             shift and go to state 34
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    class_content_repeat           shift and go to state 186
+    class_content_repeat           shift and go to state 195
     class_content                  shift and go to state 3
     map                            shift and go to state 4
     ifElseStatement                shift and go to state 5
@@ -2938,17 +2995,17 @@ state 147
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
     boolvalue                      shift and go to state 25
-    returnType                     shift and go to state 30
-    number                         shift and go to state 32
+    returnType                     shift and go to state 33
+    number                         shift and go to state 35
 
-state 148
+state 154
 
     (78) conditions -> condition condition_connector conditions .
 
     RPAREN          reduce using rule 78 (conditions -> condition condition_connector conditions .)
 
 
-state 149
+state 155
 
     (81) condition_connector -> AMPERSAND AMPERSAND .
 
@@ -2962,7 +3019,7 @@ state 149
     FALSE           reduce using rule 81 (condition_connector -> AMPERSAND AMPERSAND .)
 
 
-state 150
+state 156
 
     (82) condition_connector -> PIPELINE PIPELINE .
 
@@ -2976,7 +3033,7 @@ state 150
     FALSE           reduce using rule 82 (condition_connector -> PIPELINE PIPELINE .)
 
 
-state 151
+state 157
 
     (57) deniable_values -> IDENTIFIER .
 
@@ -2988,7 +3045,7 @@ state 151
     SEMICOLON       reduce using rule 57 (deniable_values -> IDENTIFIER .)
 
 
-state 152
+state 158
 
     (72) condition -> IDENTIFIER condition_operator condition_values .
 
@@ -3000,7 +3057,7 @@ state 152
     SEMICOLON       reduce using rule 72 (condition -> IDENTIFIER condition_operator condition_values .)
 
 
-state 153
+state 159
 
     (61) condition_values -> negation_values .
 
@@ -3012,7 +3069,7 @@ state 153
     SEMICOLON       reduce using rule 61 (condition_values -> negation_values .)
 
 
-state 154
+state 160
 
     (62) condition_values -> INTEGER .
 
@@ -3024,7 +3081,7 @@ state 154
     SEMICOLON       reduce using rule 62 (condition_values -> INTEGER .)
 
 
-state 155
+state 161
 
     (63) condition_values -> FLOAT .
 
@@ -3036,7 +3093,7 @@ state 155
     SEMICOLON       reduce using rule 63 (condition_values -> FLOAT .)
 
 
-state 156
+state 162
 
     (64) condition_values -> STR .
 
@@ -3048,7 +3105,7 @@ state 156
     SEMICOLON       reduce using rule 64 (condition_values -> STR .)
 
 
-state 157
+state 163
 
     (59) negation_values -> deniable_values .
 
@@ -3060,18 +3117,18 @@ state 157
     SEMICOLON       reduce using rule 59 (negation_values -> deniable_values .)
 
 
-state 158
+state 164
 
     (60) negation_values -> EXMARK . deniable_values
     (57) deniable_values -> . IDENTIFIER
     (58) deniable_values -> . BOOLEAN
 
-    IDENTIFIER      shift and go to state 151
-    BOOLEAN         shift and go to state 159
+    IDENTIFIER      shift and go to state 157
+    BOOLEAN         shift and go to state 165
 
-    deniable_values                shift and go to state 187
+    deniable_values                shift and go to state 196
 
-state 159
+state 165
 
     (58) deniable_values -> BOOLEAN .
 
@@ -3083,7 +3140,7 @@ state 159
     SEMICOLON       reduce using rule 58 (deniable_values -> BOOLEAN .)
 
 
-state 160
+state 166
 
     (68) condition_operator -> LESSTHAN EQUAL .
 
@@ -3095,7 +3152,7 @@ state 160
     BOOLEAN         reduce using rule 68 (condition_operator -> LESSTHAN EQUAL .)
 
 
-state 161
+state 167
 
     (69) condition_operator -> GREATERTHAN EQUAL .
 
@@ -3107,7 +3164,7 @@ state 161
     BOOLEAN         reduce using rule 69 (condition_operator -> GREATERTHAN EQUAL .)
 
 
-state 162
+state 168
 
     (73) condition -> EXMARK IDENTIFIER condition_operator . condition_values
     (61) condition_values -> . negation_values
@@ -3119,18 +3176,18 @@ state 162
     (57) deniable_values -> . IDENTIFIER
     (58) deniable_values -> . BOOLEAN
 
-    INTEGER         shift and go to state 154
-    FLOAT           shift and go to state 155
-    STR             shift and go to state 156
-    EXMARK          shift and go to state 158
-    IDENTIFIER      shift and go to state 151
-    BOOLEAN         shift and go to state 159
+    INTEGER         shift and go to state 160
+    FLOAT           shift and go to state 161
+    STR             shift and go to state 162
+    EXMARK          shift and go to state 164
+    IDENTIFIER      shift and go to state 157
+    BOOLEAN         shift and go to state 165
 
-    condition_values               shift and go to state 188
-    negation_values                shift and go to state 153
-    deniable_values                shift and go to state 157
+    condition_values               shift and go to state 197
+    negation_values                shift and go to state 159
+    deniable_values                shift and go to state 163
 
-state 163
+state 169
 
     (74) condition -> BOOLEAN condition_operator BOOLEAN .
 
@@ -3142,7 +3199,7 @@ state 163
     SEMICOLON       reduce using rule 74 (condition -> BOOLEAN condition_operator BOOLEAN .)
 
 
-state 164
+state 170
 
     (75) condition -> number condition_operator number .
 
@@ -3154,7 +3211,7 @@ state 164
     SEMICOLON       reduce using rule 75 (condition -> number condition_operator number .)
 
 
-state 165
+state 171
 
     (76) condition -> STR condition_operator STR .
 
@@ -3166,7 +3223,7 @@ state 165
     SEMICOLON       reduce using rule 76 (condition -> STR condition_operator STR .)
 
 
-state 166
+state 172
 
     (44) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN . datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
     (46) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN . datatype GREATERTHAN LPAREN RPAREN SEMICOLON
@@ -3182,40 +3239,40 @@ state 166
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
 
-    VAR             shift and go to state 31
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
+    VAR             shift and go to state 34
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
     BOOL            shift and go to state 69
-    DOUBLE          shift and go to state 39
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
-    MAP             shift and go to state 28
+    MAP             shift and go to state 31
 
-    datatype                       shift and go to state 189
-    returnType                     shift and go to state 30
+    datatype                       shift and go to state 198
+    returnType                     shift and go to state 33
     map_identifier                 shift and go to state 70
 
-state 167
+state 173
 
     (47) stack -> FINAL IDENTIFIER EQUAL STACK DOT . OF LPAREN IDENTIFIER RPAREN SEMICOLON
 
-    OF              shift and go to state 190
+    OF              shift and go to state 199
 
 
-state 168
+state 174
 
     (109) booloperation -> IDENTIFIER condition_connector . boolvalue
     (110) booloperation -> IDENTIFIER condition_connector . IDENTIFIER
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    IDENTIFIER      shift and go to state 191
+    IDENTIFIER      shift and go to state 200
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    boolvalue                      shift and go to state 192
+    boolvalue                      shift and go to state 201
 
-state 169
+state 175
 
     (106) bool -> BOOL IDENTIFIER EQUAL boolvalue SEMICOLON .
 
@@ -3243,20 +3300,20 @@ state 169
     RCURLYBRACKET   reduce using rule 106 (bool -> BOOL IDENTIFIER EQUAL boolvalue SEMICOLON .)
 
 
-state 170
+state 176
 
     (108) booloperation -> boolvalue condition_connector . boolvalue
     (111) booloperation -> boolvalue condition_connector . IDENTIFIER
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    IDENTIFIER      shift and go to state 194
+    IDENTIFIER      shift and go to state 203
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    boolvalue                      shift and go to state 193
+    boolvalue                      shift and go to state 202
 
-state 171
+state 177
 
     (107) bool -> BOOL IDENTIFIER EQUAL booloperations SEMICOLON .
 
@@ -3284,7 +3341,7 @@ state 171
     RCURLYBRACKET   reduce using rule 107 (bool -> BOOL IDENTIFIER EQUAL booloperations SEMICOLON .)
 
 
-state 172
+state 178
 
     (113) booloperations -> booloperation condition_connector . booloperations
     (112) booloperations -> . booloperation
@@ -3296,36 +3353,57 @@ state 172
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    IDENTIFIER      shift and go to state 122
+    IDENTIFIER      shift and go to state 125
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    booloperation                  shift and go to state 125
-    booloperations                 shift and go to state 195
-    boolvalue                      shift and go to state 196
+    booloperation                  shift and go to state 128
+    booloperations                 shift and go to state 204
+    boolvalue                      shift and go to state 205
 
-state 173
+state 179
 
-    (114) semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER . EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER . EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
 
-    EQUAL           shift and go to state 197
-
-
-state 174
-
-    (115) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER . EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-
-    EQUAL           shift and go to state 198
+    EQUAL           shift and go to state 206
 
 
-state 175
+state 180
+
+    (115) semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER . EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+
+    EQUAL           shift and go to state 207
+
+
+state 181
+
+    (116) semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER . EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+
+    EQUAL           shift and go to state 208
+
+
+state 182
+
+    (117) semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER . EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+
+    EQUAL           shift and go to state 209
+
+
+state 183
+
+    (118) semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER . EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
+
+    EQUAL           shift and go to state 210
+
+
+state 184
 
     (18) map_type_specified -> LESSTHAN datatype COMMA datatype . GREATERTHAN
 
-    GREATERTHAN     shift and go to state 199
+    GREATERTHAN     shift and go to state 211
 
 
-state 176
+state 185
 
     (40) ifStatement -> IF LPAREN conditions RPAREN LCURLYBRACKET . class_content_repeat RCURLYBRACKET
     (11) class_content_repeat -> . class_content
@@ -3358,8 +3436,11 @@ state 176
     (95) expression -> . operableTypes operatorExpression operatorExpression
     (106) bool -> . BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
     (107) bool -> . BOOL IDENTIFIER EQUAL booloperations SEMICOLON
-    (114) semanticlist -> . LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (115) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (115) semanticlist -> . LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+    (116) semanticlist -> . LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+    (117) semanticlist -> . LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+    (118) semanticlist -> . LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
     (40) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -3391,22 +3472,22 @@ state 176
     IDENTIFIER      shift and go to state 16
     BOOL            shift and go to state 24
     LIST            shift and go to state 26
-    MAP             shift and go to state 28
-    IF              shift and go to state 29
-    VAR             shift and go to state 31
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
-    DOUBLE          shift and go to state 39
+    MAP             shift and go to state 31
+    IF              shift and go to state 32
+    VAR             shift and go to state 34
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    class_content_repeat           shift and go to state 200
+    class_content_repeat           shift and go to state 212
     class_content                  shift and go to state 3
     map                            shift and go to state 4
     ifElseStatement                shift and go to state 5
@@ -3425,17 +3506,17 @@ state 176
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
     boolvalue                      shift and go to state 25
-    returnType                     shift and go to state 30
-    number                         shift and go to state 32
+    returnType                     shift and go to state 33
+    number                         shift and go to state 35
 
-state 177
+state 186
 
     (15) map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET . SEMICOLON
 
-    SEMICOLON       shift and go to state 201
+    SEMICOLON       shift and go to state 213
 
 
-state 178
+state 187
 
     (33) map_pairs -> map_pair COMMA . map_pairs
     (32) map_pairs -> . map_pair
@@ -3451,21 +3532,21 @@ state 178
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    INTEGER         shift and go to state 137
-    FLOAT           shift and go to state 138
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    IDENTIFIER      shift and go to state 130
+    INTEGER         shift and go to state 143
+    FLOAT           shift and go to state 144
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    IDENTIFIER      shift and go to state 136
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    map_pair                       shift and go to state 134
-    map_pairs                      shift and go to state 202
-    map_key                        shift and go to state 135
-    value                          shift and go to state 136
+    map_pair                       shift and go to state 140
+    map_pairs                      shift and go to state 214
+    map_key                        shift and go to state 141
+    value                          shift and go to state 142
     boolvalue                      shift and go to state 25
 
-state 179
+state 188
 
     (31) map_pair -> map_key COLON . map_value
     (35) map_value -> . value
@@ -3478,19 +3559,19 @@ state 179
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    INTEGER         shift and go to state 137
-    FLOAT           shift and go to state 138
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    IDENTIFIER      shift and go to state 130
+    INTEGER         shift and go to state 143
+    FLOAT           shift and go to state 144
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    IDENTIFIER      shift and go to state 136
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    map_value                      shift and go to state 203
-    value                          shift and go to state 204
+    map_value                      shift and go to state 215
+    value                          shift and go to state 216
     boolvalue                      shift and go to state 25
 
-state 180
+state 189
 
     (48) inferedReturnFunction -> IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN . expression SEMICOLON RCURLYBRACKET
     (93) expression -> . operableTypes operatorExpression operableTypes
@@ -3509,44 +3590,44 @@ state 180
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    IDENTIFIER      shift and go to state 103
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
+    IDENTIFIER      shift and go to state 106
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    expression                     shift and go to state 205
+    expression                     shift and go to state 217
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
-    number                         shift and go to state 32
+    number                         shift and go to state 35
     boolvalue                      shift and go to state 25
 
-state 181
+state 190
 
     (83) function_lambda -> datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN . EQUAL GREATERTHAN expression SEMICOLON
 
-    EQUAL           shift and go to state 206
+    EQUAL           shift and go to state 218
 
 
-state 182
+state 191
 
     (88) optFunction_argumentsExpression -> LCURLYBRACKET optFunction_arguments . RCURLYBRACKET
 
-    RCURLYBRACKET   shift and go to state 207
+    RCURLYBRACKET   shift and go to state 219
 
 
-state 183
+state 192
 
     (91) optFunction_arguments -> optFunction_argument .
     (92) optFunction_arguments -> optFunction_argument . COMMA optFunction_arguments
 
     RCURLYBRACKET   reduce using rule 91 (optFunction_arguments -> optFunction_argument .)
-    COMMA           shift and go to state 208
+    COMMA           shift and go to state 220
 
 
-state 184
+state 193
 
     (90) optFunction_argument -> REQUIRED . datatype IDENTIFIER
     (19) datatype -> . returnType
@@ -3561,20 +3642,20 @@ state 184
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
 
-    VAR             shift and go to state 31
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
+    VAR             shift and go to state 34
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
     BOOL            shift and go to state 69
-    DOUBLE          shift and go to state 39
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
-    MAP             shift and go to state 28
+    MAP             shift and go to state 31
 
-    datatype                       shift and go to state 209
-    returnType                     shift and go to state 30
+    datatype                       shift and go to state 221
+    returnType                     shift and go to state 33
     map_identifier                 shift and go to state 70
 
-state 185
+state 194
 
     (43) forStatement -> FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON . expression RPAREN LCURLYBRACKET RCURLYBRACKET
     (93) expression -> . operableTypes operatorExpression operableTypes
@@ -3593,21 +3674,21 @@ state 185
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    IDENTIFIER      shift and go to state 103
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
+    IDENTIFIER      shift and go to state 106
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    expression                     shift and go to state 210
+    expression                     shift and go to state 222
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
-    number                         shift and go to state 32
+    number                         shift and go to state 35
     boolvalue                      shift and go to state 25
 
-state 186
+state 195
 
     (45) while -> WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat . RCURLYBRACKET
     (12) class_content_repeat -> class_content_repeat . class_content
@@ -3639,8 +3720,11 @@ state 186
     (95) expression -> . operableTypes operatorExpression operatorExpression
     (106) bool -> . BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
     (107) bool -> . BOOL IDENTIFIER EQUAL booloperations SEMICOLON
-    (114) semanticlist -> . LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (115) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (115) semanticlist -> . LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+    (116) semanticlist -> . LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+    (117) semanticlist -> . LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+    (118) semanticlist -> . LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
     (40) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -3666,23 +3750,23 @@ state 186
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    RCURLYBRACKET   shift and go to state 211
+    RCURLYBRACKET   shift and go to state 223
     FOR             shift and go to state 19
     WHILE           shift and go to state 20
     FINAL           shift and go to state 21
     IDENTIFIER      shift and go to state 16
     BOOL            shift and go to state 24
     LIST            shift and go to state 26
-    MAP             shift and go to state 28
-    IF              shift and go to state 29
-    VAR             shift and go to state 31
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
-    DOUBLE          shift and go to state 39
+    MAP             shift and go to state 31
+    IF              shift and go to state 32
+    VAR             shift and go to state 34
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
     TRUE            shift and go to state 41
@@ -3706,10 +3790,10 @@ state 186
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
     boolvalue                      shift and go to state 25
-    returnType                     shift and go to state 30
-    number                         shift and go to state 32
+    returnType                     shift and go to state 33
+    number                         shift and go to state 35
 
-state 187
+state 196
 
     (60) negation_values -> EXMARK deniable_values .
 
@@ -3721,7 +3805,7 @@ state 187
     SEMICOLON       reduce using rule 60 (negation_values -> EXMARK deniable_values .)
 
 
-state 188
+state 197
 
     (73) condition -> EXMARK IDENTIFIER condition_operator condition_values .
 
@@ -3733,22 +3817,22 @@ state 188
     SEMICOLON       reduce using rule 73 (condition -> EXMARK IDENTIFIER condition_operator condition_values .)
 
 
-state 189
+state 198
 
     (44) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype . GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
     (46) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype . GREATERTHAN LPAREN RPAREN SEMICOLON
 
-    GREATERTHAN     shift and go to state 212
+    GREATERTHAN     shift and go to state 224
 
 
-state 190
+state 199
 
     (47) stack -> FINAL IDENTIFIER EQUAL STACK DOT OF . LPAREN IDENTIFIER RPAREN SEMICOLON
 
-    LPAREN          shift and go to state 213
+    LPAREN          shift and go to state 225
 
 
-state 191
+state 200
 
     (110) booloperation -> IDENTIFIER condition_connector IDENTIFIER .
 
@@ -3759,7 +3843,7 @@ state 191
     SEMICOLON       reduce using rule 110 (booloperation -> IDENTIFIER condition_connector IDENTIFIER .)
 
 
-state 192
+state 201
 
     (109) booloperation -> IDENTIFIER condition_connector boolvalue .
 
@@ -3770,7 +3854,7 @@ state 192
     SEMICOLON       reduce using rule 109 (booloperation -> IDENTIFIER condition_connector boolvalue .)
 
 
-state 193
+state 202
 
     (108) booloperation -> boolvalue condition_connector boolvalue .
 
@@ -3781,7 +3865,7 @@ state 193
     SEMICOLON       reduce using rule 108 (booloperation -> boolvalue condition_connector boolvalue .)
 
 
-state 194
+state 203
 
     (111) booloperation -> boolvalue condition_connector IDENTIFIER .
 
@@ -3792,14 +3876,14 @@ state 194
     SEMICOLON       reduce using rule 111 (booloperation -> boolvalue condition_connector IDENTIFIER .)
 
 
-state 195
+state 204
 
     (113) booloperations -> booloperation condition_connector booloperations .
 
     SEMICOLON       reduce using rule 113 (booloperations -> booloperation condition_connector booloperations .)
 
 
-state 196
+state 205
 
     (108) booloperation -> boolvalue . condition_connector boolvalue
     (111) booloperation -> boolvalue . condition_connector IDENTIFIER
@@ -3808,37 +3892,58 @@ state 196
     (81) condition_connector -> . AMPERSAND AMPERSAND
     (82) condition_connector -> . PIPELINE PIPELINE
 
-    AND             shift and go to state 109
-    OR              shift and go to state 110
-    AMPERSAND       shift and go to state 111
-    PIPELINE        shift and go to state 112
+    AND             shift and go to state 112
+    OR              shift and go to state 113
+    AMPERSAND       shift and go to state 114
+    PIPELINE        shift and go to state 115
 
-    condition_connector            shift and go to state 170
+    condition_connector            shift and go to state 176
 
-state 197
+state 206
 
-    (114) semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL . LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL . LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
 
-    LSQUAREBRACKET  shift and go to state 214
-
-
-state 198
-
-    (115) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL . LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-
-    LSQUAREBRACKET  shift and go to state 215
+    LSQUAREBRACKET  shift and go to state 226
 
 
-state 199
+state 207
+
+    (115) semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL . LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+
+    LSQUAREBRACKET  shift and go to state 227
+
+
+state 208
+
+    (116) semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL . LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+
+    LSQUAREBRACKET  shift and go to state 228
+
+
+state 209
+
+    (117) semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL . LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+
+    LSQUAREBRACKET  shift and go to state 229
+
+
+state 210
+
+    (118) semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL . LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
+
+    LSQUAREBRACKET  shift and go to state 230
+
+
+state 211
 
     (18) map_type_specified -> LESSTHAN datatype COMMA datatype GREATERTHAN .
 
     IDENTIFIER      reduce using rule 18 (map_type_specified -> LESSTHAN datatype COMMA datatype GREATERTHAN .)
-    GREATERTHAN     reduce using rule 18 (map_type_specified -> LESSTHAN datatype COMMA datatype GREATERTHAN .)
     COMMA           reduce using rule 18 (map_type_specified -> LESSTHAN datatype COMMA datatype GREATERTHAN .)
+    GREATERTHAN     reduce using rule 18 (map_type_specified -> LESSTHAN datatype COMMA datatype GREATERTHAN .)
 
 
-state 200
+state 212
 
     (40) ifStatement -> IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat . RCURLYBRACKET
     (12) class_content_repeat -> class_content_repeat . class_content
@@ -3870,8 +3975,11 @@ state 200
     (95) expression -> . operableTypes operatorExpression operatorExpression
     (106) bool -> . BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
     (107) bool -> . BOOL IDENTIFIER EQUAL booloperations SEMICOLON
-    (114) semanticlist -> . LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-    (115) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> . LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    (115) semanticlist -> . LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+    (116) semanticlist -> . LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+    (117) semanticlist -> . LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+    (118) semanticlist -> . LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
     (16) map_identifier -> . MAP
     (17) map_identifier -> . MAP map_type_specified
     (40) ifStatement -> . IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
@@ -3897,23 +4005,23 @@ state 200
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    RCURLYBRACKET   shift and go to state 216
+    RCURLYBRACKET   shift and go to state 231
     FOR             shift and go to state 19
     WHILE           shift and go to state 20
     FINAL           shift and go to state 21
     IDENTIFIER      shift and go to state 16
     BOOL            shift and go to state 24
     LIST            shift and go to state 26
-    MAP             shift and go to state 28
-    IF              shift and go to state 29
-    VAR             shift and go to state 31
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    INT             shift and go to state 37
-    STRING          shift and go to state 38
-    DOUBLE          shift and go to state 39
+    MAP             shift and go to state 31
+    IF              shift and go to state 32
+    VAR             shift and go to state 34
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    INT             shift and go to state 28
+    STRING          shift and go to state 29
+    DOUBLE          shift and go to state 30
     DYNAMIC         shift and go to state 27
     VOID            shift and go to state 40
     TRUE            shift and go to state 41
@@ -3937,10 +4045,10 @@ state 200
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
     boolvalue                      shift and go to state 25
-    returnType                     shift and go to state 30
-    number                         shift and go to state 32
+    returnType                     shift and go to state 33
+    number                         shift and go to state 35
 
-state 201
+state 213
 
     (15) map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON .
 
@@ -3968,14 +4076,14 @@ state 201
     RCURLYBRACKET   reduce using rule 15 (map -> map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON .)
 
 
-state 202
+state 214
 
     (33) map_pairs -> map_pair COMMA map_pairs .
 
     RCURLYBRACKET   reduce using rule 33 (map_pairs -> map_pair COMMA map_pairs .)
 
 
-state 203
+state 215
 
     (31) map_pair -> map_key COLON map_value .
 
@@ -3983,7 +4091,7 @@ state 203
     RCURLYBRACKET   reduce using rule 31 (map_pair -> map_key COLON map_value .)
 
 
-state 204
+state 216
 
     (35) map_value -> value .
 
@@ -3991,54 +4099,54 @@ state 204
     RCURLYBRACKET   reduce using rule 35 (map_value -> value .)
 
 
-state 205
+state 217
 
     (48) inferedReturnFunction -> IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression . SEMICOLON RCURLYBRACKET
 
-    SEMICOLON       shift and go to state 217
+    SEMICOLON       shift and go to state 232
 
 
-state 206
+state 218
 
     (83) function_lambda -> datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL . GREATERTHAN expression SEMICOLON
 
-    GREATERTHAN     shift and go to state 218
+    GREATERTHAN     shift and go to state 233
 
 
-state 207
+state 219
 
     (88) optFunction_argumentsExpression -> LCURLYBRACKET optFunction_arguments RCURLYBRACKET .
 
     RPAREN          reduce using rule 88 (optFunction_argumentsExpression -> LCURLYBRACKET optFunction_arguments RCURLYBRACKET .)
 
 
-state 208
+state 220
 
     (92) optFunction_arguments -> optFunction_argument COMMA . optFunction_arguments
     (91) optFunction_arguments -> . optFunction_argument
     (92) optFunction_arguments -> . optFunction_argument COMMA optFunction_arguments
     (90) optFunction_argument -> . REQUIRED datatype IDENTIFIER
 
-    REQUIRED        shift and go to state 184
+    REQUIRED        shift and go to state 193
 
-    optFunction_argument           shift and go to state 183
-    optFunction_arguments          shift and go to state 219
+    optFunction_argument           shift and go to state 192
+    optFunction_arguments          shift and go to state 234
 
-state 209
+state 221
 
     (90) optFunction_argument -> REQUIRED datatype . IDENTIFIER
 
-    IDENTIFIER      shift and go to state 220
+    IDENTIFIER      shift and go to state 235
 
 
-state 210
+state 222
 
     (43) forStatement -> FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression . RPAREN LCURLYBRACKET RCURLYBRACKET
 
-    RPAREN          shift and go to state 221
+    RPAREN          shift and go to state 236
 
 
-state 211
+state 223
 
     (45) while -> WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET .
 
@@ -4066,26 +4174,26 @@ state 211
     RCURLYBRACKET   reduce using rule 45 (while -> WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET .)
 
 
-state 212
+state 224
 
     (44) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN . LPAREN opt_value RPAREN SEMICOLON
     (46) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN . LPAREN RPAREN SEMICOLON
 
-    LPAREN          shift and go to state 222
+    LPAREN          shift and go to state 237
 
 
-state 213
+state 225
 
     (47) stack -> FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN . IDENTIFIER RPAREN SEMICOLON
 
-    IDENTIFIER      shift and go to state 223
+    IDENTIFIER      shift and go to state 238
 
 
-state 214
+state 226
 
-    (114) semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET . insidelist RSQUAREBRACKET SEMICOLON
-    (116) insidelist -> . value
-    (117) insidelist -> . value COMMA insidelist
+    (114) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET . insidelist RSQUAREBRACKET SEMICOLON
+    (119) insidelist -> . value
+    (120) insidelist -> . value COMMA insidelist
     (49) value -> . INTEGER
     (50) value -> . FLOAT
     (51) value -> . STR
@@ -4095,45 +4203,63 @@ state 214
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    INTEGER         shift and go to state 137
-    FLOAT           shift and go to state 138
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    IDENTIFIER      shift and go to state 130
+    INTEGER         shift and go to state 143
+    FLOAT           shift and go to state 144
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    IDENTIFIER      shift and go to state 136
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    insidelist                     shift and go to state 224
-    value                          shift and go to state 225
+    insidelist                     shift and go to state 239
+    value                          shift and go to state 240
     boolvalue                      shift and go to state 25
 
-state 215
+state 227
 
-    (115) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET . insidelist RSQUAREBRACKET SEMICOLON
-    (116) insidelist -> . value
-    (117) insidelist -> . value COMMA insidelist
-    (49) value -> . INTEGER
-    (50) value -> . FLOAT
-    (51) value -> . STR
-    (52) value -> . BOOLEAN
-    (53) value -> . IDENTIFIER
-    (54) value -> . boolvalue
+    (115) semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET . insidelistint RSQUAREBRACKET SEMICOLON
+    (121) insidelistint -> . INTEGER
+    (122) insidelistint -> . INTEGER COMMA insidelistint
+
+    INTEGER         shift and go to state 242
+
+    insidelistint                  shift and go to state 241
+
+state 228
+
+    (116) semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET . insideliststr RSQUAREBRACKET SEMICOLON
+    (123) insideliststr -> . STR
+    (124) insideliststr -> . STR COMMA insideliststr
+
+    STR             shift and go to state 244
+
+    insideliststr                  shift and go to state 243
+
+state 229
+
+    (117) semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET . insidelistbool RSQUAREBRACKET SEMICOLON
+    (125) insidelistbool -> . boolvalue
+    (126) insidelistbool -> . boolvalue COMMA insidelistbool
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    INTEGER         shift and go to state 137
-    FLOAT           shift and go to state 138
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    IDENTIFIER      shift and go to state 130
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    insidelist                     shift and go to state 226
-    value                          shift and go to state 225
-    boolvalue                      shift and go to state 25
+    insidelistbool                 shift and go to state 245
+    boolvalue                      shift and go to state 246
 
-state 216
+state 230
+
+    (118) semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET . insidelistdouble RSQUAREBRACKET SEMICOLON
+    (127) insidelistdouble -> . FLOAT
+    (128) insidelistdouble -> . FLOAT COMMA insidelistdouble
+
+    FLOAT           shift and go to state 248
+
+    insidelistdouble               shift and go to state 247
+
+state 231
 
     (40) ifStatement -> IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET .
 
@@ -4162,14 +4288,14 @@ state 216
     RCURLYBRACKET   reduce using rule 40 (ifStatement -> IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET .)
 
 
-state 217
+state 232
 
     (48) inferedReturnFunction -> IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON . RCURLYBRACKET
 
-    RCURLYBRACKET   shift and go to state 227
+    RCURLYBRACKET   shift and go to state 249
 
 
-state 218
+state 233
 
     (83) function_lambda -> datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN . expression SEMICOLON
     (93) expression -> . operableTypes operatorExpression operableTypes
@@ -4188,28 +4314,28 @@ state 218
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    IDENTIFIER      shift and go to state 103
-    INTEGER         shift and go to state 33
-    FLOAT           shift and go to state 34
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
+    IDENTIFIER      shift and go to state 106
+    INTEGER         shift and go to state 36
+    FLOAT           shift and go to state 37
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    expression                     shift and go to state 228
+    expression                     shift and go to state 250
     operableTypes                  shift and go to state 22
     value                          shift and go to state 23
-    number                         shift and go to state 32
+    number                         shift and go to state 35
     boolvalue                      shift and go to state 25
 
-state 219
+state 234
 
     (92) optFunction_arguments -> optFunction_argument COMMA optFunction_arguments .
 
     RCURLYBRACKET   reduce using rule 92 (optFunction_arguments -> optFunction_argument COMMA optFunction_arguments .)
 
 
-state 220
+state 235
 
     (90) optFunction_argument -> REQUIRED datatype IDENTIFIER .
 
@@ -4217,14 +4343,14 @@ state 220
     RCURLYBRACKET   reduce using rule 90 (optFunction_argument -> REQUIRED datatype IDENTIFIER .)
 
 
-state 221
+state 236
 
     (43) forStatement -> FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN . LCURLYBRACKET RCURLYBRACKET
 
-    LCURLYBRACKET   shift and go to state 229
+    LCURLYBRACKET   shift and go to state 251
 
 
-state 222
+state 237
 
     (44) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN . opt_value RPAREN SEMICOLON
     (46) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN . RPAREN SEMICOLON
@@ -4241,53 +4367,110 @@ state 222
     (105) boolvalue -> . FALSE
 
   ! shift/reduce conflict for RPAREN resolved as shift
-    RPAREN          shift and go to state 231
-    INTEGER         shift and go to state 137
-    FLOAT           shift and go to state 138
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    IDENTIFIER      shift and go to state 130
+    RPAREN          shift and go to state 253
+    INTEGER         shift and go to state 143
+    FLOAT           shift and go to state 144
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    IDENTIFIER      shift and go to state 136
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
   ! RPAREN          [ reduce using rule 28 (empty -> .) ]
 
-    opt_value                      shift and go to state 230
-    value                          shift and go to state 232
-    empty                          shift and go to state 233
+    opt_value                      shift and go to state 252
+    value                          shift and go to state 254
+    empty                          shift and go to state 255
     boolvalue                      shift and go to state 25
 
-state 223
+state 238
 
     (47) stack -> FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER . RPAREN SEMICOLON
 
-    RPAREN          shift and go to state 234
+    RPAREN          shift and go to state 256
 
 
-state 224
+state 239
 
-    (114) semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist . RSQUAREBRACKET SEMICOLON
+    (114) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist . RSQUAREBRACKET SEMICOLON
 
-    RSQUAREBRACKET  shift and go to state 235
-
-
-state 225
-
-    (116) insidelist -> value .
-    (117) insidelist -> value . COMMA insidelist
-
-    RSQUAREBRACKET  reduce using rule 116 (insidelist -> value .)
-    COMMA           shift and go to state 236
+    RSQUAREBRACKET  shift and go to state 257
 
 
-state 226
+state 240
 
-    (115) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist . RSQUAREBRACKET SEMICOLON
+    (119) insidelist -> value .
+    (120) insidelist -> value . COMMA insidelist
 
-    RSQUAREBRACKET  shift and go to state 237
+    RSQUAREBRACKET  reduce using rule 119 (insidelist -> value .)
+    COMMA           shift and go to state 258
 
 
-state 227
+state 241
+
+    (115) semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint . RSQUAREBRACKET SEMICOLON
+
+    RSQUAREBRACKET  shift and go to state 259
+
+
+state 242
+
+    (121) insidelistint -> INTEGER .
+    (122) insidelistint -> INTEGER . COMMA insidelistint
+
+    RSQUAREBRACKET  reduce using rule 121 (insidelistint -> INTEGER .)
+    COMMA           shift and go to state 260
+
+
+state 243
+
+    (116) semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr . RSQUAREBRACKET SEMICOLON
+
+    RSQUAREBRACKET  shift and go to state 261
+
+
+state 244
+
+    (123) insideliststr -> STR .
+    (124) insideliststr -> STR . COMMA insideliststr
+
+    RSQUAREBRACKET  reduce using rule 123 (insideliststr -> STR .)
+    COMMA           shift and go to state 262
+
+
+state 245
+
+    (117) semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool . RSQUAREBRACKET SEMICOLON
+
+    RSQUAREBRACKET  shift and go to state 263
+
+
+state 246
+
+    (125) insidelistbool -> boolvalue .
+    (126) insidelistbool -> boolvalue . COMMA insidelistbool
+
+    RSQUAREBRACKET  reduce using rule 125 (insidelistbool -> boolvalue .)
+    COMMA           shift and go to state 264
+
+
+state 247
+
+    (118) semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble . RSQUAREBRACKET SEMICOLON
+
+    RSQUAREBRACKET  shift and go to state 265
+
+
+state 248
+
+    (127) insidelistdouble -> FLOAT .
+    (128) insidelistdouble -> FLOAT . COMMA insidelistdouble
+
+    RSQUAREBRACKET  reduce using rule 127 (insidelistdouble -> FLOAT .)
+    COMMA           shift and go to state 266
+
+
+state 249
 
     (48) inferedReturnFunction -> IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET .
 
@@ -4315,67 +4498,67 @@ state 227
     RCURLYBRACKET   reduce using rule 48 (inferedReturnFunction -> IDENTIFIER LPAREN function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET .)
 
 
-state 228
+state 250
 
     (83) function_lambda -> datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 238
+    SEMICOLON       shift and go to state 267
 
 
-state 229
+state 251
 
     (43) forStatement -> FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET . RCURLYBRACKET
 
-    RCURLYBRACKET   shift and go to state 239
+    RCURLYBRACKET   shift and go to state 268
 
 
-state 230
+state 252
 
     (44) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value . RPAREN SEMICOLON
 
-    RPAREN          shift and go to state 240
+    RPAREN          shift and go to state 269
 
 
-state 231
+state 253
 
     (46) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 241
+    SEMICOLON       shift and go to state 270
 
 
-state 232
+state 254
 
     (55) opt_value -> value .
 
     RPAREN          reduce using rule 55 (opt_value -> value .)
 
 
-state 233
+state 255
 
     (56) opt_value -> empty .
 
     RPAREN          reduce using rule 56 (opt_value -> empty .)
 
 
-state 234
+state 256
 
     (47) stack -> FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 242
+    SEMICOLON       shift and go to state 271
 
 
-state 235
+state 257
 
-    (114) semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET . SEMICOLON
+    (114) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET . SEMICOLON
 
-    SEMICOLON       shift and go to state 243
+    SEMICOLON       shift and go to state 272
 
 
-state 236
+state 258
 
-    (117) insidelist -> value COMMA . insidelist
-    (116) insidelist -> . value
-    (117) insidelist -> . value COMMA insidelist
+    (120) insidelist -> value COMMA . insidelist
+    (119) insidelist -> . value
+    (120) insidelist -> . value COMMA insidelist
     (49) value -> . INTEGER
     (50) value -> . FLOAT
     (51) value -> . STR
@@ -4385,26 +4568,91 @@ state 236
     (104) boolvalue -> . TRUE
     (105) boolvalue -> . FALSE
 
-    INTEGER         shift and go to state 137
-    FLOAT           shift and go to state 138
-    STR             shift and go to state 35
-    BOOLEAN         shift and go to state 36
-    IDENTIFIER      shift and go to state 130
+    INTEGER         shift and go to state 143
+    FLOAT           shift and go to state 144
+    STR             shift and go to state 38
+    BOOLEAN         shift and go to state 39
+    IDENTIFIER      shift and go to state 136
     TRUE            shift and go to state 41
     FALSE           shift and go to state 42
 
-    value                          shift and go to state 225
-    insidelist                     shift and go to state 244
+    value                          shift and go to state 240
+    insidelist                     shift and go to state 273
     boolvalue                      shift and go to state 25
 
-state 237
+state 259
 
-    (115) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET . SEMICOLON
+    (115) semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET . SEMICOLON
 
-    SEMICOLON       shift and go to state 245
+    SEMICOLON       shift and go to state 274
 
 
-state 238
+state 260
+
+    (122) insidelistint -> INTEGER COMMA . insidelistint
+    (121) insidelistint -> . INTEGER
+    (122) insidelistint -> . INTEGER COMMA insidelistint
+
+    INTEGER         shift and go to state 242
+
+    insidelistint                  shift and go to state 275
+
+state 261
+
+    (116) semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET . SEMICOLON
+
+    SEMICOLON       shift and go to state 276
+
+
+state 262
+
+    (124) insideliststr -> STR COMMA . insideliststr
+    (123) insideliststr -> . STR
+    (124) insideliststr -> . STR COMMA insideliststr
+
+    STR             shift and go to state 244
+
+    insideliststr                  shift and go to state 277
+
+state 263
+
+    (117) semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET . SEMICOLON
+
+    SEMICOLON       shift and go to state 278
+
+
+state 264
+
+    (126) insidelistbool -> boolvalue COMMA . insidelistbool
+    (125) insidelistbool -> . boolvalue
+    (126) insidelistbool -> . boolvalue COMMA insidelistbool
+    (104) boolvalue -> . TRUE
+    (105) boolvalue -> . FALSE
+
+    TRUE            shift and go to state 41
+    FALSE           shift and go to state 42
+
+    boolvalue                      shift and go to state 246
+    insidelistbool                 shift and go to state 279
+
+state 265
+
+    (118) semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET . SEMICOLON
+
+    SEMICOLON       shift and go to state 280
+
+
+state 266
+
+    (128) insidelistdouble -> FLOAT COMMA . insidelistdouble
+    (127) insidelistdouble -> . FLOAT
+    (128) insidelistdouble -> . FLOAT COMMA insidelistdouble
+
+    FLOAT           shift and go to state 248
+
+    insidelistdouble               shift and go to state 281
+
+state 267
 
     (83) function_lambda -> datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .
 
@@ -4432,7 +4680,7 @@ state 238
     RCURLYBRACKET   reduce using rule 83 (function_lambda -> datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON .)
 
 
-state 239
+state 268
 
     (43) forStatement -> FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET .
 
@@ -4460,14 +4708,14 @@ state 239
     RCURLYBRACKET   reduce using rule 43 (forStatement -> FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET .)
 
 
-state 240
+state 269
 
     (44) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 246
+    SEMICOLON       shift and go to state 282
 
 
-state 241
+state 270
 
     (46) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN RPAREN SEMICOLON .
 
@@ -4495,7 +4743,7 @@ state 241
     RCURLYBRACKET   reduce using rule 46 (stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN RPAREN SEMICOLON .)
 
 
-state 242
+state 271
 
     (47) stack -> FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON .
 
@@ -4523,70 +4771,182 @@ state 242
     RCURLYBRACKET   reduce using rule 47 (stack -> FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON .)
 
 
-state 243
+state 272
 
-    (114) semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .
+    (114) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .
 
-    FOR             reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    WHILE           reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    FINAL           reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    IDENTIFIER      reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    BOOL            reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    LIST            reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    MAP             reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    IF              reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    VAR             reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    INTEGER         reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    FLOAT           reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    STR             reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    BOOLEAN         reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    INT             reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    STRING          reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    DOUBLE          reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    DYNAMIC         reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    VOID            reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    TRUE            reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    FALSE           reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    $end            reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    RCURLYBRACKET   reduce using rule 114 (semanticlist -> LIST LESSTHAN datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-
-
-state 244
-
-    (117) insidelist -> value COMMA insidelist .
-
-    RSQUAREBRACKET  reduce using rule 117 (insidelist -> value COMMA insidelist .)
+    FOR             reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    WHILE           reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    FINAL           reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    IDENTIFIER      reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    BOOL            reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    LIST            reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    MAP             reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    IF              reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    VAR             reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    INTEGER         reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    FLOAT           reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    STR             reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    BOOLEAN         reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    INT             reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    STRING          reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    DOUBLE          reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    DYNAMIC         reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    VOID            reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    TRUE            reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    FALSE           reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    $end            reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    RCURLYBRACKET   reduce using rule 114 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
 
 
-state 245
+state 273
 
-    (115) semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .
+    (120) insidelist -> value COMMA insidelist .
 
-    FOR             reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    WHILE           reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    FINAL           reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    IDENTIFIER      reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    BOOL            reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    LIST            reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    MAP             reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    IF              reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    VAR             reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    INTEGER         reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    FLOAT           reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    STR             reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    BOOLEAN         reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    INT             reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    STRING          reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    DOUBLE          reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    DYNAMIC         reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    VOID            reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    TRUE            reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    FALSE           reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    $end            reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
-    RCURLYBRACKET   reduce using rule 115 (semanticlist -> LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON .)
+    RSQUAREBRACKET  reduce using rule 120 (insidelist -> value COMMA insidelist .)
 
 
-state 246
+state 274
+
+    (115) semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .
+
+    FOR             reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    WHILE           reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    FINAL           reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    IDENTIFIER      reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    BOOL            reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    LIST            reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    MAP             reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    IF              reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    VAR             reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    INTEGER         reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    FLOAT           reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    STR             reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    BOOLEAN         reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    INT             reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    STRING          reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    DOUBLE          reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    DYNAMIC         reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    VOID            reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    TRUE            reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    FALSE           reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    $end            reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+    RCURLYBRACKET   reduce using rule 115 (semanticlist -> LIST LESSTHAN INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON .)
+
+
+state 275
+
+    (122) insidelistint -> INTEGER COMMA insidelistint .
+
+    RSQUAREBRACKET  reduce using rule 122 (insidelistint -> INTEGER COMMA insidelistint .)
+
+
+state 276
+
+    (116) semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .
+
+    FOR             reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    WHILE           reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    FINAL           reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    IDENTIFIER      reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    BOOL            reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    LIST            reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    MAP             reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    IF              reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    VAR             reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    INTEGER         reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    FLOAT           reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    STR             reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    BOOLEAN         reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    INT             reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    STRING          reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    DOUBLE          reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    DYNAMIC         reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    VOID            reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    TRUE            reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    FALSE           reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    $end            reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+    RCURLYBRACKET   reduce using rule 116 (semanticlist -> LIST LESSTHAN STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON .)
+
+
+state 277
+
+    (124) insideliststr -> STR COMMA insideliststr .
+
+    RSQUAREBRACKET  reduce using rule 124 (insideliststr -> STR COMMA insideliststr .)
+
+
+state 278
+
+    (117) semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .
+
+    FOR             reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    WHILE           reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    FINAL           reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    IDENTIFIER      reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    BOOL            reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    LIST            reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    MAP             reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    IF              reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    VAR             reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    INTEGER         reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    FLOAT           reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    STR             reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    BOOLEAN         reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    INT             reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    STRING          reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    DOUBLE          reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    DYNAMIC         reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    VOID            reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    TRUE            reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    FALSE           reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    $end            reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+    RCURLYBRACKET   reduce using rule 117 (semanticlist -> LIST LESSTHAN BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON .)
+
+
+state 279
+
+    (126) insidelistbool -> boolvalue COMMA insidelistbool .
+
+    RSQUAREBRACKET  reduce using rule 126 (insidelistbool -> boolvalue COMMA insidelistbool .)
+
+
+state 280
+
+    (118) semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .
+
+    FOR             reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    WHILE           reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    FINAL           reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    IDENTIFIER      reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    BOOL            reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    LIST            reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    MAP             reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    IF              reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    VAR             reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    INTEGER         reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    FLOAT           reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    STR             reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    BOOLEAN         reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    INT             reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    STRING          reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    DOUBLE          reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    DYNAMIC         reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    VOID            reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    TRUE            reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    FALSE           reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    $end            reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+    RCURLYBRACKET   reduce using rule 118 (semanticlist -> LIST LESSTHAN DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON .)
+
+
+state 281
+
+    (128) insidelistdouble -> FLOAT COMMA insidelistdouble .
+
+    RSQUAREBRACKET  reduce using rule 128 (insidelistdouble -> FLOAT COMMA insidelistdouble .)
+
+
+state 282
 
     (44) stack -> FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON .
 
@@ -4618,5 +4978,4 @@ WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for IDENTIFIER in state 15 resolved as shift
 WARNING: shift/reduce conflict for IDENTIFIER in state 24 resolved as shift
-WARNING: shift/reduce conflict for GREATERTHAN in state 94 resolved as shift
-WARNING: shift/reduce conflict for RPAREN in state 222 resolved as shift
+WARNING: shift/reduce conflict for RPAREN in state 237 resolved as shift

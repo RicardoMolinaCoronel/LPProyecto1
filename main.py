@@ -414,13 +414,39 @@ def p_booloperations(p):
   '''
 
 def p_semanticlist(p):
-  ''' semanticlist : LIST LESSTHAN  datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-                  | LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+  ''' semanticlist : LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+                  | LIST LESSTHAN  INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+                  | LIST LESSTHAN  STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+                  | LIST LESSTHAN  BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+                  | LIST LESSTHAN  DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
   '''
+#LIST LESSTHAN  datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+
+#returnType : INT| STRING| BOOL| DOUBLE| DYNAMIC| VOID| map_identifier
 
 def p_insidelist(p):
   ''' insidelist : value
                   | value COMMA insidelist
+  '''
+
+def p_insidelistint(p):
+  ''' insidelistint : INTEGER
+                  | INTEGER COMMA insidelistint
+  '''
+
+def p_insideliststr(p):
+  ''' insideliststr : STR
+                  | STR COMMA insideliststr
+  '''
+
+def p_insidelistbool(p):
+  ''' insidelistbool : boolvalue
+                  | boolvalue COMMA insidelistbool
+  '''
+
+def p_insidelistdouble(p):
+  ''' insidelistdouble : FLOAT
+                  | FLOAT COMMA insidelistdouble
   '''
 
 def p_error(p):
