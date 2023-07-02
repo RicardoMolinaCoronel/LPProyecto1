@@ -398,7 +398,7 @@ def p_boolvalue(p):
 
 def p_semanticbool(p):
   ''' bool : BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
-           | BOOL IDENTIFIER EQUAL booloperation SEMICOLON
+           | BOOL IDENTIFIER EQUAL booloperations SEMICOLON
   '''
 
 def p_booloperation(p):
@@ -420,7 +420,6 @@ def p_semanticlist(p):
 
 def p_insidelist(p):
   ''' insidelist : value
-                  | value COMMA value
                   | value COMMA insidelist
   '''
 
