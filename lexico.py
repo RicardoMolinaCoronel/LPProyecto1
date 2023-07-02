@@ -39,7 +39,8 @@ reserved = reservadas.crear(
    'of',
    'do',
    'true',
-   'false'
+   'false',
+   'dynamic'
    ])
 
 

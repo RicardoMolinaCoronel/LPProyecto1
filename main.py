@@ -38,9 +38,13 @@ suma(int a, int b) {
 algoritmoPruebaSemanticoJaredCastillo = '''
 List<int> numeros = [1, 2, 3, 4, 5];
 
+List<dynamic> tupla = [1, "dos", true];
+
 bool a = true;
 
+bool c = a && b;
 
+bool c = a || b;
 '''
 #Testeos
 algoritmoLexico1 = '''
@@ -281,6 +285,7 @@ def p_value(p):
               | STR
               | BOOLEAN
               | IDENTIFIER
+              | boolvalue
   '''
 def p_opt_value(p):
   '''opt_value : value
@@ -393,6 +398,7 @@ def p_boolvalue(p):
 
 def p_semanticbool(p):
   ''' bool : BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
+           | BOOL IDENTIFIER EQUAL booloperation SEMICOLON
   '''
 
 def p_booloperation(p):
@@ -409,6 +415,7 @@ def p_booloperations(p):
 
 def p_semanticlist(p):
   ''' semanticlist : LIST LESSTHAN  datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+                  | LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
   '''
 
 def p_insidelist(p):
