@@ -35,21 +35,8 @@ suma(int a, int b) {
 }
 '''
 
-prueba2 = '''
-for (var i = 0; i < 5; i++) {
-}
-
-'''
-
-Pstack='''
-final stack = Stack<int>();
-final smokeStack = Stack.of(list);
-'''
-
-pr3='''
-suma(int a, int b) {
-  return a + b;
-}
+algoritmoPruebaSemanticoJaredCastillo = '''
+List<int> numeros = [1, 2, 3, 4, 5];
 '''
 #Testeos
 algoritmoLexico1 = '''
@@ -186,6 +173,15 @@ def p_class_content_repeat(p):
   '''class_content_repeat : class_content
                            | class_content_repeat class_content
   '''
+
+def p_class_content_bool(p):
+  '''class_content : bool
+  '''
+
+def p_class_content_semanticlist(p):
+  '''class_content : semanticlist
+  '''
+
 def p_map(p):
   'map : map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON'
 
@@ -255,9 +251,9 @@ def p_forStatement(p):
   '''forStatement : FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
   '''
 
-def p_taskStatement(p):
-  '''taskStatement : IDENTIFIER operatorExpression operatorExpression
-  '''
+#def p_taskStatement(p):
+#  '''taskStatement : IDENTIFIER operatorExpression operatorExpression
+#  '''
 
 def p_stack(p):
   '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
@@ -386,28 +382,36 @@ def p_declarationExpression_asign(p):
   '''
 
 #SEMANTIC RULES
-def boolvalues(p):
-  ''' boolvalue: TRUE
+def p_boolvalue(p):
+  ''' boolvalue : TRUE
                 | FALSE
   '''
 
 def p_semanticbool(p):
-  ''' bool: BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
+  ''' bool : BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
   '''
 
 def p_booloperation(p):
-  ''' booloperation: boolvalue condition_connector boolvalue
+  ''' booloperation : boolvalue condition_connector boolvalue
                   | IDENTIFIER condition_connector boolvalue
                   | IDENTIFIER condition_connector IDENTIFIER
                   | boolvalue condition_connector IDENTIFIER
   '''
 
 def p_booloperations(p):
-  ''' booloperations: booloperation
+  ''' booloperations : booloperation
                     | booloperation condition_connector booloperations
   '''
 
+def p_semanticlist(p):
+  ''' semanticlist : LIST LESSTHAN  datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+  '''
 
+def p_insidelist(p):
+  ''' insidelist : value
+                  | value COMMA value
+                  | value COMMA insidelist
+  '''
 
 def p_error(p):
   if p:
@@ -432,8 +436,9 @@ else:
 
 print("-------------------------------")
 print("PRUEBA SEMANTICO DE ALGORITMO ->")
-result = semantico.parse(algoritmoPruebaSintaticoJaredCastillo)
-if result == None:
+result2 = semantico.parse(algoritmoPruebaSemanticoJaredCastillo)
+if result2 == None:
   print("La sintaxis es correcta")
 else:
-  print(result)
+  print(result2)
+
