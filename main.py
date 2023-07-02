@@ -37,6 +37,10 @@ suma(int a, int b) {
 
 algoritmoPruebaSemanticoJaredCastillo = '''
 List<int> numeros = [1, 2, 3, 4, 5];
+
+bool a = true;
+
+
 '''
 #Testeos
 algoritmoLexico1 = '''
