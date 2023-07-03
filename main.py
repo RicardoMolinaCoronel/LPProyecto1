@@ -1,8 +1,11 @@
+import tkinter
+
 from lexico import tokens
 import ply.yacc as yacc
+import tkinter as tk
+from variables_analizador import app,error,cajaValidator
 
-
-#BY RICARDO MOLINA : class_content,ifElseStatement,conditions,Map,declarationExpression,function_lambda,parte forStatement
+# BY RICARDO MOLINA : class_content,ifElseStatement,conditions,Map,declarationExpression,function_lambda,parte forStatement
 algoritmoPruebaSintaticoRicardoMolina = '''
 Map<int,String> personas = {
     1 : 'ere',
@@ -26,7 +29,7 @@ algoritmoPruebaSintaticoJaredCastillo = '''
 while(a < b) {
   x++;
  }
- 
+
 final stack = Stack<int>();
 final smokeStack = Stack.of(list);
 
@@ -46,7 +49,7 @@ bool c = a && b;
 
 bool c = a || b;
 '''
-#Testeos
+# Testeos
 algoritmoLexico1 = '''
 //ALGORITMO RICARDO MOLINA
 main() {
@@ -79,7 +82,7 @@ void leerFile() {
     for(var line in contents){
     print(line);
     }
-    
+
   } catch (e) {
     if (e is FileSystemException && e.message.contains('No such file or directory') || e is PathNotFoundException) {
       print('El archivo no existe o la ruta es incorrecta.');
@@ -122,7 +125,7 @@ void menu() {
 }
 '''
 
-algoritmo3= '''
+algoritmo3 = '''
 //ALGORITMO FREDDY TENESACA
 int mayorQueX(Iterable<int> collection, int x) {
   return collection.where((item) => item > x).length;
@@ -138,343 +141,489 @@ main() async {
     'luis': 2
    };
   final x = 5;
-  
+
   print('Numeros mayor que $x en list: ${mayorQueX(numeros, 5)}');
   print('Numeros mayor que $x en set: ${mayorQueX(mySet, 5)}');
   print('Puntos mayor que $x en map: ${mayorQueX(puntos.values, 5)}');
 }
 '''
+
+
 def p_class(p):
     'class : class_content_repeat'
 
+
 def p_class_content_map(p):
-  '''class_content : map
-  '''
+    '''class_content : map
+    '''
+
+
 def p_class_content_ifElse(p):
-  '''class_content : ifElseStatement
-  '''
+    '''class_content : ifElseStatement
+    '''
+
+
 def p_class_content_lambdaFunction(p):
-  '''class_content : function_lambda
-  '''
+    '''class_content : function_lambda
+    '''
+
+
 def p_class_content_declarationExpression(p):
-  '''class_content : declarationExpression
-  '''
+    '''class_content : declarationExpression
+    '''
+
+
 def p_class_content_for(p):
     '''class_content : forStatement
     '''
 
+
 def p_class_content_while(p):
-  '''class_content : while
-  '''
+    '''class_content : while
+    '''
+
 
 def p_class_content_stack(p):
-  '''class_content : stack
-  '''
-  
+    '''class_content : stack
+    '''
+
+
 def p_class_content_inferedFunction(p):
-  '''class_content : inferedReturnFunction
-  '''
+    '''class_content : inferedReturnFunction
+    '''
+
+
 def p_class_content_expression(p):
-  '''class_content : expression SEMICOLON
-  '''
+    '''class_content : expression SEMICOLON
+    '''
+
+
 def p_class_content_repeat(p):
-  '''class_content_repeat : class_content
-                           | class_content_repeat class_content
-  '''
+    '''class_content_repeat : class_content
+                             | class_content_repeat class_content
+    '''
+
 
 def p_class_content_bool(p):
-  '''class_content : bool
-  '''
+    '''class_content : semanticbool
+    '''
+
 
 def p_class_content_semanticlist(p):
-  '''class_content : semanticlist
-  '''
+    '''class_content : semanticlist
+    '''
+
 
 def p_map(p):
-  'map : map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON'
+    'map : map_identifier IDENTIFIER EQUAL LCURLYBRACKET map_content RCURLYBRACKET SEMICOLON'
+
 
 def p_map_identifier(p):
-  '''map_identifier : MAP
-                     | MAP map_type_specified
-  '''
+    '''map_identifier : MAP
+                       | MAP map_type_specified
+    '''
+
 
 def p_map_type_specified(p):
-  'map_type_specified : LESSTHAN datatype COMMA datatype GREATERTHAN'
+    'map_type_specified : LESSTHAN datatype COMMA datatype GREATERTHAN'
+
 
 def p_datatype(p):
-  '''datatype : returnType
-               | VAR
-  '''
+    '''datatype : returnType
+                 | VAR
+    '''
+
+
 def p_returnType(p):
-  '''returnType : INT
-                 | STRING
-                 | BOOL
-                 | DOUBLE
-                 | DYNAMIC
-                 | VOID
-                 | map_identifier
-  '''
+    '''returnType : INT
+                   | STRING
+                   | BOOL
+                   | DOUBLE
+                   | DYNAMIC
+                   | VOID
+                   | map_identifier
+    '''
+
 
 def p_empty(p):
     'empty :'
+
+
 def p_map_content(p):
-  '''map_content : map_pairs
-                  | empty
-  '''
+    '''map_content : map_pairs
+                    | empty
+    '''
+
+
 def p_map_pair(p):
-  'map_pair : map_key COLON map_value'
+    'map_pair : map_key COLON map_value'
+
 
 def p_map_pairs(p):
-  '''map_pairs : map_pair
-                | map_pair COMMA map_pairs
-  '''
+    '''map_pairs : map_pair
+                  | map_pair COMMA map_pairs
+    '''
+
+
 def p_map_key(p):
-  '''map_key : value
-  '''
+    '''map_key : value
+    '''
+
+
 def p_map_value(p):
-  '''map_value : value
-  '''
+    '''map_value : value
+    '''
+
 
 def p_ifElseStatement(p):
-  '''ifElseStatement : ifStatement
-                      | ifStatement elifStatement_repeat
-  '''
+    '''ifElseStatement : ifStatement
+                        | ifStatement elifStatement_repeat
+    '''
+
 
 def p_elifStatement_repeat(p):
-  '''elifStatement_repeat : elifStatement
-                           | elifStatement elifStatement_repeat
-  '''
+    '''elifStatement_repeat : elifStatement
+                             | elifStatement elifStatement_repeat
+    '''
+
+
 def p_ifStatement(p):
-  '''ifStatement : IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
-  '''
+    '''ifStatement : IF LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
+    '''
+
 
 def p_elifStatement(p):
-  '''elifStatement : ELSE ifStatement
-  '''
+    '''elifStatement : ELSE ifStatement
+    '''
+
+
 def p_elseStatement(p):
-  '''elifStatement : ELSE LCURLYBRACKET class_content_repeat RCURLYBRACKET
-  '''
+    '''elifStatement : ELSE LCURLYBRACKET class_content_repeat RCURLYBRACKET
+    '''
+
 
 def p_forStatement(p):
-  '''forStatement : FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
-  '''
+    '''forStatement : FOR LPAREN declarationExpression SEMICOLON condition SEMICOLON expression RPAREN LCURLYBRACKET RCURLYBRACKET
+    '''
 
-#def p_taskStatement(p):
+
+# def p_taskStatement(p):
 #  '''taskStatement : IDENTIFIER operatorExpression operatorExpression
 #  '''
 
 def p_stack(p):
-  '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
-  '''
+    '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN opt_value RPAREN SEMICOLON
+    '''
+
 
 def p_whileStatement(p):
-  '''while : WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
-  '''
+    '''while : WHILE LPAREN conditions RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
+    '''
+
+
 def p_stackStatement(p):
-  '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN RPAREN SEMICOLON
-          | FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
-  '''
+    '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN RPAREN SEMICOLON
+            | FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
+    '''
+
 
 def p_inferedReturnFunction(p):
-  '''inferedReturnFunction : IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
-  '''
+    '''inferedReturnFunction : IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
+    '''
+
 
 def p_value(p):
-  '''value : INTEGER
-              | FLOAT
-              | STR
-              | BOOLEAN
-              | IDENTIFIER
-              | boolvalue
-  '''
+    '''value : INTEGER
+                | FLOAT
+                | STR
+                | BOOLEAN
+                | IDENTIFIER
+                | booleanOp
+    '''
+
+
 def p_opt_value(p):
-  '''opt_value : value
-                | empty
-  '''
+    '''opt_value : value
+                  | empty
+    '''
+
+
 def p_deniable_values(p):
-  '''deniable_values : IDENTIFIER
-                      | BOOLEAN
-  '''
+    '''deniable_values : IDENTIFIER
+                        | BOOLEAN
+                        | booleanOp
+    '''
+
+
 def p_negation_values(p):
-  '''negation_values : deniable_values
-                     | EXMARK deniable_values
-  '''
+    '''negation_values : deniable_values
+                       | EXMARK deniable_values
+    '''
+
 
 def p_condition_values(p):
-  '''condition_values : negation_values
-                      | INTEGER
-                      | FLOAT
-                      | STR
-  '''
+    '''condition_values : negation_values
+                        | INTEGER
+                        | FLOAT
+                        | STR
+    '''
+
+
 def p_condition_operator(p):
-  '''condition_operator : DOUBLEQUAL
-                         | LESSTHAN
-                         | GREATERTHAN
-                         | LESSTHAN EQUAL
-                         | GREATERTHAN EQUAL
-  '''
+    '''condition_operator : DOUBLEQUAL
+                           | LESSTHAN
+                           | GREATERTHAN
+                           | LESSTHAN EQUAL
+                           | GREATERTHAN EQUAL
+    '''
+
+
 def p_number(p):
-  '''number : FLOAT
-             | INTEGER
-  '''
+    '''number : FLOAT
+               | INTEGER
+    '''
+
+
 def p_condition(p):
-  '''condition : IDENTIFIER condition_operator condition_values
-                | EXMARK IDENTIFIER condition_operator condition_values
-                | BOOLEAN condition_operator BOOLEAN
-                | number condition_operator number
-                | STR condition_operator STR
-  '''
+    '''condition : IDENTIFIER condition_operator condition_values
+                  | EXMARK IDENTIFIER condition_operator condition_values
+                  | BOOLEAN condition_operator BOOLEAN
+                  | number condition_operator number
+                  | STR condition_operator STR
+                  | booleanOp condition_operator booleanOp
+    '''
+
 
 def p_conditions(p):
-  '''conditions : condition
-                 | condition condition_connector conditions
-  '''
+    '''conditions : condition
+                   | condition condition_connector conditions
+    '''
+
 
 def p_condition_connector(p):
-  '''condition_connector : AND
-                          | OR
-                          | AMPERSAND AMPERSAND
-                          | PIPELINE PIPELINE
-  '''
+    '''condition_connector : AND
+                            | OR
+                            | AMPERSAND AMPERSAND
+                            | PIPELINE PIPELINE
+    '''
+
 
 def p_function_lambda(p):
-  '''function_lambda : datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
-  '''
+    '''function_lambda : datatype IDENTIFIER LPAREN function_arguments_repeat optFunction_argumentsExpression RPAREN EQUAL GREATERTHAN expression SEMICOLON
+    '''
+
 
 def p_function_argument(p):
-  ''' function_argument : datatype IDENTIFIER
-                        | empty
-  '''
+    ''' function_argument : datatype IDENTIFIER
+                          | empty
+    '''
+
 
 def p_function_arguments_repeat(p):
-  '''function_arguments_repeat : function_argument
-                                | function_argument COMMA function_arguments_repeat
-  '''
+    '''function_arguments_repeat : function_argument
+                                  | function_argument COMMA function_arguments_repeat
+    '''
+
 
 def p_optFunction_argumentsExpression(p):
-  ''' optFunction_argumentsExpression : LCURLYBRACKET optFunction_arguments RCURLYBRACKET
-                                       | empty
-  '''
-def p_optFunction_argument(p):
-  '''optFunction_argument : REQUIRED datatype IDENTIFIER
+    ''' optFunction_argumentsExpression : LCURLYBRACKET optFunction_arguments RCURLYBRACKET
+                                         | empty
+    '''
 
-  '''
+
+def p_optFunction_argument(p):
+    '''optFunction_argument : REQUIRED datatype IDENTIFIER
+
+    '''
+
 
 def p_optFunction_arguments(p):
-  '''optFunction_arguments : optFunction_argument
-                            | optFunction_argument COMMA optFunction_arguments
-  '''
+    '''optFunction_arguments : optFunction_argument
+                              | optFunction_argument COMMA optFunction_arguments
+    '''
+
 
 def p_expression(p):
-  '''expression : operableTypes operatorExpression operableTypes
-                  | value
-                  | operableTypes operatorExpression operatorExpression
-  '''
+    '''expression : operableTypes operatorExpression operableTypes
+                    | value
+                    | operableTypes operatorExpression operatorExpression
+    '''
 
-def p_operablTypes(p):
-  '''operableTypes : IDENTIFIER
-                    | number
-  '''
+
+def p_operableTypes(p):
+    '''operableTypes : IDENTIFIER
+                      | number
+    '''
+
+
 def p_operatorExpression(p):
-  '''operatorExpression : PLUS
-                         | MINUS
-                         | TIMES
-                         | DIVISION
-  '''
+    '''operatorExpression : PLUS
+                           | MINUS
+                           | TIMES
+                           | DIVISION
+    '''
+
 
 def p_declarationExpression(p):
-  '''declarationExpression : datatype IDENTIFIER SEMICOLON
-  '''
+    '''declarationExpression : datatype IDENTIFIER SEMICOLON
+    '''
 
-def p_declarationExpression_asign(p):
-  '''declarationExpression : datatype IDENTIFIER EQUAL expression SEMICOLON
-  '''
 
-#SEMANTIC RULES
-def p_boolvalue(p):
-  ''' boolvalue : TRUE
-                | FALSE
-  '''
+def p_declarationExpression_asignOther(p):
+    '''declarationExpression : datatype IDENTIFIER EQUAL expression SEMICOLON
+    '''
+
+
+
+# SEMANTIC RULES
 
 def p_semanticbool(p):
-  ''' bool : BOOL IDENTIFIER EQUAL boolvalue SEMICOLON
-           | BOOL IDENTIFIER EQUAL booloperations SEMICOLON
-  '''
+    ''' semanticbool : BOOL IDENTIFIER EQUAL booleanOp SEMICOLON
+             | BOOL IDENTIFIER EQUAL booloperations SEMICOLON
+    '''
+
+def p_booleanOp(p):
+    '''booleanOp : TRUE
+                | FALSE
+    '''
 
 def p_booloperation(p):
-  ''' booloperation : boolvalue condition_connector boolvalue
-                  | IDENTIFIER condition_connector boolvalue
-                  | IDENTIFIER condition_connector IDENTIFIER
-                  | boolvalue condition_connector IDENTIFIER
-  '''
+    ''' booloperation : booleanOp condition_connector booleanOp
+                    | IDENTIFIER condition_connector booleanOp
+                    | IDENTIFIER condition_connector IDENTIFIER
+                    | booleanOp condition_connector IDENTIFIER
+    '''
+
 
 def p_booloperations(p):
-  ''' booloperations : booloperation
-                    | booloperation condition_connector booloperations
-  '''
+    ''' booloperations : booloperation
+                      | booloperation condition_connector booloperations
+    '''
+
 
 def p_semanticlist(p):
-  ''' semanticlist : LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
-                  | LIST LESSTHAN  INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
-                  | LIST LESSTHAN  STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
-                  | LIST LESSTHAN  BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
-                  | LIST LESSTHAN  DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
-  '''
-#LIST LESSTHAN  datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+    ''' semanticlist : LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+                    | LIST LESSTHAN  INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
+                    | LIST LESSTHAN  STRING GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insideliststr RSQUAREBRACKET SEMICOLON
+                    | LIST LESSTHAN  BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
+                    | LIST LESSTHAN  DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
+    '''
 
-#returnType : INT| STRING| BOOL| DOUBLE| DYNAMIC| VOID| map_identifier
+
+# LIST LESSTHAN  datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+
+# returnType : INT| STRING| BOOL| DOUBLE| DYNAMIC| VOID| map_identifier
 
 def p_insidelist(p):
-  ''' insidelist : value
-                  | value COMMA insidelist
-  '''
+    ''' insidelist : value
+                    | value COMMA insidelist
+    '''
+
 
 def p_insidelistint(p):
-  ''' insidelistint : INTEGER
-                  | INTEGER COMMA insidelistint
-  '''
+    ''' insidelistint : INTEGER
+                    | INTEGER COMMA insidelistint
+    '''
+
 
 def p_insideliststr(p):
-  ''' insideliststr : STR
-                  | STR COMMA insideliststr
-  '''
+    ''' insideliststr : STR
+                    | STR COMMA insideliststr
+    '''
+
 
 def p_insidelistbool(p):
-  ''' insidelistbool : boolvalue
-                  | boolvalue COMMA insidelistbool
-  '''
+    ''' insidelistbool : booleanOp
+                    | booleanOp COMMA insidelistbool
+    '''
+
 
 def p_insidelistdouble(p):
-  ''' insidelistdouble : FLOAT
-                  | FLOAT COMMA insidelistdouble
-  '''
+    ''' insidelistdouble : FLOAT
+                    | FLOAT COMMA insidelistdouble
+    '''
+
+def p_declarationExpression_asignString(p):
+    '''declarationExpression : STRING IDENTIFIER EQUAL expressionString SEMICOLON
+    '''
+def p_expressionString(p):
+     '''expressionString : STR
+                          | STR operatorExpressionString expressionString
+     '''
+def p_operationExpressionString(p):
+    '''operatorExpressionString : PLUS
+    '''
+def p_declarationExpression_asignInteger(p):
+    '''declarationExpression : INT IDENTIFIER EQUAL expressionInteger SEMICOLON
+    '''
+def p_expressionInteger(p):
+     '''expressionInteger : number
+                          | number operatorExpression expressionInteger
+     '''
+def p_expressionIntegerIdentifier(p):
+    '''expressionInteger : IDENTIFIER
+                         | IDENTIFIER operatorExpression expressionInteger
+    '''
+
+
 
 def p_error(p):
-  if p:
-    print("Error de sintaxis en token:", p.type)
-    #sintactico.errok()
-  else:
-    print("Syntax error at EOF")
+    globals()['error'] = True
+    cajaValidator.config(fg=rojo)
+    if p:
+        cajaValidator.insert(tk.END, "Error de sintaxis en token:" + p.type + "\n")
+        print("Error de sintaxis en token:", p.type)
+        # sintactico.errok()
+    else:
+        cajaValidator.insert(tk.END, "Syntax error at EOF" + "\n")
+        print("Syntax error at EOF")
 
 
 # Build the parser
 sintactico = yacc.yacc()
-semantico = yacc.yacc()
-
-print("-------------------------------")
-print("PRUEBA DE SINTAXIS DE ALGORITMO ->")
-result = sintactico.parse(algoritmoPruebaSintaticoJaredCastillo)
-if result == None:
-  print("La sintaxis es correcta")
-else:
-  print(result)
 
 
-print("-------------------------------")
-print("PRUEBA SEMANTICO DE ALGORITMO ->")
-result2 = semantico.parse(algoritmoPruebaSemanticoJaredCastillo)
-if result2 == None:
-  print("La sintaxis es correcta")
-else:
-  print(result2)
+def runAnalyzer():
+    cajaValidator.config(state=tk.NORMAL)
+    cajaValidator.delete(1.0, "end-1c")
+    cajaValidator.config(fg=verde)
+    codigo = cajaCodigo.get(1.0, "end-1c")
+    result = sintactico.parse(codigo)
+    if (error != True):
+        cajaValidator.insert(1.0, "Todo OK!")
+    globals()['error'] = False
+    cajaValidator.config(state=tk.DISABLED)
+
+
+fondo = "#444444"
+celeste = "#00A4D3"
+gris1 = "#B1B1B1"
+verde = "#639D45"
+rojo = "#E11E1E"
+
+
+
+app.geometry("900x470")
+app.configure(background="#444444")
+tk.Wm.wm_title(app, "DART ANALYZER")
+img = tkinter.PhotoImage(file="img/Dart_logo.png")
+app.resizable(False, False)
+tk.Label(app, image=img
+         ).place(x=15, y=10, width=45, height=45)
+tk.Label(app, text="DART ANALYZER GRUPO 2", font=("Calibri", 23), bg=fondo, fg="white"
+         ).place(x=75, y=10, width=350, height=45)
+tk.Label(app, text="CODE", font=("Calibri", 12), bg=fondo, fg=gris1
+         ).place(x=17, y=70, width=50, height=20)
+tk.Label(app, text="VALIDATOR", font=("Calibri", 12), bg=fondo, fg=gris1
+         ).place(x=582, y=70, width=100, height=20)
+cajaCodigo = tk.Text(app, font=("Calibri", 12), bg="white", fg="black")
+cajaCodigo.place(x=15, y=100, width=550, height=300)
+
+
+tk.Button(app, text="RUN", font=("Calibri", 18), background="#00A4D3", fg="black", relief="flat", command=runAnalyzer
+          ).place(x=15, y=410, width=100, height=40)
+app.mainloop()
+
+
+
 

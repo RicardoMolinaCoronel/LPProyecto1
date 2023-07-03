@@ -1,6 +1,9 @@
+
 import ply.lex as lex
 import reservadas
+import variables_analizador
 
+import tkinter as tk
 reserved = reservadas.crear(
   ['while',
    'for',
@@ -115,6 +118,9 @@ def t_COMMENT(t):
 
 
 def t_error(t):
+  variables_analizador.error= True
+  variables_analizador.cajaValidator.config(fg="#E11E1E")
+  variables_analizador.cajaValidator.insert(tk.END, "Error léxico en símbolo: "+ t.value.strip()+ "\n")
   print("Error léxico", t.value.strip(), " línea:", t.lineno, "columna:",
         t.lexpos)
   t.lexer.skip(1)
