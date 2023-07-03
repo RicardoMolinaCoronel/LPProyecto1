@@ -608,7 +608,7 @@ app.configure(background="#444444")
 tk.Wm.wm_title(app, "DART ANALYZER")
 img = tkinter.PhotoImage(file="img/Dart_logo.png")
 app.resizable(False, False)
-tk.Label(app, image=img
+tk.Label(app, image=img, bg=fondo
          ).place(x=15, y=10, width=45, height=45)
 tk.Label(app, text="DART ANALYZER GRUPO 2", font=("Calibri", 23), bg=fondo, fg="white"
          ).place(x=75, y=10, width=350, height=45)
