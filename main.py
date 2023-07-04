@@ -67,7 +67,18 @@ bool c = a && b;
 bool c = a || b;
 '''
 
-
+algoritmoPruebaSintaticoFreddyTenesaca= '''
+// Dartprogram to illustrate 
+// Anonymous functions in Dart
+void main()
+{
+  var list = ["Shubham","Nick","Adil","Puthal"];
+  print("GeeksforGeeks - Anonymous function in Dart");
+  list.forEach((item) {
+    print('${list.indexOf(item)} : $item');
+  });
+}
+'''
 
 def p_class(p):
     '''class : class_content_repeat
