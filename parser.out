@@ -2,16 +2,30 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
+    ABSTRACT
     APOSTROPHE
+    ASSERT
     ASYNC
     AWAIT
+    BREAK
+    CASE
     CATCH
+    CLASS
     CLOSE
     COMMENT
+    CONST
+    CONTINUE
+    DEFAULT
+    DEFERRED
     DO
     DOLLAR
     DOUBQUOTMARK
+    ENUM
     EXIT
+    EXPORT
+    EXTENSION
+    EXTERNAL
+    FACTORY
     FILE
     IMPORT
     IN
@@ -196,18 +210,27 @@ Rule 165   propertiesAccess -> IDENTIFIER DOT properties
 
 Terminals, with rules where they appear
 
+ABSTRACT             : 
 AMPERSAND            : 100 100
 AND                  : 98
 APOSTROPHE           : 
+ASSERT               : 
 ASYNC                : 
 AWAIT                : 
 BOOL                 : 29 37 127 128 140
 BOOLEAN              : 67 74 92 92
+BREAK                : 
+CASE                 : 
 CATCH                : 
+CLASS                : 
 CLOSE                : 
 COLON                : 46
 COMMA                : 26 48 106 111 124 143 145 147 149 151
 COMMENT              : 
+CONST                : 
+CONTINUE             : 
+DEFAULT              : 
+DEFERRED             : 
 DIVISION             : 121
 DO                   : 
 DOLLAR               : 
@@ -217,9 +240,14 @@ DOUBLEQUAL           : 83
 DOUBQUOTMARK         : 
 DYNAMIC              : 31 39 137
 ELSE                 : 56 57
+ENUM                 : 
 EQUAL                : 23 59 61 62 86 87 102 115 125 126 127 128 137 138 139 140 141 152 157
 EXIT                 : 
 EXMARK               : 77 91
+EXPORT               : 
+EXTENSION            : 
+EXTERNAL             : 
+FACTORY              : 
 FALSE                : 130
 FILE                 : 
 FINAL                : 59 61 62
