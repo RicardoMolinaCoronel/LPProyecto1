@@ -6,7 +6,7 @@ import tkinter as tk
 from variables_analizador import app,error,cajaValidator
 from lexico import palabras
 
-# BY RICARDO MOLINA : class_content,ifElseStatement,conditions,Map,declarationExpression,asign,function_lambda,main,parte forStatement
+# BY RICARDO MOLINA : class_content,ifElseStatement,conditions,Map,declarationExpression,asign,function_lambda,main,parte forStatement,print
 # SEMANTIC RULES: declarationString, declarationInt, operationTypesString,operationTypesInt
 algoritmoPruebaRicardoMolina = '''
 main(){
@@ -121,6 +121,10 @@ def p_class_content_expression(p):
     '''class_content : expression SEMICOLON
     '''
 
+def p_class_content_print(p):
+    '''class_content : print
+    '''
+
 
 def p_class_content_repeat(p):
     '''class_content_repeat : class_content
@@ -184,7 +188,9 @@ def p_returnType(p):
                    | map_identifier
     '''
 
-
+def p_print(p):
+    '''print : PRINT LPAREN value RPAREN SEMICOLON
+    '''
 def p_empty(p):
     'empty :'
 
@@ -422,6 +428,9 @@ def p_repeatDeclaration(p):
 
 def p_declarationExpression_asignOther(p):
     '''declarationExpression : datatype IDENTIFIER EQUAL expression SEMICOLON
+    '''
+def p_declarationExpression_asignOtherCasting(p):
+    '''declarationExpression : datatype IDENTIFIER EQUAL LPAREN datatype RPAREN IDENTIFIER SEMICOLON
     '''
 
 
