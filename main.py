@@ -4,24 +4,41 @@ from lexico import tokens
 import ply.yacc as yacc
 import tkinter as tk
 from variables_analizador import app,error,cajaValidator
+from lexico import palabras
 
-# BY RICARDO MOLINA : class_content,ifElseStatement,conditions,Map,declarationExpression,function_lambda,parte forStatement
-algoritmoPruebaSintaticoRicardoMolina = '''
-Map<int,String> personas = {
-    1 : 'ere',
-    2 :'sd'
-};
-if(!n==true){
-int x=5;
-  }else if(n==6){
-  int x=6;
-  }else if(n==7){
-  int x=7;
-  }else{
-  int x=8;
-  }
+# BY RICARDO MOLINA : class_content,ifElseStatement,conditions,Map,declarationExpression,asign,function_lambda,main,parte forStatement
+# SEMANTIC RULES: declarationString, declarationInt, operationTypesString,operationTypesInt
+algoritmoPruebaRicardoMolina = '''
+main(){
+	Map<int,String> personas = {
+    		1 : 'Ricardo',
+    		2 : 'Molina',
+    		4 : 'Coronel'
+	};
+	Map<String,String> personas2 ={};
+	var claves = personas.keys;
+	var valores = personas.values;
+	String persona2= "Jorge";
+	var x=5;
+	int x=0;
+	int n=0;
+	while(n<5){
+		if(n==1){
+		x=1;
+  		}else if(n==2){
+ 		 x=2;
+  		}else if(n==3){
+   	 	x=3;
+  		}else{
+  		x=4;
+  		}
+		x++;
+		}
+
+	int x2= 5.0 + 4 / 5;
+}
 void imprimirMediaNumero(int c1,{required int num1, required int num2}) => num1+num2;
-int x= num1+num2;
+int x1= num1+num2;
 '''
 
 # BY JARED CASTILLO : FOR, STACK, INFERED RETURN FUNCTION STATEMENT
@@ -49,108 +66,15 @@ bool c = a && b;
 
 bool c = a || b;
 '''
-# Testeos
-algoritmoLexico1 = '''
-//ALGORITMO RICARDO MOLINA
-main() {
-  print(insertionSort([8,9, 4, 2, 6,10,12]));
-}
-List<int> insertionSort(List<int> list) {
-  for (int j = 1; j < list.length; j++) {
-    int key = list[j];
-    int i = j - 1;
-  }
-  return list;
-}
-    '''
 
-algoritmo2 = '''//ALGORITMO POR JARED CASTILLO 
-// importing dart:io file
-import 'dart:async';
-import 'dart:io';
-
-void main()  {
-  menu();
-}
-
-
-void leerFile() {
-
-  try {
-    var file = File('C:/Users/wayar/OneDrive/Escritorio/archivo.txt');
-    var contents = file.readAsLinesSync();
-    for(var line in contents){
-    print(line);
-    }
-
-  } catch (e) {
-    if (e is FileSystemException && e.message.contains('No such file or directory') || e is PathNotFoundException) {
-      print('El archivo no existe o la ruta es incorrecta.');
-    }
-  }
-  menu();
-}
-
-void escribirFile() async{
-
-    print("Ingresa el contenido: ");
-    String contenido = stdin.readLineSync()!;
-    var file = File('C:/Users/wayar/OneDrive/Escritorio/archivo.txt');
-    var sink = file.openWrite(mode: FileMode.append);
-    sink.write((contenido + " "));
-    await sink.close();
-    print('¡Archivo escrito exitosamente!');  
-    menu();
-}
-
-
-void menu() {
-
-  print("\n************* MENU ******************");
-  print("1. Ingresar contenido");
-  print("2. Leer archivo\n");
-  String scan2 = stdin.readLineSync()!;
-
-  print("Elija una opcion: ");
-  int opt = int.parse(scan2);
-
-  if(opt == 1){
-    escribirFile();
-  }else if(opt == 2){
-    leerFile();
-  }else{
-    print("Opcion incorrecta. Cerrando Sesion...");
-    exit(0);
-  }
-}
-'''
-
-algoritmo3 = '''
-//ALGORITMO FREDDY TENESACA
-int mayorQueX(Iterable<int> collection, int x) {
-  return collection.where((item) => item > x).length;
-}
-
-main() async {
-  final numeros = [1, 2, 3, 4, 8, 52, 47, 8, 10, 18, 19, 4, 19];
-  final mySet = Set<int>.from(numeros);
-  final puntos = {
-    'juan': 1, 
-    'pedro': 4,
-    'josue': 7,
-    'luis': 2
-   };
-  final x = 5;
-
-  print('Numeros mayor que $x en list: ${mayorQueX(numeros, 5)}');
-  print('Numeros mayor que $x en set: ${mayorQueX(mySet, 5)}');
-  print('Puntos mayor que $x en map: ${mayorQueX(puntos.values, 5)}');
-}
-'''
 
 
 def p_class(p):
-    'class : class_content_repeat'
+    '''class : class_content_repeat
+              | declarationMain class_content_repeat
+              | class_content_repeat declarationMain
+              | declarationMain
+    '''
 
 
 def p_class_content_map(p):
@@ -203,7 +127,13 @@ def p_class_content_repeat(p):
                              | class_content_repeat class_content
     '''
 
-
+def p_declarationMain(p):
+    '''declarationMain : datatypeOpt MAIN LPAREN RPAREN LCURLYBRACKET class_content_repeat RCURLYBRACKET
+    '''
+def p_datatypeOpt(p):
+    '''datatypeOpt : datatype
+                    | empty
+    '''
 def p_class_content_bool(p):
     '''class_content : semanticbool
     '''
@@ -211,6 +141,10 @@ def p_class_content_bool(p):
 
 def p_class_content_semanticlist(p):
     '''class_content : semanticlist
+    '''
+
+def p_class_content_asign(p):
+    '''class_content : asign
     '''
 
 
@@ -229,7 +163,13 @@ def p_map_type_specified(p):
 
 
 def p_datatype(p):
-    '''datatype : returnType
+    '''datatype : INT
+                   | STRING
+                   | BOOL
+                   | DOUBLE
+                   | DYNAMIC
+                   | VOID
+                   | map_identifier
                  | VAR
     '''
 
@@ -292,6 +232,7 @@ def p_ifStatement(p):
     '''
 
 
+
 def p_elifStatement(p):
     '''elifStatement : ELSE ifStatement
     '''
@@ -321,6 +262,7 @@ def p_whileStatement(p):
     '''
 
 
+
 def p_stackStatement(p):
     '''stack : FINAL IDENTIFIER EQUAL STACK LESSTHAN datatype GREATERTHAN LPAREN RPAREN SEMICOLON
             | FINAL IDENTIFIER EQUAL STACK DOT OF LPAREN IDENTIFIER RPAREN SEMICOLON
@@ -339,6 +281,7 @@ def p_value(p):
                 | BOOLEAN
                 | IDENTIFIER
                 | booleanOp
+                | propertiesAccess
     '''
 
 
@@ -366,6 +309,7 @@ def p_condition_values(p):
                         | INTEGER
                         | FLOAT
                         | STR
+                        | NULL
     '''
 
 
@@ -444,11 +388,14 @@ def p_optFunction_arguments(p):
 
 
 def p_expression(p):
-    '''expression : operableTypes operatorExpression operableTypes
-                    | value
-                    | operableTypes operatorExpression operatorExpression
+    '''expression : value
+                    | value operatorExpression expression
+                    | value operatorExpression operatorExpression
     '''
+def p_asign(p):
+    '''asign : IDENTIFIER EQUAL expression SEMICOLON
 
+    '''
 
 def p_operableTypes(p):
     '''operableTypes : IDENTIFIER
@@ -465,7 +412,11 @@ def p_operatorExpression(p):
 
 
 def p_declarationExpression(p):
-    '''declarationExpression : datatype IDENTIFIER SEMICOLON
+    '''declarationExpression : datatype repeatDeclaration SEMICOLON
+    '''
+def p_repeatDeclaration(p):
+    '''repeatDeclaration : IDENTIFIER
+                          | IDENTIFIER COMMA repeatDeclaration
     '''
 
 
@@ -543,8 +494,11 @@ def p_insidelistdouble(p):
                     | FLOAT COMMA insidelistdouble
     '''
 
+
+#SEMANTIC RULES RICARDO MOLINA
 def p_declarationExpression_asignString(p):
     '''declarationExpression : STRING IDENTIFIER EQUAL expressionString SEMICOLON
+                              | STRING IDENTIFIER SEMICOLON
     '''
 def p_expressionString(p):
      '''expressionString : STR
@@ -555,6 +509,7 @@ def p_operationExpressionString(p):
     '''
 def p_declarationExpression_asignInteger(p):
     '''declarationExpression : INT IDENTIFIER EQUAL expressionInteger SEMICOLON
+                              | INT IDENTIFIER SEMICOLON
     '''
 def p_expressionInteger(p):
      '''expressionInteger : number
@@ -565,14 +520,21 @@ def p_expressionIntegerIdentifier(p):
                          | IDENTIFIER operatorExpression expressionInteger
     '''
 
+def p_properties(p):
+    '''properties : KEYS
+                   | VALUES
+    '''
+def p_propertiesAccess(p):
+    '''  propertiesAccess : IDENTIFIER DOT properties
+    '''
 
 
 def p_error(p):
     globals()['error'] = True
     cajaValidator.config(fg=rojo)
     if p:
-        cajaValidator.insert(tk.END, "Error de sintaxis en token:" + p.type + "\n")
-        print("Error de sintaxis en token:", p.type)
+        cajaValidator.insert(tk.END, "Error en token:" + p.type + "\n")
+        print("Error en token:", p.type)
         # sintactico.errok()
     else:
         cajaValidator.insert(tk.END, "Syntax error at EOF" + "\n")
@@ -581,6 +543,38 @@ def p_error(p):
 
 # Build the parser
 sintactico = yacc.yacc()
+
+def detect_k():
+    cajaCodigo.tag_config("start",
+                          foreground="black")
+
+    iF=1
+    iC=0
+    iFC=0
+    codigo = cajaCodigo.get(1.0, "end-1c")
+    palabra="";
+    for indice in range(len(codigo)):
+        if (codigo[indice] == "\n"):
+            iF += 1
+            iC = 0
+            iFC = 0
+            palabra=""
+        elif(codigo[indice] == " "):
+            iC = indice+1
+            iFC = indice+1
+            palabra = ""
+        else:
+            palabra = palabra+codigo[indice]
+            iFC+=1
+        #print(palabra,iF,iC,iFC)
+        if palabra in palabras:
+            pos1=str(iF)+"."+str(iC)
+            pos2=str(iF)+"."+str(iFC)
+            iC=iFC
+            cajaCodigo.tag_add("start", pos1, pos2)
+            # configuring a tag called start
+            cajaCodigo.tag_config("start",
+                            foreground="blue")
 
 
 def runAnalyzer():
@@ -593,7 +587,7 @@ def runAnalyzer():
         cajaValidator.insert(1.0, "Todo OK!")
     globals()['error'] = False
     cajaValidator.config(state=tk.DISABLED)
-
+    detect_k()
 
 fondo = "#444444"
 celeste = "#00A4D3"
@@ -623,6 +617,10 @@ cajaCodigo.place(x=15, y=100, width=550, height=300)
 tk.Button(app, text="RUN", font=("Calibri", 18), background="#00A4D3", fg="black", relief="flat", command=runAnalyzer
           ).place(x=15, y=410, width=100, height=40)
 app.mainloop()
+
+
+
+
 
 
 

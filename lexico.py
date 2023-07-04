@@ -4,8 +4,7 @@ import reservadas
 import variables_analizador
 
 import tkinter as tk
-reserved = reservadas.crear(
-  ['while',
+palabras=['while',
    'for',
    'int',
    'import',
@@ -43,8 +42,14 @@ reserved = reservadas.crear(
    'do',
    'true',
    'false',
-   'dynamic'
-   ])
+   'dynamic',
+   'null',
+   'keys',
+   'values'
+   ]
+reserved = reservadas.crear(
+    palabras
+  )
 
 
 tokens = ('INTEGER','FLOAT','IDENTIFIER','BOOLEAN','PLUS', 'MINUS', 'TIMES', 'DIVISION', 'LPAREN', 'RPAREN',
@@ -162,4 +167,4 @@ suma(int a, int b) {
   return a + b;
 }
 '''
-consultarTokens(data2)
+#consultarTokens(data2)
