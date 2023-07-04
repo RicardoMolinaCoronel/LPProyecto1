@@ -6,7 +6,7 @@ import tkinter as tk
 from variables_analizador import app,error,cajaValidator
 from lexico import palabras
 
-# BY RICARDO MOLINA : class_content,ifElseStatement,conditions,Map,declarationExpression,asign,function_lambda,main,parte forStatement,print
+# BY RICARDO MOLINA : class_content,ifElseStatement,conditions,Map,declarationExpression,asign,function_lambda,main,parte forStatement,print,GUI
 # SEMANTIC RULES: declarationString, declarationInt, operationTypesString,operationTypesInt
 algoritmoPruebaRicardoMolina = '''
 main(){
