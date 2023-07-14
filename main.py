@@ -16,6 +16,7 @@ main(){
     		4 : 'Coronel'
 	};
 	Map<String,String> personas2 ={};
+	
 	var claves = personas.keys;
 	var valores = personas.values;
 	String persona2= "Jorge";
@@ -92,6 +93,7 @@ def p_class(p):
 def p_class_content_map(p):
     '''class_content : map
     '''
+
 
 
 def p_class_content_ifElse(p):
@@ -573,21 +575,26 @@ def detect_k():
     iC=0
     iFC=0
     codigo = cajaCodigo.get(1.0, "end-1c")
+    iCC=0;
     palabra="";
     for indice in range(len(codigo)):
         if (codigo[indice] == "\n"):
             iF += 1
             iC = 0
             iFC = 0
+            iCC = 0
             palabra=""
-        elif(codigo[indice] == " "):
-            iC = indice+1
-            iFC = indice+1
+        elif codigo[indice] == " " or not codigo[indice].isalpha():
+
+            iC = iCC+1
+            iFC = iCC+1
+            iCC += 1
             palabra = ""
         else:
             palabra = palabra+codigo[indice]
             iFC+=1
-        #print(palabra,iF,iC,iFC)
+            iCC += 1
+        print(palabra,iF,iC,iFC)
         if palabra in palabras:
             pos1=str(iF)+"."+str(iC)
             pos2=str(iF)+"."+str(iFC)
@@ -595,7 +602,7 @@ def detect_k():
             cajaCodigo.tag_add("start", pos1, pos2)
             # configuring a tag called start
             cajaCodigo.tag_config("start",
-                            foreground="blue")
+                            foreground="#03589C")
 
 
 def runAnalyzer():
