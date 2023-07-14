@@ -594,7 +594,7 @@ def detect_k():
             palabra = palabra+codigo[indice]
             iFC+=1
             iCC += 1
-        print(palabra,iF,iC,iFC)
+        #print(palabra,iF,iC,iFC)
         if indice+1 < len(codigo):
             if codigo[indice+1] == " " or not codigo[indice+1].isalpha():
                 if palabra in palabras:
