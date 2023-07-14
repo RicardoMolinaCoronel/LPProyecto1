@@ -302,6 +302,8 @@ def p_value(p):
                 | IDENTIFIER
                 | booleanOp
                 | propertiesAccess
+
+
     '''
 
 
@@ -355,6 +357,7 @@ def p_condition(p):
                   | number condition_operator number
                   | STR condition_operator STR
                   | booleanOp condition_operator booleanOp
+                  | negation_values
     '''
 
 
@@ -414,7 +417,15 @@ def p_expression(p):
     '''
 def p_asign(p):
     '''asign : IDENTIFIER EQUAL expression SEMICOLON
+              | IDENTIFIER otherAsignations EQUAL expression SEMICOLON
 
+    '''
+def p_otherAsignations(p):
+    '''otherAsignations : PLUS
+                         | MINUS
+                         | TIMES
+                         | DIVISION
+                         | REST
     '''
 
 def p_operableTypes(p):
@@ -428,6 +439,7 @@ def p_operatorExpression(p):
                            | MINUS
                            | TIMES
                            | DIVISION
+                           | REST
     '''
 
 
@@ -446,14 +458,16 @@ def p_declarationExpression_asignOther(p):
 def p_declarationExpression_asignOtherCasting(p):
     '''declarationExpression : datatype IDENTIFIER EQUAL LPAREN datatype RPAREN IDENTIFIER SEMICOLON
     '''
+def p_declarationExpression_asignConstant(p):
+    '''declarationExpression : FINAL IDENTIFIER EQUAL expression SEMICOLON
+    '''
 
 
 
 # SEMANTIC RULES
 
 def p_semanticbool(p):
-    ''' semanticbool : BOOL IDENTIFIER EQUAL booleanOp SEMICOLON
-             | BOOL IDENTIFIER EQUAL booloperations SEMICOLON
+    ''' semanticbool : BOOL IDENTIFIER EQUAL conditions SEMICOLON
     '''
 
 def p_booleanOp(p):
@@ -556,8 +570,8 @@ def p_error(p):
     globals()['error'] = True
     cajaValidator.config(fg=rojo)
     if p:
-        cajaValidator.insert(tk.END, "Error en token:" + p.type + "\n")
-        print("Error en token:", p.type)
+        cajaValidator.insert(tk.END, "Syntax error at token: " + p.type + "\n")
+        print("Syntax error at token:", p.type)
         # sintactico.errok()
     else:
         cajaValidator.insert(tk.END, "Syntax error at EOF" + "\n")

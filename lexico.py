@@ -47,7 +47,7 @@ palabras=['while',
    'keys',
    'values',
           'abstract','case','const','default','export','factory','continue','deferred' ,'extension','assert',
-          'break','class','enum','external'
+          'break','class','enum','external','Function','get','implements','library'
    ]
 reserved = reservadas.crear(
     palabras
@@ -55,10 +55,10 @@ reserved = reservadas.crear(
 
 
 tokens = ('INTEGER','FLOAT','IDENTIFIER','BOOLEAN','PLUS', 'MINUS', 'TIMES', 'DIVISION', 'LPAREN', 'RPAREN',
-          'COMMENT','DOT','COMMA','GREATERTHAN','LESSTHAN','NOTEQUAL',
+          'COMMENT','COMMENTMULTI','DOT','COMMA','GREATERTHAN','LESSTHAN','NOTEQUAL',
           'DOUBQUOTMARK','STR','EQUAL','DOUBLEQUAL',"LCURLYBRACKET","RCURLYBRACKET",
           'LSQUAREBRACKET','RSQUAREBRACKET','SEMICOLON','AMPERSAND', 'COLON', 'EXMARK',
-          'AND', 'OR', 'APOSTROPHE','METHOD', 'DOLLAR', 'PIPELINE') + tuple(reserved.values())
+          'AND', 'OR', 'APOSTROPHE','METHOD', 'DOLLAR', 'PIPELINE','REST') + tuple(reserved.values())
 
 '''
 Contribucion Ricardo: tokens(COMMENT hasta AMPERSAND), reservadas(while hasta return) - algoritmo1
@@ -103,6 +103,7 @@ t_APOSTROPHE = r'\''
 t_METHOD = r'[a-zA-Z\_]+\(\)$'
 t_DOLLAR=r'\$'
 t_PIPELINE= r'\|'
+t_REST= r'%'
 
 t_ignore = " \t"
 
@@ -122,12 +123,15 @@ def t_IDENTIFIER(t):
 def t_COMMENT(t):
   r'\/\/.*'
   pass
+def t_COMMENTMULTI(t):
+  r'\/\*[^\*]*\*\/'
+  pass
 
 
 def t_error(t):
   variables_analizador.error= True
   variables_analizador.cajaValidator.config(fg="#E11E1E")
-  variables_analizador.cajaValidator.insert(tk.END, "Error léxico en símbolo: "+ t.value.strip()+ "\n")
+  variables_analizador.cajaValidator.insert(tk.END, "Lexical error at symbol: "+ t.value.strip()+ "\n")
   print("Error léxico", t.value.strip(), " línea:", t.lineno, "columna:",
         t.lexpos)
   t.lexer.skip(1)
