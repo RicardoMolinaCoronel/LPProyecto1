@@ -595,14 +595,25 @@ def detect_k():
             iFC+=1
             iCC += 1
         print(palabra,iF,iC,iFC)
-        if palabra in palabras:
-            pos1=str(iF)+"."+str(iC)
-            pos2=str(iF)+"."+str(iFC)
-            iC=iFC
-            cajaCodigo.tag_add("start", pos1, pos2)
-            # configuring a tag called start
-            cajaCodigo.tag_config("start",
+        if indice+1 < len(codigo):
+            if codigo[indice+1] == " " or not codigo[indice+1].isalpha():
+                if palabra in palabras:
+                    pos1=str(iF)+"."+str(iC)
+                    pos2=str(iF)+"."+str(iFC)
+                    iC=iFC
+                    cajaCodigo.tag_add("start", pos1, pos2)
+                    # configuring a tag called start
+                    cajaCodigo.tag_config("start",
                             foreground="#03589C")
+        else:
+            if palabra in palabras:
+                pos1 = str(iF) + "." + str(iC)
+                pos2 = str(iF) + "." + str(iFC)
+                iC = iFC
+                cajaCodigo.tag_add("start", pos1, pos2)
+                # configuring a tag called start
+                cajaCodigo.tag_config("start",
+                                      foreground="#03589C")
 
 
 def runAnalyzer():
