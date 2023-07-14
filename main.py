@@ -10,22 +10,24 @@ from lexico import palabras
 # SEMANTIC RULES: declarationString, declarationInt, operationTypesString,operationTypesInt
 algoritmoPruebaRicardoMolina = '''
 main(){
+final PI =3.1416;
+bool isEmpty = false;
 	Map<int,String> personas = {
     		1 : 'Ricardo',
     		2 : 'Molina',
     		4 : 'Coronel'
 	};
-	Map<String,String> personas2 ={};
-	
+	Map<String,String> personasVacio ={};
 	var claves = personas.keys;
 	var valores = personas.values;
-	String persona2= "Jorge";
+	String persona1= "Jorge";
 	var x=5;
-	int x=0;
+	int x1=5.5;
 	int n=0;
 	while(n<5){
 		if(n==1){
 		x=1;
+		x= 5.05 + 7 / 5;
   		}else if(n==2){
  		 x=2;
   		}else if(n==3){
@@ -33,13 +35,16 @@ main(){
   		}else{
   		x=4;
   		}
-		x++;
+		x+=1;
 		}
-
-	int x2= 5.0 + 4 / 5;
+	print(x);
+	x= 5.0 + 4 / 5;
+	x-=n;
 }
+assert(true);
 void imprimirMediaNumero(int c1,{required int num1, required int num2}) => num1+num2;
 int x1= num1+num2;
+
 '''
 
 # BY JARED CASTILLO : FOR, STACK, INFERED RETURN FUNCTION STATEMENT
@@ -163,6 +168,9 @@ def p_class_content_semanticlist(p):
 
 def p_class_content_asign(p):
     '''class_content : asign
+    '''
+def p_class_content_assert(p):
+    '''class_content : assert
     '''
 
 
@@ -341,6 +349,7 @@ def p_condition_operator(p):
                            | GREATERTHAN
                            | LESSTHAN EQUAL
                            | GREATERTHAN EQUAL
+                           | EXMARK EQUAL
     '''
 
 
@@ -417,15 +426,11 @@ def p_expression(p):
     '''
 def p_asign(p):
     '''asign : IDENTIFIER EQUAL expression SEMICOLON
-              | IDENTIFIER otherAsignations EQUAL expression SEMICOLON
+              | IDENTIFIER operatorExpression EQUAL expression SEMICOLON
 
     '''
-def p_otherAsignations(p):
-    '''otherAsignations : PLUS
-                         | MINUS
-                         | TIMES
-                         | DIVISION
-                         | REST
+def p_assert(p):
+    ''' assert : ASSERT LPAREN conditions RPAREN SEMICOLON
     '''
 
 def p_operableTypes(p):
@@ -547,6 +552,7 @@ def p_operationExpressionString(p):
 def p_declarationExpression_asignInteger(p):
     '''declarationExpression : INT IDENTIFIER EQUAL expressionInteger SEMICOLON
                               | INT IDENTIFIER SEMICOLON
+
     '''
 def p_expressionInteger(p):
      '''expressionInteger : number
