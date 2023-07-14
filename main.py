@@ -49,13 +49,42 @@ int x1= num1+num2;
 
 # BY JARED CASTILLO : FOR, STACK, INFERED RETURN FUNCTION STATEMENT
 algoritmoPruebaSintaticoJaredCastillo = '''
-while(a < b) {
-  x++;
- }
+main(){
+int a=0;
+int b=20;
+bool b1 = true;
+bool b2 = false;
+bool b3 = false || !true;
 
+while(a < b) {
+  a+=1;
+ }
+List<String> letras = ["a","b","c"];
+letras.add("d");
+letras.add("e");
+letras.add("f");
+
+List<int> numeros = [1, 2, 3, 4, 5];
+numeros.add(6);
+numeros.add(7);
+
+//Error
+//List<int> numeros = [1, 2, 3, 4, 5];
+//numeros.add("a");
+
+List<bool> booleanos = [true, false, false, false, true];
+booleanos.add(true);
 
 final stack = Stack<int>();
-final smokeStack = Stack.of(list);
+final smokeStack = Stack.of(numeros);
+
+}
+
+//Funciones con tipo de retorno inferido
+operacionBools(){
+return b1 && b2 || b1 || false;
+}
+
 
 suma(int a, int b) {
   return a + b;
@@ -166,9 +195,27 @@ def p_class_content_semanticlist(p):
     '''class_content : semanticlist
     '''
 
+
 def p_class_content_asign(p):
     '''class_content : asign
     '''
+
+def p_class_content_addlistInt(p):
+    '''class_content : addlistInt
+    '''
+
+def p_class_content_addlistBool(p):
+    '''class_content : addlistBool
+    '''
+
+def p_class_content_addlistFloat(p):
+    '''class_content : addlistFloat
+    '''
+
+def p_class_content_addlistStr(p):
+    '''class_content : addlistStr
+    '''
+
 def p_class_content_assert(p):
     '''class_content : assert
     '''
@@ -299,6 +346,7 @@ def p_stackStatement(p):
 
 def p_inferedReturnFunction(p):
     '''inferedReturnFunction : IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
+                            | IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN conditions SEMICOLON RCURLYBRACKET
     '''
 
 
@@ -402,7 +450,7 @@ def p_function_arguments_repeat(p):
 
 
 def p_optFunction_argumentsExpression(p):
-    ''' optFunction_argumentsExpression : LCURLYBRACKET optFunction_arguments RCURLYBRACKET
+    '''optFunction_argumentsExpression : LCURLYBRACKET optFunction_arguments RCURLYBRACKET
                                          | empty
     '''
 
@@ -423,6 +471,7 @@ def p_expression(p):
     '''expression : value
                     | value operatorExpression expression
                     | value operatorExpression operatorExpression
+                    | booloperations
     '''
 def p_asign(p):
     '''asign : IDENTIFIER EQUAL expression SEMICOLON
@@ -430,7 +479,7 @@ def p_asign(p):
 
     '''
 def p_assert(p):
-    ''' assert : ASSERT LPAREN conditions RPAREN SEMICOLON
+    '''assert : ASSERT LPAREN conditions RPAREN SEMICOLON
     '''
 
 def p_operableTypes(p):
@@ -493,7 +542,8 @@ def p_booloperations(p):
                       | booloperation condition_connector booloperations
     '''
 
-
+listidentifier = ""
+listtype = ""
 def p_semanticlist(p):
     ''' semanticlist : LIST LESSTHAN DYNAMIC GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
                     | LIST LESSTHAN  INT GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistint RSQUAREBRACKET SEMICOLON
@@ -501,11 +551,16 @@ def p_semanticlist(p):
                     | LIST LESSTHAN  BOOL GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistbool RSQUAREBRACKET SEMICOLON
                     | LIST LESSTHAN  DOUBLE GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelistdouble RSQUAREBRACKET SEMICOLON
     '''
+    global listidentifier
+    global listtype
+    listidentifier = p[5]
+    listtype = p[3]
 
 
 # LIST LESSTHAN  datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
 
 # returnType : INT| STRING| BOOL| DOUBLE| DYNAMIC| VOID| map_identifier
+
 
 def p_insidelist(p):
     ''' insidelist : value
@@ -535,6 +590,64 @@ def p_insidelistdouble(p):
     ''' insidelistdouble : FLOAT
                     | FLOAT COMMA insidelistdouble
     '''
+
+
+def p_addlistInt(p):
+    ''' addlistInt : IDENTIFIER DOT ADD LPAREN INTEGER RPAREN SEMICOLON
+    '''
+    global listidentifier
+    global listtype
+    if p[1] == listidentifier and isinstance(int(p[5]), int) and listtype == "int":
+        print("oooook")
+    else:
+        globals()['error'] = True
+        cajaValidator.config(fg=rojo)
+        cajaValidator.insert(tk.END, "Error: Se esperaba un número entero.")
+
+
+def p_addlistStr(p):
+    ''' addlistStr : IDENTIFIER DOT ADD LPAREN STR RPAREN SEMICOLON
+    '''
+    global listidentifier
+    global listtype
+    if p[1] == listidentifier and isinstance(p[5], str) and listtype == "String":
+        print("oooook")
+    else:
+        globals()['error'] = True
+        cajaValidator.config(fg=rojo)
+        cajaValidator.insert(tk.END, "Error: Se esperaba un string.")
+
+
+def p_addlistBool(p):
+    ''' addlistBool : IDENTIFIER DOT ADD LPAREN booleanOp RPAREN SEMICOLON
+    '''
+    global listidentifier
+    global listtype
+    if p[1] == listidentifier and isinstance(bool(p[5]), bool) and listtype == "bool":
+        print("oooook")
+    else:
+        globals()['error'] = True
+        cajaValidator.config(fg=rojo)
+        cajaValidator.insert(tk.END, "Error: Se esperaba un booleano.")
+
+
+def p_addlistFloat(p):
+    ''' addlistFloat : IDENTIFIER DOT ADD LPAREN FLOAT RPAREN SEMICOLON
+    '''
+    global listidentifier
+    global listtype
+    if p[1] == listidentifier and isinstance(float(p[5]), float) and listtype == "double":
+        print("oooook")
+    else:
+        globals()['error'] = True
+        cajaValidator.config(fg=rojo)
+        cajaValidator.insert(tk.END, "Error: Se esperaba un flotante.")
+
+
+# LIST LESSTHAN  datatype GREATERTHAN IDENTIFIER EQUAL LSQUAREBRACKET insidelist RSQUAREBRACKET SEMICOLON
+
+# returnType : INT| STRING| BOOL| DOUBLE| DYNAMIC| VOID| map_identifier
+
 
 
 #SEMANTIC RULES RICARDO MOLINA

@@ -47,7 +47,7 @@ palabras=['while',
    'keys',
    'values',
           'abstract','case','const','default','export','factory','continue','deferred' ,'extension','assert',
-          'break','class','enum','external','Function','get','implements','library'
+          'break','class','enum','external','Function','get','implements','library','add'
    ]
 reserved = reservadas.crear(
     palabras
