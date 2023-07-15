@@ -164,13 +164,46 @@ if(n==5){
 void imprimirMediaNumero(int c1,{required int num1, required int num2}) => num1+num2;
 '''
 
-data2 = '''for (var i = 0; i < 5; i++) {
-  message.write('!');
+data2 = '''main(){
+/*
+Algoritmo de pueba
+*/
+final PI =3.1416;
+bool isEmpty = false;
+	Map<int,String> personas = {
+    		1 : 'Ricardo',
+    		2 : 'Molina',
+    		4 : 'Coronel'
+	};
+	Map<String,String> personasVacio ={};
+	var claves = personas.keys;
+	var valores = personas.values;
+	String persona1= "Jorge";
+	String persona2= "Jorge"+"Coello";
+	
+	var x=5;
+	int x1=5.5;
+	int n=0;
+	while(n<5){
+		if(n==1){
+		x=1;
+		continue;
+		x= 5.05 + 7 / 5;
+  		}else if(n==2){
+ 		 x=2;
+  		}else if(n==3){
+   	 	x=3;
+  		}else{
+  		x=4;
+  		}
+		x+=1;
+		}
+	print(x);
+	x= 5.0 + 4 / 5;
+	x-=n;
 }
-final stack = Stack<int>();
-final smokeStack = Stack.of(list);
-suma(int a, int b) {
-  return a + b;
-}
+assert(n<5);
+void sumaNumeros(int c1,{required int num1, required int num2}) => num1+num2;
+int x1= num1+num2;
 '''
 #consultarTokens(data2)

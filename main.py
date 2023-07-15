@@ -10,6 +10,9 @@ from lexico import palabras
 # SEMANTIC RULES: declarationString, declarationInt, operationTypesString,operationTypesInt
 algoritmoPruebaRicardoMolina = '''
 main(){
+/*
+Algoritmo de pueba
+*/
 final PI =3.1416;
 bool isEmpty = false;
 	Map<int,String> personas = {
@@ -21,12 +24,15 @@ bool isEmpty = false;
 	var claves = personas.keys;
 	var valores = personas.values;
 	String persona1= "Jorge";
+	String persona2= "Jorge"+"Coello";
+	
 	var x=5;
 	int x1=5.5;
 	int n=0;
 	while(n<5){
 		if(n==1){
 		x=1;
+		continue;
 		x= 5.05 + 7 / 5;
   		}else if(n==2){
  		 x=2;
@@ -41,8 +47,8 @@ bool isEmpty = false;
 	x= 5.0 + 4 / 5;
 	x-=n;
 }
-assert(true);
-void imprimirMediaNumero(int c1,{required int num1, required int num2}) => num1+num2;
+assert(n<5);
+void sumaNumeros(int c1,{required int num1, required int num2}) => num1+num2;
 int x1= num1+num2;
 
 '''
@@ -120,6 +126,7 @@ def p_class(p):
     '''class : class_content_repeat
               | declarationMain class_content_repeat
               | class_content_repeat declarationMain
+              | class_content_repeat declarationMain class_content_repeat
               | declarationMain
     '''
 
@@ -171,6 +178,9 @@ def p_class_content_expression(p):
 
 def p_class_content_print(p):
     '''class_content : print
+    '''
+def p_class_content_continue(p):
+    '''class_content : CONTINUE SEMICOLON
     '''
 
 
@@ -346,7 +356,7 @@ def p_stackStatement(p):
 
 def p_inferedReturnFunction(p):
     '''inferedReturnFunction : IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN expression SEMICOLON RCURLYBRACKET
-                            | IDENTIFIER LPAREN  function_arguments_repeat RPAREN LCURLYBRACKET RETURN conditions SEMICOLON RCURLYBRACKET
+
     '''
 
 
